@@ -105,12 +105,22 @@ module.exports = function(webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
-      loaders.push({
-        loader: require.resolve(preProcessor),
-        options: {
-          sourceMap: isEnvProduction && shouldUseSourceMap,
-        },
-      });
+      if (preProcessor === 'less-loader') {
+        loaders.push({
+          loader: require.resolve(preProcessor),
+          options: {
+            sourceMap: isEnvProduction && shouldUseSourceMap,
+            javascriptEnabled: true
+          },
+        });
+      } else {
+        loaders.push({
+          loader: require.resolve(preProcessor),
+          options: {
+            sourceMap: isEnvProduction && shouldUseSourceMap,
+          },
+        });
+      }
     }
     return loaders;
   };
