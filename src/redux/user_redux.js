@@ -41,7 +41,7 @@ export function login({username,password}) {
     return dispatch=>{
 		axios.post('/user/login',{username,password})
 			.then(res=>{
-				if (res.status==200&&res.data.code===0) {
+				if (res.status===200&&res.data.code===0) {
 					// dispatch(registerSuccess({user,pwd,type}))
 					dispatch(loginSuccess(res.data.data))
 				}else{
@@ -61,7 +61,7 @@ export function register({username,password,repeatpassword,type}) {
     return dispatch=>{
         axios.post('/user/register',{username,password,type})
         .then(res=>{
-            if(res.status==200 && res.data.code===0){
+            if(res.status===200 && res.data.code===0){
                 dispatch(registerSuccess({username,password,}))
             }else{
                 dispatch(errorMsg(res.data.msg))
