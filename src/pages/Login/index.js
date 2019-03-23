@@ -42,7 +42,7 @@ class Login extends Component {
                 <Content>
                     <Form  className="login-form">
                         <div className="user-img">
-                            <img src={logoImg} alt="logo" />
+                            <Link to='/'><img src={logoImg} alt="logo" /></Link>
                             <b>英语</b>
                             <span>点读平台</span>
                         </div>
