@@ -7,6 +7,7 @@ const UserSchema = new Schema({
     type: { type: String, required: true},
     //头像
     avatar:{ type: String },
+    created:{ type: Date },
 });
 
 

@@ -35,10 +35,12 @@ class Login extends Component {
         this.props.login(this.state);
     }
     render() {
+        const path = this.props.location.pathname;
         const { msg, redirectTo } = this.props;
         return (
             <Layout className="full-layout login-page">
                 {redirectTo?<Redirect to="/"/>:null}
+                {console.log(path)}
                 <Content>
                     <Form  className="login-form">
                         <div className="user-img">
@@ -58,7 +60,7 @@ class Login extends Component {
                             />
                         </FormItem>
                         <FormItem>
-                            <Input
+                            <Input.Password
                                 size="large"
                                 prefix={<Icon type="lock" />}
                                 type="password"

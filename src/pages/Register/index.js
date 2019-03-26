@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { register } from "../../redux/user_redux";
 import './index.less';
 import logoImg from '../../assets/images/logo.svg';
+import moment from 'moment';
 const { Content } = Layout;
 const FormItem = Form.Item;
 
@@ -20,7 +21,8 @@ class Register extends Component {
             username: '',
             password: '',
             repeatpassword: '',
-            type: 'admin',
+            type: 'user',
+            created: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
         }
         this.handleRegister = this.handleRegister.bind(this)
     }
@@ -76,7 +78,7 @@ class Register extends Component {
                                 overlayStyle={{ width: 240 }}
                                 placement="right"
                             >
-                                <Input
+                                <Input.Password
                                     size="large"
                                     type="password"
                                     placeholder="密码"
@@ -87,7 +89,7 @@ class Register extends Component {
                             </Popover>
                         </FormItem>
                         <FormItem>
-                            <Input
+                            <Input.Password
                                 size="large"
                                 type="password"
                                 placeholder="确认密码"

@@ -8,7 +8,30 @@ const User = require('./models/users');
 Router.get('/list',function (req, res) {
     // User.remove({},function (err,doc) {})
     User.find({},function (err,doc) {
-        return res.json(doc)
+        return res.json({code: 0, data:doc})
+    })
+})
+
+Router.post('/remove', function (req, res) {
+    const {_id} = req.body
+    console.log(req.body);
+    User.findByIdAndRemove(_id,function (err, doc) {
+        return res.json({code:1})
+    })
+})
+
+Router.post('/update', function (req, res) {
+    // console.log(req.body)
+    const body = req.body
+    const {id,username} = req.body
+    User.findOne({username},function (err, doc) {
+        if(doc) {
+            console.log(doc)
+            return res.json({msg: '用户名已经存在，请换一个'})
+        }
+        User.findByIdAndUpdate(id,body,function (err, doc) {
+            return res.json({code:0, data: body})
+        })
     })
 })
 
@@ -24,12 +47,12 @@ Router.post('/login', function (req, res) {
 
 Router.post('/register',function (req, res) {
     console.log(req.body)
-    const { username, password, type } = req.body;
+    const { username, password, type, avatar, created } = req.body;
     User.findOne({username},function (err, doc) {
         if(doc) {
             return res.json({msg: '用户名已经存在，请换一个'})
         }
-        User.create({username, password: md5Pwd(password), type},function (e, d) {
+        User.create({username, password: md5Pwd(password), type, avatar, created },function (e, d) {
             if(e) {
                 return res.json({msg: '后端出错'})
             }

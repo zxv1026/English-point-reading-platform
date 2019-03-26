@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/english', function (err) {
+mongoose.connect('mongodb://localhost/english', { useFindAndModify: false , useNewUrlParser:true},function (err) {
     if (err) {
         console.log('数据库连接失败');
     } else {
@@ -12,7 +12,6 @@ mongoose.connect('mongodb://localhost/english', function (err) {
 const userRouter = require('./user');
 const app = express();
 
-require('./models/users');
 app.use(bodyParser.json())
 app.use('/user',userRouter)
 app.listen(3001, () => {

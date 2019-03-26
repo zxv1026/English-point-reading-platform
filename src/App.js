@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch, Router } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from 'redux-thunk';
 import { Provider } from "react-redux";
 import Login from './pages/Login/index';
 import Register from './pages/Register/index';
-import Header from './components/Header/index';
+import Home from './pages/Home/index';
+import AdminHome from './pages/Admin/index';
 import { GlobalStyle_Icon } from "./assets/iconfont/iconfont";
 import reducers from './reducer';
 
@@ -13,7 +14,13 @@ const store = createStore(reducers, compose(
     applyMiddleware(thunk),
     window.devToolsExtension?window.devToolsExtension(): f=>f
 ))
-
+const RouteFallback = (props) => {
+    console.log('route fallback with location: ', props.location);
+    return <Redirect to={ {
+        pathname: '/',
+        from: props.location
+    }} />
+}
 class App extends Component {
   render() {
     return (
@@ -21,9 +28,13 @@ class App extends Component {
             <BrowserRouter>
               <GlobalStyle_Icon/>
               <div style={{height: "100%", width: "100%"}}>
-                  <Route exact path='/' component={Header}/>
+                <Switch>
+                  <Route exact path='/' component={Home}/>
                   <Route exact path='/login' component={Login}/>
                   <Route exact path='/register' component={Register}/>
+                  <Route exact path='/admin' component={AdminHome}/>
+                  <Route component={RouteFallback} />
+                </Switch>
               </div>
       	    </BrowserRouter>
         </Provider>

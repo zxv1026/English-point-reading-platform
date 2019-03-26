@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+const USERLIST_SUCCESS = 'USERLIST_SUCCESS';
+const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
 const initState={
     redirectTo: '',
@@ -9,29 +9,77 @@ const initState={
     username: '',
     password: '',
     type: '',
+    created: '',
+    list: [],
 }
 
 //reducer
 export function user(state=initState, action) {
     switch (action.type) {
-        case REGISTER_SUCCESS:
+        case AUTH_SUCCESS:
             return {...state, msg:'',redirectTo:action.payload,...action.payload}
-        case LOGIN_SUCCESS:
-            return {...state, msg:'',redirectTo:action.payload,...action.payload}
+        case USERLIST_SUCCESS:
+            return {...state, msg:'',redirectTo:action.payload,list:action.payload, ...action.payload}
         case ERROR_MSG:
             return {...state, msg:action.msg}
         default:
             return state
     }
 }
-function loginSuccess(data){
-	return { type:LOGIN_SUCCESS, payload:data}
+function getuserlistSuccess(data) {
+    return { type:USERLIST_SUCCESS, payload:data}
 }
-function registerSuccess(data){
-	return { type:REGISTER_SUCCESS, payload:data}
+function authSuccess(data){
+	return { type:AUTH_SUCCESS, payload:data}
 }
 function errorMsg(msg) {
     return { msg, type: ERROR_MSG }
+}
+
+export function remove(data) {
+    return dispatch=>{
+        axios.post('/user/remove', data)
+            .then(res=>{
+                if (res.status===200) {
+                    dispatch(authSuccess(res.data.data))
+                    axios.get('/user/list')
+                        .then(res => {
+                            dispatch(getuserlistSuccess(res.data.data))
+                        })
+				}else{
+					dispatch(errorMsg(res.data.msg))
+                }
+            })
+    }
+}
+
+export function update(id,data) {
+    data.id = id;
+    return dispatch=>{
+        axios.post('/user/update',data)
+            .then(res=>{
+                if (res.status===200&&res.data.code===0) {
+                    dispatch(authSuccess(res.data.data))
+                    axios.get('/user/list')
+                        .then(res => {
+                            dispatch(getuserlistSuccess(res.data.data))
+                        })
+				}else{
+					dispatch(errorMsg(res.data.msg))
+				}
+            })
+    }
+}
+
+export function getUserList() {
+    return dispatch=>{
+        axios.get('/user/list')
+            .then(res=>{
+                if(res.status===200){
+                    dispatch(getuserlistSuccess(res.data.data))
+                }
+            })
+    }
 }
 
 export function login({username,password}) {
@@ -43,7 +91,7 @@ export function login({username,password}) {
 			.then(res=>{
 				if (res.status===200&&res.data.code===0) {
 					// dispatch(registerSuccess({user,pwd,type}))
-					dispatch(loginSuccess(res.data.data))
+					dispatch(authSuccess(res.data.data))
 				}else{
 					dispatch(errorMsg(res.data.msg))
 				}
@@ -51,7 +99,7 @@ export function login({username,password}) {
 	}
 }
 
-export function register({username,password,repeatpassword,type}) {
+export function register({username,password,repeatpassword,type,avatar,created}) {
     if(!username || !password) {
         return errorMsg('用户名密码必须输入')
     }
@@ -59,10 +107,14 @@ export function register({username,password,repeatpassword,type}) {
         return errorMsg('密码和确认密码不同')
     }
     return dispatch=>{
-        axios.post('/user/register',{username,password,type})
+        axios.post('/user/register',{username,password,type,avatar,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(registerSuccess({username,password,}))
+                dispatch(authSuccess({username,password,type,avatar,created}))
+                axios.get('/user/list')
+                    .then(res => {
+                        dispatch(getuserlistSuccess(res.data.data))
+                    })
             }else{
                 dispatch(errorMsg(res.data.msg))
             }
