@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {  BrowserRouter, Route, Redirect, Switch, Link, Router,NavLink } from 'react-router-dom';
 import UserControl from './UserControl/index';
+import PartControl from './PartControl/index';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import logo from '../../assets/images/logo.svg';
 import './index.less';
@@ -42,14 +43,22 @@ class AdminHome extends Component {
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="2">
-                                <Link to='/admin/C'>
-                                    <Icon type="video-camera" />
-                                    <span className="nav-text">管理</span>
+                                <Link to='/admin/part'>
+                                    <Icon type="book" />
+                                    <span className="nav-text">Part管理</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="3">
-                                <Icon type="upload" />
-                                <span className="nav-text">管理</span>
+                                <Icon type="book" />
+                                <span className="nav-text">Charpter管理</span>
+                            </Menu.Item>
+                            <Menu.Item key="4">
+                                <Icon type="book" />
+                                <span className="nav-text">Detail管理</span>
+                            </Menu.Item>
+                            <Menu.Item key="5">
+                                <Icon type="book" />
+                                <span className="nav-text">Content管理</span>
                             </Menu.Item>
                         </Menu>
                     </Sider>
@@ -65,7 +74,8 @@ class AdminHome extends Component {
                         <Content style={{ margin: '0 16px' }}>
                             <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>
                                 <Switch>
-                                    <Route exact path="/admin" component={UserControl}/>
+                                    <Route exact path='/admin' component={UserControl}/>
+                                    <Route exact path='/admin/part' component={PartControl}/>
                                 </Switch>
                             </div>
                         </Content>
