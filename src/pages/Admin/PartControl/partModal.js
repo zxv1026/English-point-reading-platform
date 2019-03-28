@@ -9,6 +9,15 @@ class partModal extends Component{
         super(props);
         this.state = {
             visible: false,
+            disabled: true,
+        }
+    }
+    componentWillMount(){
+        const { create } = this.props;
+        if(create){
+            this.setState({
+                disabled: false,
+            })
         }
     }
     showModal = (e) => {
@@ -44,6 +53,7 @@ class partModal extends Component{
     render(){
         let {children,record} = this.props;
         const { getFieldDecorator } = this.props.form;
+        const { disabled } = this.state;
         if (!record) {
             record = {}
         }
@@ -77,7 +87,7 @@ class partModal extends Component{
                             })(
                                 <Input
                                     size="large"
-                                    disabled='true'
+                                    disabled={disabled}
                                 />
                             )}
                         </FormItem>

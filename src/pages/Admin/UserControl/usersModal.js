@@ -9,6 +9,15 @@ class usersModal extends Component{
         super(props);
         this.state = {
             visible: false,
+            disabled: true,
+        }
+    }
+    componentWillMount(){
+        const { create } = this.props;
+        if(create){
+            this.setState({
+                disabled: false,
+            })
         }
     }
     showModal = (e) => {
@@ -45,6 +54,7 @@ class usersModal extends Component{
     render(){
         let {children,record} = this.props;
         const { getFieldDecorator } = this.props.form;
+        const { disabled } = this.state;
         if (!record) {
             record = {}
         }
@@ -78,7 +88,7 @@ class usersModal extends Component{
                             })(
                                 <Input
                                     size="large"
-                                    disabled='true'
+                                    disabled={disabled}
                                 />
                             )}
                         </FormItem>
