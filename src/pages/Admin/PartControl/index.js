@@ -3,8 +3,12 @@ import { Button, Table, Popconfirm, message } from "antd";
 import moment from 'moment';
 import PartModal from './partModal';
 import { connect } from 'react-redux';
+import { create, update, remove, getPartList } from "../../../redux/part_redux";
 
-
+@connect(
+    state => state.part,
+    {create, update, remove, getPartList}
+)
 class PartControl extends Component {
     constructor(props) {
         super(props);
@@ -12,20 +16,32 @@ class PartControl extends Component {
             create: true,
         }
     }
+    componentDidMount() {
+        this.props.getPartList();
+    }
+    delectPart(part) {
+        this.props.remove(part);
+    }
+    updatePart(_id,part) {
+        this.props.update(_id,part);
+    }
+    createPart(part) {
+        this.props.create(part);
+    }
     render() {
         const { msg,list } = this.props
         const { create } = this.state
         const columns = [
             {
                 title: 'PartID',
-                dataIndex: 'username',
-                key: 'username',
+                dataIndex: 'id',
+                key: 'id',
                 render: text => <a href=" ">{text}</a>,
             },
             {
                 title: 'Part名',
-                dataIndex: 'type',
-                key: 'type',
+                dataIndex: 'name',
+                key: 'name',
             },
             {
                 title: '创建时间',
@@ -40,16 +56,22 @@ class PartControl extends Component {
                     return (
                         <span>
                             <PartModal
+                                onOk={(part) =>{
+                                    this.updatePart(record._id, part);
+                                }}
                                 record={record}
                             >
-                                <Button type="primary">修改</Button>
+                                <Button className='button' type="primary">修改</Button>
                             </PartModal>
                             <Popconfirm
                                 title="确定删除吗?"
                                 cancelText="取消"
                                 okText="确认"
+                                onConfirm={() => {
+                                    this.delectPart(record);
+                                }}
                             >
-                                <Button type="danger">删除</Button>
+                                <Button className='button' type="danger">删除</Button>
                             </Popconfirm>
                         </span>
                     )
@@ -58,10 +80,13 @@ class PartControl extends Component {
         ];
         return (
             <div>
-                {msg?message.error("编辑用户失败！ "+msg,5): null}
+                {msg?message.error("编辑Part失败！ "+msg,5): null}
                 <h3 style={{ margin: '0px 0 20px' }}>Part管理</h3>
                 <div className="whitebox" >
                     <PartModal
+                        onOk={(part) =>{
+                            this.createPart(part);
+                        }}
                         create={create}
                     >
                         <Button type="primary">创建Part</Button>

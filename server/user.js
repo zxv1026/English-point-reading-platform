@@ -1,14 +1,33 @@
 const express = require('express');
 const utils = require('utility');
 const Router = express.Router();
+// const path = require('path');
+// const multer = require('multer');
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, path.resolve('../src/data/user'));
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, Date.now() + path.extname(file.originalname));
+//     }
+// })
+// const upload = multer({storage: storage});
+
 // const mongoose = require('mongoose');
 // const User = mongoose.model('User');
 const User = require('./models/users');
 
+// Router.post('/updateavtar', upload.single('avatar'), (req, res, next)=> {
+//     res.send({
+//         err: null,
+//         filePath: 'user/' + path.basename(req.file.path)
+//     })
+// })
+
 Router.get('/list',function (req, res) {
     // User.remove({},function (err,doc) {})
     User.find({},function (err,doc) {
-        return res.json({code: 0, data:doc})
+        return res.json({code: 0, data:doc,msg: 'true'})
     })
 })
 
@@ -24,14 +43,9 @@ Router.post('/update', function (req, res) {
     // console.log(req.body)
     const body = req.body
     const {id,username} = req.body
-    User.findOne({username},function (err, doc) {
-        if(doc) {
-            console.log(doc)
-            return res.json({msg: '用户名已经存在，请换一个'})
-        }
-        User.findByIdAndUpdate(id,body,function (err, doc) {
-            return res.json({code:0, data: body})
-        })
+
+    User.findByIdAndUpdate(id,body,function (err, doc) {
+        return res.json({code:0, data: body, msg: 'true'})
     })
 })
 

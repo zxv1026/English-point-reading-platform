@@ -81,7 +81,6 @@ class UserControl extends Component {
                                     this.updateUser(record._id,user);
                                 }}
                                 record={record}
-                                msg={msg}
                             >
                                 <Button className='button' type="primary">修改</Button>
                             </UsersModal>

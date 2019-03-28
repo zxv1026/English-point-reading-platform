@@ -25,7 +25,6 @@ class partModal extends Component{
                 if (typeof onOk === "function") {
                     if(create){
                         values.created = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-                        values.repeatpassword = values.password;
                     }
                     onOk(values);
                     console.log(values)
@@ -58,7 +57,7 @@ class partModal extends Component{
                     {children}
                 </span>
                 <Modal
-                    title="编辑用户"
+                    title="编辑Part"
                     visible={this.state.visible}
                     onOk={this.okHandler}
                     onCancel={this.hideModelHandler}
@@ -69,44 +68,30 @@ class partModal extends Component{
                         <FormItem
                             label="PartID"
                         >
-                            {getFieldDecorator('username',{
-                                initialValue: record.username,
+                            {getFieldDecorator('id',{
+                                initialValue: record.id,
                                 rules: [{
                                     required: true,
-                                    message: '请输入用户名'
+                                    message: '请输入PartID'
                                 }]
                             })(
                                 <Input
                                     size="large"
+                                    disabled='true'
                                 />
                             )}
                         </FormItem>
                         <FormItem
                             label="Part名"
                         >
-                            {getFieldDecorator('type',{
-                                initialValue: record.type,
+                            {getFieldDecorator('name',{
+                                initialValue: record.name,
                                 rules: [{
                                     required: true,
-                                    message: '请输入类别'
+                                    message: '请输入Part名称'
                                 }]
                             })(
                                 <Input
-                                    size="large"
-                                />
-                            )}
-                        </FormItem>
-                        <FormItem
-                            label="图片"
-                        >
-                            {getFieldDecorator('password',{
-                                initialValue: record.password,
-                                rules: [{
-                                    required: true,
-                                    message: '请输入密码'
-                                }]
-                            })(
-                                <Upload
                                     size="large"
                                 />
                             )}

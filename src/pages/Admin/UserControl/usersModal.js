@@ -78,6 +78,7 @@ class usersModal extends Component{
                             })(
                                 <Input
                                     size="large"
+                                    disabled='true'
                                 />
                             )}
                         </FormItem>
