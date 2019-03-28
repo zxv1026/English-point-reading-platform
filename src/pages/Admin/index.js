@@ -3,6 +3,7 @@ import {  BrowserRouter, Route, Redirect, Switch, Link, Router,NavLink } from 'r
 import AvatarChoose from '../../components/AvatarChoose';
 import UserControl from './UserControl/index';
 import PartControl from './PartControl/index';
+import CharpterControl from './CharpterControl/index';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import logo from '../../assets/images/logo.svg';
 import './index.less';
@@ -50,8 +51,10 @@ class AdminHome extends Component {
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="3">
-                                <Icon type="book" />
-                                <span className="nav-text">Charpter管理</span>
+                                <Link to='/admin/charpter'>
+                                    <Icon type="book" />
+                                    <span className="nav-text">Charpter管理</span>
+                                </Link>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <Icon type="book" />
@@ -78,6 +81,7 @@ class AdminHome extends Component {
                                     <Route exact path='/admin' component={UserControl}/>
                                     <Route exact path='/admin/avatarchoose' component={AvatarChoose}/>
                                     <Route exact path='/admin/part' component={PartControl}/>
+                                    <Route exact path='/admin/charpter' component={CharpterControl}/>
                                 </Switch>
                             </div>
                         </Content>

@@ -22,7 +22,7 @@ class Register extends Component {
             password: '',
             repeatpassword: '',
             type: 'user',
-            avatar: 'user',
+            avatar: 'lion',
             created: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
         }
         this.handleRegister = this.handleRegister.bind(this)

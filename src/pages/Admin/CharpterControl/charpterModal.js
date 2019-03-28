@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input , Alert } from 'antd';
+import { Modal, Form, Input , Alert, Upload } from 'antd';
 import moment from 'moment';
 
 const FormItem = Form.Item;
 
-class usersModal extends Component{
+class charpterModal extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -34,8 +34,6 @@ class usersModal extends Component{
                 if (typeof onOk === "function") {
                     if(create){
                         values.created = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-                        values.repeatpassword = values.password;
-                        values.avatar = 'lion';
                     }
                     onOk(values);
                     console.log(values)
@@ -60,7 +58,7 @@ class usersModal extends Component{
             record = {}
         }
         const formItemLayout = {
-            labelCol: { span: 4 },
+            labelCol: { span: 5 },
             wrapperCol: { span: 18 },
         };
         return(
@@ -69,7 +67,7 @@ class usersModal extends Component{
                     {children}
                 </span>
                 <Modal
-                    title="编辑用户"
+                    title="编辑Charpter"
                     visible={this.state.visible}
                     onOk={this.okHandler}
                     onCancel={this.hideModelHandler}
@@ -78,13 +76,13 @@ class usersModal extends Component{
                 >
                     <Form {...formItemLayout} className="login-form">
                         <FormItem
-                            label="用户名"
+                            label="CharpterID"
                         >
-                            {getFieldDecorator('username',{
-                                initialValue: record.username,
+                            {getFieldDecorator('id',{
+                                initialValue: record.id,
                                 rules: [{
                                     required: true,
-                                    message: '请输入用户名'
+                                    message: '请输入CharpterID'
                                 }]
                             })(
                                 <Input
@@ -94,13 +92,13 @@ class usersModal extends Component{
                             )}
                         </FormItem>
                         <FormItem
-                            label="类别"
+                            label="PartID"
                         >
-                            {getFieldDecorator('type',{
-                                initialValue: record.type,
+                            {getFieldDecorator('partid',{
+                                initialValue: record.partid,
                                 rules: [{
                                     required: true,
-                                    message: '请输入类别'
+                                    message: '请输入PartID'
                                 }]
                             })(
                                 <Input
@@ -109,16 +107,16 @@ class usersModal extends Component{
                             )}
                         </FormItem>
                         <FormItem
-                            label="密码"
+                            label="Charpter名"
                         >
-                            {getFieldDecorator('password',{
-                                initialValue: record.password,
+                            {getFieldDecorator('name',{
+                                initialValue: record.name,
                                 rules: [{
                                     required: true,
-                                    message: '请输入密码'
+                                    message: '请输入Charpter名称'
                                 }]
                             })(
-                                <Input.Password
+                                <Input
                                     size="large"
                                 />
                             )}
@@ -130,4 +128,4 @@ class usersModal extends Component{
     }
 }
 
-export default Form.create()(usersModal);
+export default Form.create()(charpterModal);

@@ -12,12 +12,14 @@ mongoose.connect('mongodb://localhost/english', { useFindAndModify: false , useN
 
 const userRouter = require('./user');
 const PartRouter = require('./part');
+const CharpterRouter = require('./charpter');
 const app = express();
 
 // app.use(express.static(path.join(__dirname, "../static")))
 app.use(bodyParser.json())
 app.use('/user',userRouter)
 app.use('/part', PartRouter)
+app.use('/charpter', CharpterRouter)
 app.listen(3001, () => {
     console.log('node服务器监听3001端口成功');
 })
