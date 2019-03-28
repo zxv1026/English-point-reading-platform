@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Button, Table, Popconfirm, message } from "antd";
 import moment from 'moment';
-import CharpterModal from './charpterModal';
+import DetailModal from './detailModal';
 import { connect } from 'react-redux';
-import { create, update, remove, getCharpterList } from "../../../redux/charpter_redux";
+import { create, update, remove, getDetailList } from "../../../redux/detail_redux";
 
 @connect(
-    state => state.charpter,
-    {create, update, remove, getCharpterList}
+    state => state.detail,
+    {create, update, remove, getDetailList}
 )
-class CharpterControl extends Component {
+class DetailControl extends Component {
     constructor(props) {
         super(props);
         this.state={
@@ -17,34 +17,34 @@ class CharpterControl extends Component {
         }
     }
     componentDidMount() {
-        this.props.getCharpterList();
+        this.props.getDetailList();
     }
-    delectCharpter(charpter) {
-        this.props.remove(charpter);
+    delectDetail(detail) {
+        this.props.remove(detail);
     }
-    updateCharpter(_id,charpter) {
-        this.props.update(_id,charpter);
+    updateDetail(_id, detail) {
+        this.props.update(_id, detail);
     }
-    createCharpter(charpter) {
-        this.props.create(charpter);
+    createDetail(detail) {
+        this.props.create(detail);
     }
     render() {
         const { msg,list } = this.props
         const { create } = this.state
         const columns = [
             {
-                title: 'CharpterID',
+                title: 'DetailID',
                 dataIndex: 'id',
                 key: 'id',
                 render: text => <a href=" ">{text}</a>,
             },
             {
-                title: 'PartID',
-                dataIndex: 'partid',
-                key: 'partid',
+                title: 'CharpterID',
+                dataIndex: 'charpterid',
+                key: 'charpterid',
             },
             {
-                title: 'Charpter名',
+                title: 'Detail名',
                 dataIndex: 'name',
                 key: 'name',
             },
@@ -60,20 +60,20 @@ class CharpterControl extends Component {
                 render: (text, record)=>{
                     return (
                         <span>
-                            <CharpterModal
-                                onOk={(charpter) =>{
-                                    this.updateCharpter(record._id, charpter);
+                            <DetailModal
+                                onOk={(detail) =>{
+                                    this.updateDetail(record._id, detail);
                                 }}
                                 record={record}
                             >
                                 <Button className='button' type="primary">修改</Button>
-                            </CharpterModal>
+                            </DetailModal>
                             <Popconfirm
                                 title="确定删除吗?"
                                 cancelText="取消"
                                 okText="确认"
                                 onConfirm={() => {
-                                    this.delectCharpter(record);
+                                    this.delectDetail(record);
                                 }}
                             >
                                 <Button className='button' type="danger">删除</Button>
@@ -85,17 +85,17 @@ class CharpterControl extends Component {
         ];
         return (
             <div>
-                {msg?message.error("编辑Charpter失败！ "+msg,5): null}
-                <h3 style={{ margin: '0px 0 20px' }}>Charpter管理</h3>
+                {msg?message.error("编辑Detail失败！ "+msg,5): null}
+                <h3 style={{ margin: '0px 0 20px' }}>Detail管理</h3>
                 <div className="whitebox" >
-                    <CharpterModal
-                        onOk={(charpter) =>{
-                            this.createCharpter(charpter);
+                    <DetailModal
+                        onOk={(detail) =>{
+                            this.createDetail(detail);
                         }}
                         create={create}
                     >
-                        <Button type="primary">创建Charpter</Button>
-                    </CharpterModal>
+                        <Button type="primary">创建Detail</Button>
+                    </DetailModal>
                 </div>
                 <div className="whitebox noPadding">
                     <Table
@@ -109,4 +109,4 @@ class CharpterControl extends Component {
     }
 }
 
-export default CharpterControl;
+export default DetailControl;
