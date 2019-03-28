@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Button, Table, Popconfirm, message } from "antd";
 import moment from 'moment';
 import UsersModal from './usersModal';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register, update, remove, getUserList } from "../../../redux/user_redux";
+import './index.less';
 
 @connect(
     state => state.user,
@@ -33,6 +35,12 @@ class UserControl extends Component {
         const { create } = this.state
         const columns = [
             {
+                title: '头像',
+                dataIndex: 'avatar',
+                key: 'avatar',
+                render: v => <img className='img' alt='用户头像' src={require(`../../../assets/images/user/${v}.jpg`)}/>
+            },
+            {
                 title: '用户名',
                 dataIndex: 'username',
                 key: 'username',
@@ -60,6 +68,14 @@ class UserControl extends Component {
                 render: (text, record)=>{
                     return (
                         <span>
+                            <Link to={{
+                                pathname:'/admin/avatarchoose',
+                                state:{
+                                    path: 'admin',
+                                    id: record._id,
+                                    avatar: record.avatar
+                                }
+                            }}><Button className='button' type="primary">修改头像</Button></Link>
                             <UsersModal
                                 onOk={(user) =>{
                                     this.updateUser(record._id,user);
@@ -67,7 +83,7 @@ class UserControl extends Component {
                                 record={record}
                                 msg={msg}
                             >
-                                <Button type="primary">修改</Button>
+                                <Button className='button' type="primary">修改</Button>
                             </UsersModal>
                             <Popconfirm
                                 title="确定删除吗?"
@@ -77,7 +93,7 @@ class UserControl extends Component {
                                     this.delectUser(record);
                                 }}
                             >
-                                <Button type="danger">删除</Button>
+                                <Button className='button' type="danger">删除</Button>
                             </Popconfirm>
                         </span>
                     )
@@ -86,7 +102,7 @@ class UserControl extends Component {
         ];
         return (
             <div>
-                {msg?message.error("编辑用户失败！ "+msg,5): null}
+                {msg&&msg!=='true'?message.error("编辑用户失败！ "+msg,5): null}
                 <h3 style={{ margin: '0px 0 20px' }}>用户管理</h3>
                 <div className="whitebox" >
                     <UsersModal

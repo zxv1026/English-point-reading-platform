@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {  BrowserRouter, Route, Redirect, Switch, Link, Router,NavLink } from 'react-router-dom';
+import AvatarChoose from '../../components/AvatarChoose';
 import UserControl from './UserControl/index';
 import PartControl from './PartControl/index';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
@@ -75,6 +76,7 @@ class AdminHome extends Component {
                             <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>
                                 <Switch>
                                     <Route exact path='/admin' component={UserControl}/>
+                                    <Route exact path='/admin/avatarchoose' component={AvatarChoose}/>
                                     <Route exact path='/admin/part' component={PartControl}/>
                                 </Switch>
                             </div>
