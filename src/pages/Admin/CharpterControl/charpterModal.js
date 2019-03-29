@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input , Alert, Upload } from 'antd';
+import { Modal, Form, Input } from 'antd';
 import moment from 'moment';
 
 const FormItem = Form.Item;
