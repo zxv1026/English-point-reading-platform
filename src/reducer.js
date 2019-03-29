@@ -4,5 +4,6 @@ import { user } from "./redux/user_redux";
 import { part } from "./redux/part_redux";
 import { charpter } from "./redux/charpter_redux";
 import { detail } from "./redux/detail_redux";
+import { content } from "./redux/content_redux";
 
-export default combineReducers({user,part,charpter,detail})
+export default combineReducers({user,part,charpter,detail,content})

@@ -14,6 +14,7 @@ const userRouter = require('./user');
 const PartRouter = require('./part');
 const CharpterRouter = require('./charpter');
 const DetailRouter = require('./detail');
+const ContentRouter = require('./content');
 const app = express();
 
 // app.use(express.static(path.join(__dirname, "../static")))
@@ -22,6 +23,7 @@ app.use('/user',userRouter)
 app.use('/part', PartRouter)
 app.use('/charpter', CharpterRouter)
 app.use('/detail', DetailRouter)
+app.use('/content', ContentRouter)
 app.listen(3001, () => {
     console.log('node服务器监听3001端口成功');
 })
