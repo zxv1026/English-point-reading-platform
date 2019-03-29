@@ -82,7 +82,8 @@ class partModal extends Component{
                                 initialValue: record.id,
                                 rules: [{
                                     required: true,
-                                    message: '请输入PartID'
+                                    pattern: new RegExp(/^[0-9]\d*$/, "g"),
+                                    message: '请输入PartID，只能输入非负整数'
                                 }]
                             })(
                                 <Input

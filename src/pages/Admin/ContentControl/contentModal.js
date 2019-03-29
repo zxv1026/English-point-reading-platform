@@ -83,7 +83,7 @@ class contentModal extends Component{
                                 rules: [{
                                     required: true,
                                     pattern: new RegExp(/^[0-9]\d*$/, "g"),
-                                    message: '请输入ContentID'
+                                    message: '请输入ContentID，只能输入非负整数'
                                 }]
                             })(
                                 <Input
@@ -100,7 +100,7 @@ class contentModal extends Component{
                                 rules: [{
                                     required: true,
                                     pattern: new RegExp(/^[0-9]\d*$/, "g"),
-                                    message: '请输入DetailID'
+                                    message: '请输入DetailID，只能输入非负整数'
                                 }]
                             })(
                                 <Input
@@ -145,8 +145,8 @@ class contentModal extends Component{
                                 initialValue: record.offset,
                                 rules: [{
                                     required: true,
-                                    pattern: new RegExp(/^[1-9]\d*$/, "g"),
-                                    message: '请输入对于句子的音频的偏移时间（单位：ms）'
+                                    pattern: new RegExp(/^[0-9]\d*$/, "g"),
+                                    message: '请输入对于句子的音频的偏移时间（单位：ms），只能输入非负整数'
                                 }]
                             })(
                                 <Input
@@ -162,7 +162,7 @@ class contentModal extends Component{
                                 rules: [{
                                     required: true,
                                     pattern: new RegExp(/^[1-9]\d*$/, "g"),
-                                    message: '请输入对于句子的音频的持续时间（单位：ms）'
+                                    message: '请输入对于句子的音频的持续时间（单位：ms），只能输入正整数'
                                 }]
                             })(
                                 <Input

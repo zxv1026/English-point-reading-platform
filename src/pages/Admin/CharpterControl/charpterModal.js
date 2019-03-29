@@ -82,7 +82,8 @@ class charpterModal extends Component{
                                 initialValue: record.id,
                                 rules: [{
                                     required: true,
-                                    message: '请输入CharpterID'
+                                    pattern: new RegExp(/^[0-9]\d*$/, "g"),
+                                    message: '请输入CharpterID，只能输入非负整数'
                                 }]
                             })(
                                 <Input
@@ -98,7 +99,8 @@ class charpterModal extends Component{
                                 initialValue: record.partid,
                                 rules: [{
                                     required: true,
-                                    message: '请输入PartID'
+                                    pattern: new RegExp(/^[0-9]\d*$/, "g"),
+                                    message: '请输入PartID，只能输入非负整数'
                                 }]
                             })(
                                 <Input
