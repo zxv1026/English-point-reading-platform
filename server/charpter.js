@@ -1,5 +1,8 @@
 const express = require('express');
 const Router = express.Router();
+// const mongoose = require('mongoose');
+// const Part = mongoose.model('Part');
+const Part = require('./models/part');
 const Charpter = require('./models/charpter');
 
 Router.get('/list',function (req, res) {
@@ -27,17 +30,29 @@ Router.post('/update', function (req, res) {
 })
 
 Router.post('/create', function (req, res) {
-    console.log(req.body)
-    const { id, partid, name, created } = req.body;
-    Charpter.findOne({id},function (err, doc) {
+    // console.log("charpter创建")
+    // console.log(req.body)
+    const { charpterid, partid, name, created } = req.body;
+    Charpter.findOne({charpterid},function (err, doc) {
         if(doc) {
             return res.json({msg: 'CharpterID已经存在，请换一个'})
         }
-        Charpter.create({id, partid, name, created },function (e, d) {
-            if(e) {
-                return res.json({msg: '后端出错'})
+        Part.findOne({partid},function (err,doc) {
+            // console.log(charpterid)
+            // console.log(doc)
+            // console.log(doc.name)
+            if(doc){
+                console.log(charpterid)
+                Charpter.create({charpterid, partid, name, created },function (e, d) {
+                    console.log(d)
+                    if(e) {
+                        return res.json({msg: '后端出错'})
+                    }
+                    return res.json({code:0})
+                })
+            }else{
+                return res.json({msg: 'PartID不存在'})
             }
-            return res.json({code:0})
         })
     })
 })

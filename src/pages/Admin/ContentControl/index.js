@@ -34,14 +34,16 @@ class ContentControl extends Component {
         const columns = [
             {
                 title: 'ContentID',
-                dataIndex: 'id',
-                key: 'id',
+                dataIndex: 'contentid',
+                key: 'contentid',
+                sorter: (a,b) => a.contentid - b.contentid,
                 render: text => <a href=" ">{text}</a>,
             },
             {
                 title: 'DetailID',
                 dataIndex: 'detailid',
                 key: 'detailid',
+                sorter: (a,b) => a.detailid - b.detailid,
             },
             {
                 title: '中文语句',
@@ -67,6 +69,8 @@ class ContentControl extends Component {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',
+                defaultSortOrder: 'ascend',
+                sorter: (a,b) => (moment(a.created).isBefore(b.created) ? 1 : -1),
                 render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
             },
             {

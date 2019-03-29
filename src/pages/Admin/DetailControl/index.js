@@ -34,14 +34,16 @@ class DetailControl extends Component {
         const columns = [
             {
                 title: 'DetailID',
-                dataIndex: 'id',
-                key: 'id',
+                dataIndex: 'detailid',
+                key: 'detailid',
+                sorter: (a,b) => a.detailid - b.detailid,
                 render: text => <a href=" ">{text}</a>,
             },
             {
                 title: 'CharpterID',
                 dataIndex: 'charpterid',
                 key: 'charpterid',
+                sorter: (a,b) => a.charpterid - b.charpterid,
             },
             {
                 title: 'Detail名',
@@ -52,6 +54,8 @@ class DetailControl extends Component {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',
+                defaultSortOrder: 'ascend',
+                sorter: (a,b) => (moment(a.created).isBefore(b.created) ? 1 : -1),
                 render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
             },
             {

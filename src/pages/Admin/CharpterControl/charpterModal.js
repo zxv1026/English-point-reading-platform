@@ -78,7 +78,7 @@ class charpterModal extends Component{
                         <FormItem
                             label="CharpterID"
                         >
-                            {getFieldDecorator('id',{
+                            {getFieldDecorator('charpterid',{
                                 initialValue: record.id,
                                 rules: [{
                                     required: true,

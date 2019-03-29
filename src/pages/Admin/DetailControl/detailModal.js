@@ -78,8 +78,8 @@ class detailModal extends Component{
                         <FormItem
                             label="DetailID"
                         >
-                            {getFieldDecorator('id',{
-                                initialValue: record.id,
+                            {getFieldDecorator('detailid',{
+                                initialValue: record.detailid,
                                 rules: [{
                                     required: true,
                                     pattern: new RegExp(/^[0-9]\d*$/, "g"),

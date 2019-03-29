@@ -34,8 +34,9 @@ class PartControl extends Component {
         const columns = [
             {
                 title: 'PartID',
-                dataIndex: 'id',
-                key: 'id',
+                dataIndex: 'partid',
+                key: 'partid',
+                sorter: (a,b) => a.partid - b.partid,
                 render: text => <a href=" ">{text}</a>,
             },
             {
@@ -47,6 +48,8 @@ class PartControl extends Component {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',
+                defaultSortOrder: 'ascend',
+                sorter: (a,b) => (moment(a.created).isBefore(b.created) ? 1 : -1),
                 render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
             },
             {

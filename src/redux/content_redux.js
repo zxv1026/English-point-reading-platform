@@ -5,7 +5,7 @@ const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
 const initState={
     msg: '',
-    id:'',
+    contentid:'',
     detailid:'',
     chinese: "",
     english: "",
@@ -86,15 +86,15 @@ export function getContentList() {
     }
 }
 
-export function create({id,detailid,chinese,english,offset,duration,created}) {
-    if(!id || !detailid ||!chinese || !english || !offset || !duration) {
+export function create({contentid,detailid,chinese,english,offset,duration,created}) {
+    if(!contentid || !detailid ||!chinese || !english || !offset || !duration) {
         return errorMsg('ContentID,DetailID和语句的中英文和对于语句的音频偏移时间和持续时间必须输入')
     }
     return dispatch=>{
-        axios.post('/content/create',{id,detailid,chinese,english,offset,duration,created})
+        axios.post('/content/create',{contentid,detailid,chinese,english,offset,duration,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({id,detailid,chinese,english,offset,duration,created}))
+                dispatch(authSuccess({contentid,detailid,chinese,english,offset,duration,created}))
                 axios.get('/content/list')
                     .then(res => {
                         dispatch(getcontentlistSuccess(res.data.data))

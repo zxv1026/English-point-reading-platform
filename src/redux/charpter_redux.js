@@ -5,7 +5,7 @@ const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
 const initState={
     msg: '',
-    id:'',
+    charpterid:'',
     partid:'',
     name: '',
     created: '',
@@ -81,15 +81,15 @@ export function getCharpterList() {
     }
 }
 
-export function create({id,partid,name,created}) {
-    if(!id || !partid ||!name) {
+export function create({charpterid,partid,name,created}) {
+    if(!charpterid || !partid ||!name) {
         return errorMsg('CharpterID,PartID和名称必须输入')
     }
     return dispatch=>{
-        axios.post('/charpter/create',{id,partid,name,created})
+        axios.post('/charpter/create',{charpterid,partid,name,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({id,partid,name,created}))
+                dispatch(authSuccess({charpterid,partid,name,created}))
                 axios.get('/charpter/list')
                     .then(res => {
                         dispatch(getcharpterlistSuccess(res.data.data))

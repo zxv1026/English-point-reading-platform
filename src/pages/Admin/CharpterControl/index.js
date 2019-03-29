@@ -34,14 +34,16 @@ class CharpterControl extends Component {
         const columns = [
             {
                 title: 'CharpterID',
-                dataIndex: 'id',
-                key: 'id',
+                dataIndex: 'charpterid',
+                key: 'charpterid',
+                sorter: (a,b) => a.charpterid - b.charpterid,
                 render: text => <a href=" ">{text}</a>,
             },
             {
                 title: 'PartID',
                 dataIndex: 'partid',
                 key: 'partid',
+                sorter: (a,b) => a.partid - b.partid,
             },
             {
                 title: 'Charpter名',
@@ -52,6 +54,8 @@ class CharpterControl extends Component {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',
+                defaultSortOrder: 'ascend',
+                sorter: (a,b) => (moment(a.created).isBefore(b.created) ? 1 : -1),
                 render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
             },
             {

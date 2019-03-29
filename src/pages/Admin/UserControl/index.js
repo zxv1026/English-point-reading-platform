@@ -60,6 +60,8 @@ class UserControl extends Component {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',
+                defaultSortOrder: 'ascend',
+                sorter: (a,b) => (moment(a.created).isBefore(b.created) ? 1 : -1),
                 render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
             },
             {

@@ -28,12 +28,12 @@ Router.post('/update', function (req, res) {
 
 Router.post('/create', function (req, res) {
     console.log(req.body)
-    const { id, name, created } = req.body;
-    Part.findOne({id},function (err, doc) {
+    const { partid, name, created } = req.body;
+    Part.findOne({partid},function (err, doc) {
         if(doc) {
             return res.json({msg: 'PartID已经存在，请换一个'})
         }
-        Part.create({id, name, created },function (e, d) {
+        Part.create({partid, name, created },function (e, d) {
             if(e) {
                 return res.json({msg: '后端出错'})
             }

@@ -5,7 +5,7 @@ const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
 const initState={
     msg: '',
-    id:'',
+    detailid:'',
     charpterid:'',
     name: '',
     created: '',
@@ -81,15 +81,15 @@ export function getDetailList() {
     }
 }
 
-export function create({id,charpterid,name,created}) {
-    if(!id || !charpterid ||!name) {
+export function create({detailid,charpterid,name,created}) {
+    if(!detailid || !charpterid ||!name) {
         return errorMsg('DetailID,CharpterID和名称必须输入')
     }
     return dispatch=>{
-        axios.post('/detail/create',{id,charpterid,name,created})
+        axios.post('/detail/create',{detailid,charpterid,name,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({id,charpterid,name,created}))
+                dispatch(authSuccess({detailid,charpterid,name,created}))
                 axios.get('/detail/list')
                     .then(res => {
                         dispatch(getdetaillistSuccess(res.data.data))

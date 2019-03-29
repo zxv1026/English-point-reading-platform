@@ -1,5 +1,6 @@
 const express = require('express');
 const Router = express.Router();
+const Charpter = require('./models/charpter');
 const Detail = require('./models/detail');
 
 Router.get('/list',function (req, res) {
@@ -28,17 +29,23 @@ Router.post('/update', function (req, res) {
 
 Router.post('/create', function (req, res) {
     console.log(req.body)
-    const { id, charpterid, name, created } = req.body;
-    Detail.findOne({id},function (err, doc) {
-        if(doc) {
-            return res.json({msg: 'DetailID已经存在，请换一个'})
+    const { detailid, charpterid, name, created } = req.body;
+    Charpter.findOne({charpterid},function (err, doc) {
+        if(doc){
+            Detail.findOne({detailid},function (err, doc) {
+                if(doc) {
+                    return res.json({msg: 'DetailID已经存在，请换一个'})
+                }
+                Detail.create({detailid, charpterid, name, created },function (e, d) {
+                    if(e) {
+                        return res.json({msg: '后端出错'})
+                    }
+                    return res.json({code:0})
+                })
+            })
+        }else{
+            return res.json({msg: 'CharpterID不存在'})
         }
-        Detail.create({id, charpterid, name, created },function (e, d) {
-            if(e) {
-                return res.json({msg: '后端出错'})
-            }
-            return res.json({code:0})
-        })
     })
 })
 

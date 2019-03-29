@@ -78,8 +78,8 @@ class partModal extends Component{
                         <FormItem
                             label="PartID"
                         >
-                            {getFieldDecorator('id',{
-                                initialValue: record.id,
+                            {getFieldDecorator('partid',{
+                                initialValue: record.partid,
                                 rules: [{
                                     required: true,
                                     pattern: new RegExp(/^[0-9]\d*$/, "g"),

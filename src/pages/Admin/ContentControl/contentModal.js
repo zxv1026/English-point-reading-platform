@@ -78,8 +78,8 @@ class contentModal extends Component{
                         <FormItem
                             label="ContentID"
                         >
-                            {getFieldDecorator('id',{
-                                initialValue: record.id,
+                            {getFieldDecorator('contentid',{
+                                initialValue: record.contentid,
                                 rules: [{
                                     required: true,
                                     pattern: new RegExp(/^[0-9]\d*$/, "g"),

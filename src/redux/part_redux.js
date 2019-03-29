@@ -5,7 +5,7 @@ const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
 const initState={
     msg: '',
-    id:'',
+    partid:'',
     name: '',
     created: '',
     list: [],
@@ -80,15 +80,15 @@ export function getPartList() {
     }
 }
 
-export function create({id,name,created}) {
-    if(!id || !name) {
+export function create({partid,name,created}) {
+    if(!partid || !name) {
         return errorMsg('PartID和名称必须输入')
     }
     return dispatch=>{
-        axios.post('/part/create',{id,name,created})
+        axios.post('/part/create',{partid,name,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({id,name,created}))
+                dispatch(authSuccess({partid,name,created}))
                 axios.get('/part/list')
                     .then(res => {
                         dispatch(getpartlistSuccess(res.data.data))
