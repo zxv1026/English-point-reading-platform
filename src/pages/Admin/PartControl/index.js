@@ -29,7 +29,7 @@ class PartControl extends Component {
         this.props.create(part);
     }
     render() {
-        const { msg,list } = this.props
+        const { msg,partlist } = this.props
         const { create } = this.state
         const columns = [
             {
@@ -98,7 +98,7 @@ class PartControl extends Component {
                 <div className="whitebox noPadding">
                     <Table
                         columns={columns}
-                        dataSource={list}
+                        dataSource={partlist}
                         rowKey="id"
                     />
                 </div>

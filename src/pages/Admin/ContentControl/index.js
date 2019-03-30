@@ -29,7 +29,7 @@ class ContentControl extends Component {
         this.props.create(content);
     }
     render() {
-        const { msg,list } = this.props
+        const { msg,contentlist } = this.props
         const { create } = this.state
         const columns = [
             {
@@ -119,7 +119,7 @@ class ContentControl extends Component {
                 <div className="whitebox noPadding">
                     <Table
                         columns={columns}
-                        dataSource={list}
+                        dataSource={contentlist}
                         rowKey="id"
                     />
                 </div>

@@ -29,7 +29,7 @@ class DetailControl extends Component {
         this.props.create(detail);
     }
     render() {
-        const { msg,list } = this.props
+        const { msg,detaillist } = this.props
         const { create } = this.state
         const columns = [
             {
@@ -104,7 +104,7 @@ class DetailControl extends Component {
                 <div className="whitebox noPadding">
                     <Table
                         columns={columns}
-                        dataSource={list}
+                        dataSource={detaillist}
                         rowKey="id"
                     />
                 </div>

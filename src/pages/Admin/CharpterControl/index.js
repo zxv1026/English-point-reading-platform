@@ -29,7 +29,7 @@ class CharpterControl extends Component {
         this.props.create(charpter);
     }
     render() {
-        const { msg,list } = this.props
+        const { msg,charpterlist } = this.props
         const { create } = this.state
         const columns = [
             {
@@ -104,7 +104,7 @@ class CharpterControl extends Component {
                 <div className="whitebox noPadding">
                     <Table
                         columns={columns}
-                        dataSource={list}
+                        dataSource={charpterlist}
                         rowKey="id"
                     />
                 </div>
