@@ -11,8 +11,16 @@ Router.get('/list',function (req, res) {
 })
 //获取与前端传过来的charpterid相同的的detail信息
 Router.post('/listone',function (req, res) {
+    console.log('detail listone')
     const {id} = req.body
     Detail.find({'charpterid': id}, null,{sort: {'detailid': 1}},function (err, doc) {
+        return res.json({code: 0, data:doc,msg: 'true'})
+    })
+})
+
+Router.post('/one',function (req, res) {
+    const {id} = req.body
+    Detail.findOne({'detailid': id},function (err, doc) {
         return res.json({code: 0, data:doc,msg: 'true'})
     })
 })
@@ -36,14 +44,14 @@ Router.post('/update', function (req, res) {
 
 Router.post('/create', function (req, res) {
     console.log(req.body)
-    const { detailid, charpterid, name, created } = req.body;
+    const { detailid, charpterid, name, mp3, created } = req.body;
     Charpter.findOne({'charpterid': charpterid},function (err, doc) {
         if(doc){
             Detail.findOne({detailid},function (err, doc) {
                 if(doc) {
                     return res.json({msg: 'DetailID已经存在，请换一个'})
                 }
-                Detail.create({detailid, charpterid, name, created },function (e, d) {
+                Detail.create({detailid, charpterid, name, mp3, created },function (e, d) {
                     if(e) {
                         return res.json({msg: '后端出错'})
                     }

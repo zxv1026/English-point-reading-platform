@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { getDetailListOne } from "../../redux/detail_redux";
 
 @connect(
-    state => state.detail,
+    state => ({
+        detaillist: state.detail.detaillist,
+    }),
     {getDetailListOne}
 )
 class Detail extends Component {
@@ -16,7 +18,6 @@ class Detail extends Component {
     }
     render() {
         const { detaillist } = this.props
-        console.log(detaillist);
         return (
             <div>
                 <Header/>

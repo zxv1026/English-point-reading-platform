@@ -8,6 +8,7 @@ const initState={
     detailid:'',
     charpterid:'',
     name: '',
+    mp3: '',
     created: '',
     detaillist: [],
 }
@@ -93,15 +94,27 @@ export function getDetailListOne(data) {
     }
 }
 
-export function create({detailid,charpterid,name,created}) {
+export function getDetailOne(data) {
+    console.log(data)
+    return dispatch => {
+        axios.post('/detail/one', data)
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch(authSuccess(res.data.data))
+                }
+            })
+    }
+}
+
+export function create({detailid,charpterid,name,mp3,created}) {
     if(!detailid || !charpterid ||!name) {
         return errorMsg('DetailID,CharpterID和名称必须输入')
     }
     return dispatch=>{
-        axios.post('/detail/create',{detailid,charpterid,name,created})
+        axios.post('/detail/create',{detailid,charpterid,name,mp3,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({detailid,charpterid,name,created}))
+                dispatch(authSuccess({detailid,charpterid,name,mp3,created}))
                 axios.get('/detail/list')
                     .then(res => {
                         dispatch(getdetaillistSuccess(res.data.data))

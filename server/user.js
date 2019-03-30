@@ -42,8 +42,7 @@ Router.post('/remove', function (req, res) {
 Router.post('/update', function (req, res) {
     // console.log(req.body)
     const body = req.body
-    const {id,username} = req.body
-
+    const {id} = req.body
     User.findByIdAndUpdate(id,body,function (err, doc) {
         return res.json({code:0, data: body, msg: 'true'})
     })

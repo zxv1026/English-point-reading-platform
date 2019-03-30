@@ -51,6 +51,11 @@ class DetailControl extends Component {
                 key: 'name',
             },
             {
+                title: '音频',
+                dataIndex: 'mp3',
+                key: 'mp3',
+            },
+            {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',
@@ -64,6 +69,7 @@ class DetailControl extends Component {
                 render: (text, record)=>{
                     return (
                         <span>
+                            <Button className='button' type="primary">修改音频</Button>
                             <DetailModal
                                 onOk={(detail) =>{
                                     this.updateDetail(record._id, detail);
