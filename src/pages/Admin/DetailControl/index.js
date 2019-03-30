@@ -4,6 +4,8 @@ import moment from 'moment';
 import DetailModal from './detailModal';
 import { connect } from 'react-redux';
 import { create, update, remove, getDetailList } from "../../../redux/detail_redux";
+import { Howl } from 'howler';
+
 
 @connect(
     state => state.detail,
@@ -27,6 +29,12 @@ class DetailControl extends Component {
     }
     createDetail(detail) {
         this.props.create(detail);
+    }
+    SoundPlay(mp3) {
+        const Sounds = new Howl({
+            src: [require(`../../../assets/mp3/${mp3}.mp3`)],
+        })
+        Sounds.play("time")
     }
     render() {
         const { msg,detaillist } = this.props
@@ -69,6 +77,11 @@ class DetailControl extends Component {
                 render: (text, record)=>{
                     return (
                         <span>
+                            <Button 
+                                className='button' 
+                                type="primary" 
+                                onClick={() =>this.SoundPlay(record.mp3)}
+                            >播放音频</Button>
                             <Button className='button' type="primary">修改音频</Button>
                             <DetailModal
                                 onOk={(detail) =>{
