@@ -81,6 +81,18 @@ export function getDetailList() {
     }
 }
 
+export function getDetailListOne(data) {
+    console.log(data)
+    return dispatch => {
+        axios.post('/detail/listone', data)
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch(getdetaillistSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function create({detailid,charpterid,name,created}) {
     if(!detailid || !charpterid ||!name) {
         return errorMsg('DetailID,CharpterID和名称必须输入')

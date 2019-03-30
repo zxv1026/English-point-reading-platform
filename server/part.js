@@ -4,7 +4,7 @@ const Part = require('./models/part');
 
 Router.get('/list',function (req, res) {
     // Part.remove({},function (err,doc) {})
-    Part.find({},function (err,doc) {
+    Part.find({},null,{sort: {'partid': 1}},function (err,doc) {
         return res.json({code: 0, data:doc,msg: 'true'})
     })
 })

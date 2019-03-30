@@ -86,6 +86,18 @@ export function getContentList() {
     }
 }
 
+export function getContentListOne(data) {
+    console.log(data)
+    return dispatch => {
+        axios.post('/content/listone', data)
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch(getcontentlistSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function create({contentid,detailid,chinese,english,offset,duration,created}) {
     if(!contentid || !detailid ||!chinese || !english || !offset || !duration) {
         return errorMsg('ContentID,DetailID和语句的中英文和对于语句的音频偏移时间和持续时间必须输入')

@@ -81,6 +81,18 @@ export function getCharpterList() {
     }
 }
 
+export function getCharpterListOne(data) {
+    console.log(data)
+    return dispatch=>{
+        axios.post('/charpter/listone',data)
+            .then(res=>{
+                if(res.status===200){
+                    dispatch(getcharpterlistSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function create({charpterid,partid,name,created}) {
     if(!charpterid || !partid ||!name) {
         return errorMsg('CharpterID,PartID和名称必须输入')

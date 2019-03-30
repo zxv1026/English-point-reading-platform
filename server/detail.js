@@ -9,6 +9,13 @@ Router.get('/list',function (req, res) {
         return res.json({code: 0, data:doc,msg: 'true'})
     })
 })
+//获取与前端传过来的charpterid相同的的detail信息
+Router.post('/listone',function (req, res) {
+    const {id} = req.body
+    Detail.find({'charpterid': id}, null,{sort: {'detailid': 1}},function (err, doc) {
+        return res.json({code: 0, data:doc,msg: 'true'})
+    })
+})
 
 Router.post('/remove', function (req, res) {
     const {_id} = req.body
@@ -30,7 +37,7 @@ Router.post('/update', function (req, res) {
 Router.post('/create', function (req, res) {
     console.log(req.body)
     const { detailid, charpterid, name, created } = req.body;
-    Charpter.findOne({charpterid},function (err, doc) {
+    Charpter.findOne({'charpterid': charpterid},function (err, doc) {
         if(doc){
             Detail.findOne({detailid},function (err, doc) {
                 if(doc) {

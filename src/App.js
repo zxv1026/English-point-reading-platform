@@ -6,6 +6,9 @@ import { Provider } from "react-redux";
 import Login from './pages/Login/index';
 import Register from './pages/Register/index';
 import Home from './pages/Home/index';
+import Charpter from './pages/Charpter';
+import Detail from './pages/Detail';
+import Content from './pages/Content';
 import AdminHome from './pages/Admin/index';
 import { GlobalStyle_Icon } from "./assets/iconfont/iconfont";
 import reducers from './reducer';
@@ -32,6 +35,9 @@ class App extends Component {
                   <Route exact path='/' component={Home}/>
                   <Route exact path='/login' component={Login}/>
                   <Route exact path='/register' component={Register}/>
+                  <Route exact path="/parts/:partId/charpters" component={Charpter} />
+                  <Route exact path="/parts/:partId/charpters/:charpterId/details" component={Detail} />
+                  <Route exact path="/parts/:partId/charpters/:charpterId/details/:detailId/contents" component={Content} />
                   <Route exact path='/admin' component={AdminHome}/>
                   <Route component={RouteFallback} />
                 </Switch>

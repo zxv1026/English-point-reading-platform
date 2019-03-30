@@ -5,9 +5,17 @@ const Router = express.Router();
 const Part = require('./models/part');
 const Charpter = require('./models/charpter');
 
+//获取全部charpter信息
 Router.get('/list',function (req, res) {
-    // CharPart.remove({},function (err,doc) {})
+    // Charpter.remove({},function (err,doc) {})
     Charpter.find({}, function (err, doc) {
+        return res.json({code: 0, data:doc,msg: 'true'})
+    })
+})
+//获取与前端传过来的partid相同的的charpter信息
+Router.post('/listone',function (req, res) {
+    const {id} = req.body
+    Charpter.find({'partid': id},null,{sort: {'charpterid': 1}},function (err, doc) {
         return res.json({code: 0, data:doc,msg: 'true'})
     })
 })
@@ -37,7 +45,7 @@ Router.post('/create', function (req, res) {
         if(doc) {
             return res.json({msg: 'CharpterID已经存在，请换一个'})
         }
-        Part.findOne({partid},function (err,doc) {
+        Part.findOne({'partid': partid},function (err,doc) {
             // console.log(charpterid)
             // console.log(doc)
             // console.log(doc.name)

@@ -1,19 +1,11 @@
-import React, { Component } from "react";
-import { Link } from 'react-router-dom';
-import { Icon, List } from 'antd';
-import { connect } from 'react-redux';
-import { getPartList } from "../../../../redux/part_redux";
+import React,{Component} from 'react';
+import { Link } from "react-router-dom";
+import { Icon, List } from "antd";
 
-@connect(
-    state => state.part,
-    {getPartList}
-)
-class Listpart extends Component {
-    componentDidMount() {
-        this.props.getPartList();
-    }
+class ListDetail extends Component {
+    
     render() {
-        const {list} =this.props;
+        const { list,partid } = this.props
         const IconText = ({ type, text }) => (
             <span>
                 <Icon type={type} style={{ marginRight: 8 }} />
@@ -22,6 +14,11 @@ class Listpart extends Component {
         );
         return (
             <div>
+                <Link className="close-detail" to={{
+                    pathname: "/parts/" + partid + "/charpters"
+                }}>
+                    <Icon type="caret-left"/>Back
+                </Link>
                 <List
                     itemLayout="vertical"
                     size="large"
@@ -34,12 +31,12 @@ class Listpart extends Component {
                     dataSource={list}
                     renderItem={item => (
                         <List.Item
-                            key={"part_"+item.partid}
+                            key={"detail_"+item.detailid}
                             actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
                             extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
                         >
                             <Link to={{
-                                pathname: "/parts/"+item.partid+"/charpters",
+                                pathname: "/parts/"+partid+"/charpters/"+item.charpterid+"/details/"+item.detailid+'/contents',
                             }} ><h3>{item.name}</h3></Link>
                         </List.Item>
                     )}
@@ -49,4 +46,4 @@ class Listpart extends Component {
     }
 }
 
-export default Listpart;
+export default ListDetail;
