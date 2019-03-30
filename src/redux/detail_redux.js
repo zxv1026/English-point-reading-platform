@@ -9,7 +9,7 @@ const initState={
     charpterid:'',
     name: '',
     created: '',
-    list: [],
+    detaillist: [],
 }
 
 //reducer
@@ -18,7 +18,7 @@ export function detail(state=initState, action) {
         case AUTH_SUCCESS:
             return {...state, msg:action.msg,redirectTo:action.payload,...action.payload}
         case DETAILLIST_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,list:action.payload, ...action.payload}
+            return {...state, msg:action.msg,redirectTo:action.payload,detaillist:action.payload, ...action.payload}
         case ERROR_MSG:
             return {...state, msg:action.msg}
         default:

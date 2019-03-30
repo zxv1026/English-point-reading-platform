@@ -8,7 +8,7 @@ const initState={
     partid:'',
     name: '',
     created: '',
-    list: [],
+    partlist: [],
 }
 
 //reducer
@@ -17,7 +17,7 @@ export function part(state=initState, action) {
         case AUTH_SUCCESS:
             return {...state, msg:action.msg,redirectTo:action.payload,...action.payload}
         case PARTLIST_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,list:action.payload, ...action.payload}
+            return {...state, msg:action.msg,redirectTo:action.payload,partlist:action.payload, ...action.payload}
         case ERROR_MSG:
             return {...state, msg:action.msg}
         default:

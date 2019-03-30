@@ -14,7 +14,7 @@ const initState={
     //持续时间（单位：ms）
     duration: '',
     created: '',
-    list: [],
+    contentlist: [],
 }
 
 //reducer
@@ -23,7 +23,7 @@ export function content(state=initState, action) {
         case AUTH_SUCCESS:
             return {...state, msg:action.msg,redirectTo:action.payload,...action.payload}
         case CONTENTLIST_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,list:action.payload, ...action.payload}
+            return {...state, msg:action.msg,redirectTo:action.payload,contentlist:action.payload, ...action.payload}
         case ERROR_MSG:
             return {...state, msg:action.msg}
         default:

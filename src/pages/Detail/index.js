@@ -15,13 +15,13 @@ class Detail extends Component {
         this.props.getDetailListOne(state)
     }
     render() {
-        const { list } = this.props
-        console.log(list);
+        const { detaillist } = this.props
+        console.log(detaillist);
         return (
             <div>
                 <Header/>
                 <ListDetail
-                    list={list}
+                    list={detaillist}
                     partid={this.props.match.params.partId}
                 />
             </div>

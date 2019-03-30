@@ -1,17 +1,8 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { Icon, List } from 'antd';
-import { connect } from 'react-redux';
-import { getPartList } from "../../../../redux/part_redux";
 
-@connect(
-    state => state.part,
-    {getPartList}
-)
 class Listpart extends Component {
-    componentDidMount() {
-        this.props.getPartList();
-    }
     render() {
         const {list} =this.props;
         const IconText = ({ type, text }) => (

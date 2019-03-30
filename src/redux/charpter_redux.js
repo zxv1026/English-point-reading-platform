@@ -9,7 +9,7 @@ const initState={
     partid:'',
     name: '',
     created: '',
-    list: [],
+    charpterlist: [],
 }
 
 //reducer
@@ -18,7 +18,7 @@ export function charpter(state=initState, action) {
         case AUTH_SUCCESS:
             return {...state, msg:action.msg,redirectTo:action.payload,...action.payload}
         case CHARPTERLIST_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,list:action.payload, ...action.payload}
+            return {...state, msg:action.msg,redirectTo:action.payload,charpterlist:action.payload, ...action.payload}
         case ERROR_MSG:
             return {...state, msg:action.msg}
         default:

@@ -15,13 +15,13 @@ class Content extends Component {
         this.props.getContentListOne(state)
     }
     render() {
-        const { list } = this.props
-        console.log(list);
+        const { contentlist } = this.props
+        console.log(contentlist);
         return (
             <div>
                 <Header/>
                 <ListContent
-                    list={list}
+                    list={contentlist}
                     partid={this.props.match.params.partId}
                     charpterid={this.props.match.params.charpterId}
                 />
