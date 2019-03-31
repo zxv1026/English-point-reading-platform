@@ -3,12 +3,14 @@ import { message } from 'antd';
 
 const USERLIST_SUCCESS = 'USERLIST_SUCCESS';
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
+const LOG_OUT = 'LOG_OUT';
 const ERROR_MSG = 'ERROR_MSG';
 const initState={
     redirectTo: '',
     msg: '',
     username: '',
     password: '',
+    avatar:'',
     type: '',
     created: '',
     list: [],
@@ -20,7 +22,9 @@ export function user(state=initState, action) {
         case AUTH_SUCCESS:
             return {...state,redirectTo:action.payload,...action.payload}
         case USERLIST_SUCCESS:
-            return {...state,redirectTo:action.payload,list:action.payload, ...action.payload}
+            return {...state,list:action.payload, ...action.payload}
+        case LOG_OUT:
+            return {...initState,}
         case ERROR_MSG:
             return {...state, msg:action.msg}
         default:
@@ -35,6 +39,11 @@ function authSuccess(data){
 }
 function errorMsg(msg) {
     return { msg, type: ERROR_MSG }
+}
+
+export function logout(){
+    message.success('退出成功');
+    return { type: LOG_OUT }
 }
 
 export function remove(data) {
@@ -97,7 +106,7 @@ export function login({username,password}) {
 				if (res.status===200&&res.data.code===0) {
 					// dispatch(registerSuccess({user,pwd,type}))
                     dispatch(authSuccess(res.data.data))
-                    message.success(res.data.success, 5);
+                    message.success(res.data.success);
 				}else{
                     dispatch(errorMsg(res.data.msg))
                     message.error(res.data.msg);
@@ -112,7 +121,7 @@ export function register({username,password,repeatpassword,type,avatar,created})
         return errorMsg('用户名密码必须输入')
     }
     if(password!==repeatpassword){
-        message.error('密码和确认密码不同',5);
+        message.error('密码和确认密码不同');
         return errorMsg('用户名密码必须输入')
     }
     return dispatch=>{
@@ -120,7 +129,7 @@ export function register({username,password,repeatpassword,type,avatar,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
                 dispatch(authSuccess({username,password,type,avatar,created}))
-                message.success(res.data.success, 5);
+                message.success(res.data.success);
                 axios.get('/user/list')
                     .then(res => {
                         dispatch(getuserlistSuccess(res.data.data))

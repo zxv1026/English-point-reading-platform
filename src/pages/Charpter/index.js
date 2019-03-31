@@ -15,12 +15,12 @@ class Charpter extends Component {
         this.props.getCharpterListOne(state)
     }
     render() {
-        const { charpterlist } = this.props
+        const { charpterlistone } = this.props
         return (
             <div>
                 <Header/>
                 <ListCharpter
-                    list={charpterlist}
+                    list={charpterlistone}
                 />
             </div>
         )

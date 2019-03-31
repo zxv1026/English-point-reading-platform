@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { HeaderWrapper,Logo,Nav,NavItem,NavSearch,Addition,Button,SearchWrapper } from "./style";
+import Avatar from './avatar';
+import { connect } from 'react-redux';
 
+@connect(
+    state=>state.user,
+)
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -13,12 +18,13 @@ class Header extends Component {
         this.handleInputBlur = this.handleInputBlur.bind(this)
     }
     render() {
+        const { username,avatar } = this.props
         return (
             <HeaderWrapper>
                 <Link to="/"><Logo/></Link>
                 <Nav>
                     <Link to="/"><NavItem className='left active'>首页</NavItem></Link>
-                    <Link to="/login"><NavItem className='right'>登录</NavItem></Link>
+                    {username? null:<Link to="/login"><NavItem className='right'>登录</NavItem></Link>}
                     <SearchWrapper>
                         <CSSTransition
                             in={this.state.focused}
@@ -35,7 +41,10 @@ class Header extends Component {
                     </SearchWrapper>
                 </Nav>
                 <Addition>
-                    <Link to="/register"><Button>注册</Button></Link>
+                    {username? 
+                        <span style={{float: "right", marginRight: 30 }}>
+                            <Avatar/>
+                        </span> :<Link to="/register"><Button>注册</Button></Link>}
                 </Addition>
             </HeaderWrapper>
         )

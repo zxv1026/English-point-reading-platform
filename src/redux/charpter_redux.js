@@ -2,6 +2,7 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const CHARPTERLIST_SUCCESS = 'CHARPTERLIST_SUCCESS';
+const CHARPTERLISTONE_SUCCESS = 'CHARPTERLISTONE_SUCCESS';
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 
 const initState={
@@ -10,6 +11,7 @@ const initState={
     name: '',
     created: '',
     charpterlist: [],
+    charpterlistone:[],
 }
 
 //reducer
@@ -19,9 +21,14 @@ export function charpter(state=initState, action) {
             return {...state,...action.payload}
         case CHARPTERLIST_SUCCESS:
             return {...state,charpterlist:action.payload, ...action.payload}
+        case CHARPTERLISTONE_SUCCESS:
+            return {...state,charpterlistone:action.payload}
         default:
             return state
     }
+}
+function getcharpterlistoneSuccess(data) {
+    return { type:CHARPTERLISTONE_SUCCESS, payload:data}
 }
 function getcharpterlistSuccess(data) {
     return { type:CHARPTERLIST_SUCCESS, payload:data}
@@ -85,7 +92,7 @@ export function getCharpterListOne(data) {
         axios.post('/charpter/listone',data)
             .then(res=>{
                 if(res.status===200&&res.data.code===0){
-                    dispatch(getcharpterlistSuccess(res.data.data))
+                    dispatch(getcharpterlistoneSuccess(res.data.data))
                 }
             })
     }
