@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, message } from "antd";
+import { Button, Table, Popconfirm } from "antd";
 import moment from 'moment';
 import PartModal from './partModal';
 import { connect } from 'react-redux';
@@ -29,8 +29,10 @@ class PartControl extends Component {
         this.props.create(part);
     }
     render() {
-        const { msg,partlist } = this.props
+
+        const { partlist } = this.props
         const { create } = this.state
+
         const columns = [
             {
                 title: 'PartID',
@@ -82,8 +84,7 @@ class PartControl extends Component {
             },
         ];
         return (
-            <div>
-                {msg?message.error("编辑Part失败！ "+msg,5): null}
+            <span>
                 <h3 style={{ margin: '0px 0 20px' }}>Part管理</h3>
                 <div className="whitebox" >
                     <PartModal
@@ -102,7 +103,7 @@ class PartControl extends Component {
                         rowKey="id"
                     />
                 </div>
-            </div>
+            </span>
         )
     }
 }
