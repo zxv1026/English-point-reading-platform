@@ -35,7 +35,7 @@ Router.post('/remove', function (req, res) {
     const {_id} = req.body
     console.log(req.body);
     User.findByIdAndRemove(_id,function (err, doc) {
-        return res.json({code:1})
+        return res.json({code:0,success:'删除user成功'})
     })
 })
 
@@ -44,7 +44,7 @@ Router.post('/update', function (req, res) {
     const body = req.body
     const {id} = req.body
     User.findByIdAndUpdate(id,body,function (err, doc) {
-        return res.json({code:0, data: body, msg: 'true'})
+        return res.json({code:0, data: body, success:'更新user成功'})
     })
 })
 
@@ -54,7 +54,7 @@ Router.post('/login', function (req, res) {
         if(!doc) {
             return res.json({msg:'用户名或密码错误'})
         }
-        return res.json({code: 0,data: doc})
+        return res.json({code: 0,data: doc, success:'登录成功'})
     })
 })
 
@@ -69,14 +69,11 @@ Router.post('/register',function (req, res) {
             if(e) {
                 return res.json({msg: '后端出错'})
             }
-            return res.json({code:0})
+            return res.json({code:0,success:'用户注册成功'})
         })
     })
 })
 
-Router.get('/info', function (req, res) {
-    return  res.json({code:1})
-})
 //在用户的密码后面加上复杂的字符串并进行加密
 function md5Pwd(pwd) {
     const salt = 'ZhengjiangDxCsxy_31501315_@?AFAFA%!&*%@';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { login } from "../../redux/user_redux";
-import { Form, Layout, Button, Icon, Input, Alert, Checkbox, Spin } from 'antd';
+import { Form, Layout, Button, Icon, Input, Alert } from 'antd';
 import logoImg from '../../assets/images/logo.svg';
 import './index.less';
 const { Content } = Layout;

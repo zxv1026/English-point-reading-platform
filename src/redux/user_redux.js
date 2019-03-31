@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { message } from 'antd';
 
 const USERLIST_SUCCESS = 'USERLIST_SUCCESS';
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
@@ -17,9 +18,9 @@ const initState={
 export function user(state=initState, action) {
     switch (action.type) {
         case AUTH_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,...action.payload}
+            return {...state,redirectTo:action.payload,...action.payload}
         case USERLIST_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,list:action.payload, ...action.payload}
+            return {...state,redirectTo:action.payload,list:action.payload, ...action.payload}
         case ERROR_MSG:
             return {...state, msg:action.msg}
         default:
@@ -42,12 +43,13 @@ export function remove(data) {
             .then(res=>{
                 if (res.status===200) {
                     dispatch(authSuccess(res.data.data))
+                    message.success(res.data.success, 5);
                     axios.get('/user/list')
                         .then(res => {
                             dispatch(getuserlistSuccess(res.data.data))
                         })
 				}else{
-					dispatch(errorMsg(res.data.msg))
+					message.error(res.data.msg);
                 }
             })
     }
@@ -60,12 +62,14 @@ export function update(id,data) {
             .then(res=>{
                 if (res.status===200&&res.data.code===0) {
                     dispatch(authSuccess(res.data.data))
+                    message.success(res.data.success, 5);
                     axios.get('/user/list')
                         .then(res => {
                             dispatch(getuserlistSuccess(res.data.data))
                         })
 				}else{
-					dispatch(errorMsg(res.data.msg))
+                    dispatch(errorMsg(res.data.msg))
+                    message.error(res.data.msg);
 				}
             })
     }
@@ -84,6 +88,7 @@ export function getUserList() {
 
 export function login({username,password}) {
     if(!username || !password) {
+        message.error('用户名密码必须输入');
         return errorMsg('用户名密码必须输入')
     }
     return dispatch=>{
@@ -91,9 +96,11 @@ export function login({username,password}) {
 			.then(res=>{
 				if (res.status===200&&res.data.code===0) {
 					// dispatch(registerSuccess({user,pwd,type}))
-					dispatch(authSuccess(res.data.data))
+                    dispatch(authSuccess(res.data.data))
+                    message.success(res.data.success, 5);
 				}else{
-					dispatch(errorMsg(res.data.msg))
+                    dispatch(errorMsg(res.data.msg))
+                    message.error(res.data.msg);
 				}
 			})		
 	}
@@ -101,22 +108,26 @@ export function login({username,password}) {
 
 export function register({username,password,repeatpassword,type,avatar,created}) {
     if(!username || !password) {
+        message.error('用户名密码必须输入');
         return errorMsg('用户名密码必须输入')
     }
     if(password!==repeatpassword){
-        return errorMsg('密码和确认密码不同')
+        message.error('密码和确认密码不同',5);
+        return errorMsg('用户名密码必须输入')
     }
     return dispatch=>{
         axios.post('/user/register',{username,password,type,avatar,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
                 dispatch(authSuccess({username,password,type,avatar,created}))
+                message.success(res.data.success, 5);
                 axios.get('/user/list')
                     .then(res => {
                         dispatch(getuserlistSuccess(res.data.data))
                     })
             }else{
                 dispatch(errorMsg(res.data.msg))
+                message.error(res.data.msg);
             }
         })
     }
