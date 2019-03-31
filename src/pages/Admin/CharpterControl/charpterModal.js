@@ -79,7 +79,7 @@ class charpterModal extends Component{
                             label="CharpterID"
                         >
                             {getFieldDecorator('charpterid',{
-                                initialValue: record.id,
+                                initialValue: record.charpterid,
                                 rules: [{
                                     required: true,
                                     pattern: new RegExp(/^[0-9]\d*$/, "g"),

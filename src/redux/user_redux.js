@@ -41,7 +41,7 @@ export function remove(data) {
     return dispatch=>{
         axios.post('/user/remove', data)
             .then(res=>{
-                if (res.status===200) {
+                if (res.status===200&&res.data.code===0) {
                     dispatch(authSuccess(res.data.data))
                     message.success(res.data.success, 5);
                     axios.get('/user/list')
