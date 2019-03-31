@@ -4,10 +4,15 @@ import moment from 'moment';
 import ContentModal from './contentModal';
 import { connect } from 'react-redux';
 import { create, update, remove, getContentList } from "../../../redux/content_redux";
+import { getDetailOne } from "../../../redux/detail_redux";
+import { Howl } from 'howler';
 
 @connect(
-    state => state.content,
-    {create, update, remove, getContentList}
+    state => ({
+        contentlist: state.content.contentlist,
+        mp3: state.detail.mp3,
+    }),
+    {create, update, remove, getContentList,getDetailOne}
 )
 class ContentControl extends Component {
     constructor(props) {
@@ -28,9 +33,19 @@ class ContentControl extends Component {
     createContent(content) {
         this.props.create(content);
     }
+    // SoundPlay(mp3,offset, duration) {
+    //     const Sounds = new Howl({
+    //         src: [require(`../../../assets/mp3/${mp3}.mp3`)],
+    //         sprite: {
+    //             time: [offset, duration]
+    //         }
+    //     })
+    //     Sounds.play()
+    // }
     render() {
-        const { msg,contentlist } = this.props
+        const { contentlist } = this.props
         const { create } = this.state
+        console.log(this.props.mp3)
         const columns = [
             {
                 title: 'ContentID',
@@ -79,6 +94,11 @@ class ContentControl extends Component {
                 render: (text, record)=>{
                     return (
                         <span>
+                            {/* <Button 
+                                className='button' 
+                                type="primary" 
+                                onClick={() =>this.SoundPlay(record.detailid)}
+                            >播放音频</Button> */}
                             <ContentModal
                                 onOk={(content) =>{
                                     this.updateContent(record._id, content);
@@ -104,7 +124,6 @@ class ContentControl extends Component {
         ];
         return (
             <div>
-                {msg?message.error("编辑Content失败！ "+msg,5): null}
                 <h3 style={{ margin: '0px 0 20px' }}>Content管理</h3>
                 <div className="whitebox" >
                     <ContentModal

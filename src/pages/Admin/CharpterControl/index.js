@@ -29,7 +29,7 @@ class CharpterControl extends Component {
         this.props.create(charpter);
     }
     render() {
-        const { msg,charpterlist } = this.props
+        const { charpterlist } = this.props
         const { create } = this.state
         const columns = [
             {
@@ -89,7 +89,6 @@ class CharpterControl extends Component {
         ];
         return (
             <div>
-                {msg?message.error("编辑Charpter失败！ "+msg,5): null}
                 <h3 style={{ margin: '0px 0 20px' }}>Charpter管理</h3>
                 <div className="whitebox" >
                     <CharpterModal

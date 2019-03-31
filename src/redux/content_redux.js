@@ -1,10 +1,10 @@
 import axios from 'axios';
+import { message } from 'antd';
 
 const CONTENTLIST_SUCCESS = 'CONTENTLIST_SUCCESS';
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
-const ERROR_MSG = 'ERROR_MSG';
+
 const initState={
-    msg: '',
     contentid:'',
     detailid:'',
     chinese: "",
@@ -21,11 +21,9 @@ const initState={
 export function content(state=initState, action) {
     switch (action.type) {
         case AUTH_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,...action.payload}
+            return {...state,...action.payload}
         case CONTENTLIST_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,contentlist:action.payload, ...action.payload}
-        case ERROR_MSG:
-            return {...state, msg:action.msg}
+            return {...state,contentlist:action.payload, ...action.payload}
         default:
             return state
     }
@@ -36,22 +34,21 @@ function getcontentlistSuccess(data) {
 function authSuccess(data){
 	return { type:AUTH_SUCCESS, payload:data}
 }
-function errorMsg(msg) {
-    return { msg, type: ERROR_MSG }
-}
+
 
 export function remove(data) {
     return dispatch=>{
         axios.post('/content/remove', data)
             .then(res=>{
-                if (res.status===200) {
+                if (res.status===200 && res.data.code===0) {
                     dispatch(authSuccess(res.data.data))
+                    message.success(res.data.success, 5);
                     axios.get('/content/list')
                         .then(res => {
                             dispatch(getcontentlistSuccess(res.data.data))
                         })
 				}else{
-					dispatch(errorMsg(res.data.msg))
+                    message.error(res.data.msg, 5)
                 }
             })
     }
@@ -64,12 +61,13 @@ export function update(_id,data) {
             .then(res=>{
                 if (res.status===200&&res.data.code===0) {
                     dispatch(authSuccess(res.data.data))
+                    message.success(res.data.success, 5);
                     axios.get('/content/list')
                         .then(res => {
                             dispatch(getcontentlistSuccess(res.data.data))
                         })
 				}else{
-					dispatch(errorMsg(res.data.msg))
+                    message.error(res.data.msg, 5)
 				}
             })
     }
@@ -79,7 +77,7 @@ export function getContentList() {
     return dispatch=>{
         axios.get('/content/list')
             .then(res=>{
-                if(res.status===200){
+                if(res.status===200 && res.data.code===0){
                     dispatch(getcontentlistSuccess(res.data.data))
                 }
             })
@@ -91,7 +89,7 @@ export function getContentListOne(data) {
     return dispatch => {
         axios.post('/content/listone', data)
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 200 && res.data.code===0) {
                     dispatch(getcontentlistSuccess(res.data.data))
                 }
             })
@@ -100,20 +98,21 @@ export function getContentListOne(data) {
 
 export function create({contentid,detailid,chinese,english,offset,duration,created}) {
     if(!contentid || !detailid ||!chinese || !english || !offset || !duration) {
-        return errorMsg('ContentID,DetailID和语句的中英文和对于语句的音频偏移时间和持续时间必须输入')
+        message.error('ContentID,DetailID和语句的中英文和对于语句的音频偏移时间和持续时间必须输入', 5)
     }
     return dispatch=>{
         axios.post('/content/create',{contentid,detailid,chinese,english,offset,duration,created})
-        .then(res=>{
-            if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({contentid,detailid,chinese,english,offset,duration,created}))
-                axios.get('/content/list')
-                    .then(res => {
-                        dispatch(getcontentlistSuccess(res.data.data))
-                    })
-            }else{
-                dispatch(errorMsg(res.data.msg))
-            }
-        })
+            .then(res=>{
+                if(res.status===200 && res.data.code===0){
+                    dispatch(authSuccess({contentid,detailid,chinese,english,offset,duration,created}))
+                    message.success(res.data.success, 5);
+                    axios.get('/content/list')
+                        .then(res => {
+                            dispatch(getcontentlistSuccess(res.data.data))
+                        })
+                }else{
+                    message.error(res.data.msg, 5)
+                }
+            })
     }
 }

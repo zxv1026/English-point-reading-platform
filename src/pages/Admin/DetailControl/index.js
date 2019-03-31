@@ -37,7 +37,7 @@ class DetailControl extends Component {
         Sounds.play("time")
     }
     render() {
-        const { msg,detaillist } = this.props
+        const { detaillist } = this.props
         const { create } = this.state
         const columns = [
             {
@@ -108,7 +108,6 @@ class DetailControl extends Component {
         ];
         return (
             <div>
-                {msg?message.error("编辑Detail失败！ "+msg,5): null}
                 <h3 style={{ margin: '0px 0 20px' }}>Detail管理</h3>
                 <div className="whitebox" >
                     <DetailModal

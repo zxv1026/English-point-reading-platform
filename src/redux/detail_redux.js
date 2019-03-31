@@ -17,9 +17,9 @@ const initState={
 export function detail(state=initState, action) {
     switch (action.type) {
         case AUTH_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,...action.payload}
+            return {...state,...action.payload}
         case DETAILLIST_SUCCESS:
-            return {...state, msg:action.msg,redirectTo:action.payload,detaillist:action.payload, ...action.payload}
+            return {...state,detaillist:action.payload, ...action.payload}
         default:
             return state
     }
