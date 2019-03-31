@@ -34,7 +34,7 @@ class DetailControl extends Component {
         const Sounds = new Howl({
             src: [require(`../../../assets/mp3/${mp3}.mp3`)],
         })
-        Sounds.play("time")
+        Sounds.play()
     }
     render() {
         const { detaillist } = this.props
