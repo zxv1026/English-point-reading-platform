@@ -56,7 +56,7 @@ Router.post('/create', function (req, res) {
     const { charpterid, partid, name, created } = req.body;
     Charpter.findOne({charpterid},function (err, doc) {
         if(doc) {
-            return res.json({msg: 'CharpterID已经存在，请换一个'})
+            return res.json({msg: '创建charpter失败，CharpterID已经存在，请换一个'})
         }
         Part.findOne({'partid': partid},function (err,doc) {
             // console.log(charpterid)
