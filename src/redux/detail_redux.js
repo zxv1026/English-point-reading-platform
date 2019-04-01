@@ -2,13 +2,14 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const DETAILLIST_SUCCESS = 'DETAILLIST_SUCCESS';
-const AUTH_SUCCESS = 'AUTH_SUCCESS';
+const DETAIL_SUCCESS = 'DETAIL_SUCCESS';
 
 const initState={
     detailid:'',
     charpterid:'',
     name: '',
     mp3: '',
+    num: 0,
     created: '',
     detaillist: [],
 }
@@ -16,7 +17,7 @@ const initState={
 //reducer
 export function detail(state=initState, action) {
     switch (action.type) {
-        case AUTH_SUCCESS:
+        case DETAIL_SUCCESS:
             return {...state,...action.payload}
         case DETAILLIST_SUCCESS:
             return {...state,detaillist:action.payload, ...action.payload}
@@ -28,7 +29,7 @@ function getdetaillistSuccess(data) {
     return { type:DETAILLIST_SUCCESS, payload:data}
 }
 function authSuccess(data){
-	return { type:AUTH_SUCCESS, payload:data}
+	return { type:DETAIL_SUCCESS, payload:data}
 }
 
 
@@ -44,6 +45,24 @@ export function remove(data) {
                             dispatch(getdetaillistSuccess(res.data.data))
                         })
 				}else{
+                    message.error(res.data.msg, 5)
+                }
+            })
+    }
+}
+
+export function updatenum(_id, data) {
+    data._id = _id;
+    return dispatch => {
+        axios.post('/detail/updatenum', data)
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(authSuccess(res.data.data))
+                    // axios.get('/detail/list')
+                    //     .then(res => {
+                    //         dispatch(getdetaillistSuccess(res.data.data))
+                    //     })
+                } else {
                     message.error(res.data.msg, 5)
                 }
             })
@@ -104,15 +123,15 @@ export function getDetailOne(data) {
     }
 }
 
-export function create({detailid,charpterid,name,mp3,created}) {
+export function create({detailid,charpterid,name,mp3,created,num}) {
     if(!detailid || !charpterid ||!name) {
         message.error('DetailID,CharpterID和名称必须输入', 5)
     }
     return dispatch=>{
-        axios.post('/detail/create',{detailid,charpterid,name,mp3,created})
+        axios.post('/detail/create',{detailid,charpterid,name,mp3,created,num})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({detailid,charpterid,name,mp3,created}))
+                dispatch(authSuccess({detailid,charpterid,name,mp3,created,num}))
                 message.success(res.data.success, 5);
                 axios.get('/detail/list')
                     .then(res => {

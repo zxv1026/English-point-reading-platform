@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import { Link } from "react-router-dom";
 import { Icon, List, Button } from "antd";
 import { Howl } from 'howler';
 
@@ -15,14 +14,9 @@ class ListContent extends Component {
         console.log("sound")
     }
     render() {
-        const { list,partid,charpterid,mp3 } = this.props;
+        const { list,mp3 } = this.props;
         return (
             <div>
-                <Link className="close-content" to={{
-                    pathname: '/parts/'+partid+'/charpters/'+charpterid+'/details'
-                }}>
-                    <Icon type="caret-left"/>Back
-                </Link>
                 <List
                     itemLayout="vertical"
                     size="large"

@@ -6,6 +6,7 @@ const DetailSchema = new Schema({
     charpterid:{ type: Number, required: true },
     name:{ type: String, required: true },
     mp3:{ type: String, required: true },
+    num:{ type: Number, required: true },
     created:{ type: Date },
 });
 

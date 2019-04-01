@@ -14,13 +14,14 @@ const initState={
     type: '',
     created: '',
     list: [],
+    listone: [],
 }
 
 //reducer
 export function user(state=initState, action) {
     switch (action.type) {
         case AUTH_SUCCESS:
-            return {...state,redirectTo:action.payload,...action.payload}
+            return {...state,redirectTo:action.payload,listone:action.payload,...action.payload}
         case USERLIST_SUCCESS:
             return {...state,list:action.payload, ...action.payload}
         case LOG_OUT:

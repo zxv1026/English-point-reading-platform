@@ -15,15 +15,19 @@ const PartRouter = require('./part');
 const CharpterRouter = require('./charpter');
 const DetailRouter = require('./detail');
 const ContentRouter = require('./content');
+// const TagRouter = require('./tag');
+const LikeRecordRouter = require('./likerecord');
 const app = express();
 
 // app.use(express.static(path.join(__dirname, "../static")))
 app.use(bodyParser.json())
 app.use('/user',userRouter)
+// app.use('/tag', TagRouter)
 app.use('/part', PartRouter)
 app.use('/charpter', CharpterRouter)
 app.use('/detail', DetailRouter)
 app.use('/content', ContentRouter)
+app.use('/likerecord', LikeRecordRouter)
 app.listen(3001, () => {
     console.log('node服务器监听3001端口成功');
 })

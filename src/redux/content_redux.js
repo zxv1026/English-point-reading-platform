@@ -2,7 +2,7 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const CONTENTLIST_SUCCESS = 'CONTENTLIST_SUCCESS';
-const AUTH_SUCCESS = 'AUTH_SUCCESS';
+const CONTENT_SUCCESS = 'CONTENT_SUCCESS';
 
 const initState={
     contentid:'',
@@ -20,7 +20,7 @@ const initState={
 //reducer
 export function content(state=initState, action) {
     switch (action.type) {
-        case AUTH_SUCCESS:
+        case CONTENT_SUCCESS:
             return {...state,...action.payload}
         case CONTENTLIST_SUCCESS:
             return {...state,contentlist:action.payload, ...action.payload}
@@ -32,7 +32,7 @@ function getcontentlistSuccess(data) {
     return { type:CONTENTLIST_SUCCESS, payload:data}
 }
 function authSuccess(data){
-	return { type:AUTH_SUCCESS, payload:data}
+	return { type:CONTENT_SUCCESS, payload:data}
 }
 
 

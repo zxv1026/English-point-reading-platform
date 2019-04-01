@@ -3,7 +3,7 @@ import { message } from 'antd';
 
 const CHARPTERLIST_SUCCESS = 'CHARPTERLIST_SUCCESS';
 const CHARPTERLISTONE_SUCCESS = 'CHARPTERLISTONE_SUCCESS';
-const AUTH_SUCCESS = 'AUTH_SUCCESS';
+const CHARPTER_SUCCESS = 'CHARPTER_SUCCESS';
 
 const initState={
     charpterid:'',
@@ -17,7 +17,7 @@ const initState={
 //reducer
 export function charpter(state=initState, action) {
     switch (action.type) {
-        case AUTH_SUCCESS:
+        case CHARPTER_SUCCESS:
             return {...state,...action.payload}
         case CHARPTERLIST_SUCCESS:
             return {...state,charpterlist:action.payload, ...action.payload}
@@ -34,7 +34,7 @@ function getcharpterlistSuccess(data) {
     return { type:CHARPTERLIST_SUCCESS, payload:data}
 }
 function authSuccess(data){
-	return { type:AUTH_SUCCESS, payload:data}
+	return { type:CHARPTER_SUCCESS, payload:data}
 }
 
 

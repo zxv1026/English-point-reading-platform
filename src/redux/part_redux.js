@@ -2,7 +2,7 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const PARTLIST_SUCCESS = 'PARTLIST_SUCCESS';
-const AUTH_SUCCESS = 'AUTH_SUCCESS';
+const PART_SUCCESS = 'PART_SUCCESS';
 
 const initState={
     partid:'',
@@ -14,7 +14,7 @@ const initState={
 //reducer
 export function part(state=initState, action) {
     switch (action.type) {
-        case AUTH_SUCCESS:
+        case PART_SUCCESS:
             return {...state, ...action.payload}
         case PARTLIST_SUCCESS:
             return {...state, partlist:action.payload, ...action.payload}
@@ -26,7 +26,7 @@ function getpartlistSuccess(data) {
     return { type:PARTLIST_SUCCESS, payload:data}
 }
 function authSuccess(data){
-	return { type:AUTH_SUCCESS, payload:data}
+	return { type:PART_SUCCESS, payload:data}
 }
 
 
