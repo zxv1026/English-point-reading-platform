@@ -33,19 +33,19 @@ class ContentControl extends Component {
     createContent(content) {
         this.props.create(content);
     }
-    // SoundPlay(mp3,offset, duration) {
-    //     const Sounds = new Howl({
-    //         src: [require(`../../../assets/mp3/${mp3}.mp3`)],
-    //         sprite: {
-    //             time: [offset, duration]
-    //         }
-    //     })
-    //     Sounds.play()
-    // }
+    SoundPlay(mp3,offset, duration) {
+        const Sounds = new Howl({
+            src: [require(`../../../assets/mp3/${mp3}.mp3`)],
+            sprite: {
+                time: [offset, duration]
+            }
+        })
+        Sounds.play("time")
+    }
     render() {
         const { contentlist } = this.props
         const { create } = this.state
-        console.log(this.props.mp3)
+        console.log(contentlist)
         const columns = [
             {
                 title: 'ContentID',
@@ -94,11 +94,11 @@ class ContentControl extends Component {
                 render: (text, record)=>{
                     return (
                         <span>
-                            {/* <Button 
+                            <Button 
                                 className='button' 
                                 type="primary" 
-                                onClick={() =>this.SoundPlay(record.detailid)}
-                            >播放音频</Button> */}
+                                onClick={() =>this.SoundPlay(record.detailID.mp3,record.offset,record.duration)}
+                            >播放音频</Button>
                             <ContentModal
                                 onOk={(content) =>{
                                     this.updateContent(record._id, content);

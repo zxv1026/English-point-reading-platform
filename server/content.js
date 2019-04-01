@@ -5,7 +5,8 @@ const Content = require('./models/content');
 
 Router.get('/list',function (req, res) {
     // Content.remove({},function (err,doc) {})
-    Content.find({}, function (err, doc) {
+    Content.find({}).populate('detailID').exec(function (err,doc) {
+        console.log(doc)
         return res.json({code: 0, data:doc})
     })
 })
@@ -31,7 +32,9 @@ Router.post('/update', function (req, res) {
     const {_id,detailid} = req.body
     Detail.findOne({'detailid': detailid}, function (err, doc) {
         if(doc){
+            body.detailID = doc._id;
             Content.findByIdAndUpdate(_id, body, function (err, doc) {
+                console.log(body)
                 return res.json({code:0, data: body,success:'更新content成功'})
             })
         }else{
@@ -45,11 +48,13 @@ Router.post('/create', function (req, res) {
     const { contentid, detailid, chinese, english, offset, duration, created } = req.body;
     Detail.findOne({'detailid': detailid},function (err,doc) {
         if(doc){
+            const detailID = doc._id;
+            console.log(detailID)
             Content.findOne({contentid},function (err, doc) {
                 if(doc) {
                     return res.json({msg: '创建content失败，ContentID已经存在，请换一个'})
                 }
-                Content.create({contentid, detailid,chinese, english,offset, duration, created },function (e, d) {
+                Content.create({contentid, detailid,chinese, english,offset, duration, created,detailID },function (e, d) {
                     if(e) {
                         return res.json({msg: '后端出错'})
                     }

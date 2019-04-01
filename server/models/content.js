@@ -8,7 +8,12 @@ const ContentSchema = new Schema({
     english:{ type: String, required: true },
     offset:{ type: Number, required: true },
     duration:{ type: Number, required: true },
+    detailID: {
+        type: Schema.Types.ObjectId,
+        ref: 'Detail'
+    },
     created:{ type: Date },
+    icon:{ type: String },
 });
 
 

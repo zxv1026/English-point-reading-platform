@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, message } from "antd";
+import { Button, Table, Popconfirm } from "antd";
 import moment from 'moment';
 import DetailModal from './detailModal';
 import { connect } from 'react-redux';
@@ -8,7 +8,9 @@ import { Howl } from 'howler';
 
 
 @connect(
-    state => state.detail,
+    state => ({
+        detaillist: state.detail.detaillist,
+    }),
     {create, update, remove, getDetailList}
 )
 class DetailControl extends Component {
