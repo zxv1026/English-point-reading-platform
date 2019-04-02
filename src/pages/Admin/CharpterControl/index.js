@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, message } from "antd";
+import { Button, Table, Popconfirm } from "antd";
 import moment from 'moment';
 import CharpterModal from './charpterModal';
 import { connect } from 'react-redux';
@@ -49,6 +49,11 @@ class CharpterControl extends Component {
                 title: 'Charpter名',
                 dataIndex: 'name',
                 key: 'name',
+            },
+            {
+                title: '点赞数',
+                dataIndex: 'likenum',
+                key: 'likenum',
             },
             {
                 title: '创建时间',

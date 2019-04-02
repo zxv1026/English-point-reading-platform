@@ -47,6 +47,11 @@ class PartControl extends Component {
                 key: 'name',
             },
             {
+                title: '点赞数',
+                dataIndex: 'likenum',
+                key: 'likenum',
+            },
+            {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',

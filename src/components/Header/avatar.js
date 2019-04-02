@@ -17,11 +17,11 @@ class Avatar extends Component {
                     overlay={
                         <Menu>
                             <Menu.Item>
-                                <a>
+                                <Link>
                                     <Icon type="user" /> 个人中心
-                                </a>
+                                </Link>
                             </Menu.Item>
-                            {type=='admin'?
+                            {type==='admin'?
                                 <Menu.Item>
                                     <Link to='/admin'>
                                         <Icon type="login" /> 进入后台管理

@@ -18,7 +18,7 @@ class Header extends Component {
         this.handleInputBlur = this.handleInputBlur.bind(this)
     }
     render() {
-        const { username,avatar } = this.props
+        const { username } = this.props
         return (
             <HeaderWrapper>
                 <Link to="/"><Logo/></Link>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from '../../components/Header/index';
 import ListContent from './components/listcontent';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Icon, Tooltip } from "antd";
 import { connect } from 'react-redux';
 import { getContentListOne } from "../../redux/content_redux";

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect, Switch, Router } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from 'redux-thunk';
 import { Provider } from "react-redux";
@@ -38,7 +38,7 @@ class App extends Component {
                   <Route exact path="/parts/:partId/charpters" component={Charpter} />
                   <Route exact path="/parts/:partId/charpters/:charpterId/details" component={Detail} />
                   <Route exact path="/parts/:partId/charpters/:charpterId/details/:detailId/contents" component={Content} />
-                  <Route exact path='/admin' component={AdminHome}/>
+                  <Route path='/admin' component={AdminHome}/>
                   <Route component={RouteFallback} />
                 </Switch>
               </div>
