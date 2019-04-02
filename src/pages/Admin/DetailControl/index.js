@@ -66,6 +66,11 @@ class DetailControl extends Component {
                 key: 'mp3',
             },
             {
+                title: '点赞数',
+                dataIndex: 'num',
+                key: 'num',
+            },
+            {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',

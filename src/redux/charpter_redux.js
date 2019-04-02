@@ -10,6 +10,7 @@ const initState={
     partid:'',
     name: '',
     created: '',
+    likenum: 0,
     charpterlist: [],
     charpterlistone:[],
 }
@@ -50,6 +51,24 @@ export function remove(data) {
                             dispatch(getcharpterlistSuccess(res.data.data))
                         })
 				}else{
+                    message.error(res.data.msg, 5)
+                }
+            })
+    }
+}
+
+export function updatecharpterlikenum(id, data) {
+    data.charpterid = id;
+    return dispatch => {
+        axios.post('/charpter/updatelikenum', data)
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(authSuccess(res.data.data))
+                    // axios.get('/detail/list')
+                    //     .then(res => {
+                    //         dispatch(getdetaillistSuccess(res.data.data))
+                    //     })
+                } else {
                     message.error(res.data.msg, 5)
                 }
             })

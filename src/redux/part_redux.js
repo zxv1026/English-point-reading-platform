@@ -8,6 +8,7 @@ const initState={
     partid:'',
     name: '',
     created: '',
+    likenum: 0,
     partlist: [],
 }
 
@@ -42,6 +43,20 @@ export function remove(data) {
                             dispatch(getpartlistSuccess(res.data.data))
                         })
 				}else{
+                    message.error(res.data.msg, 5)
+                }
+            })
+    }
+}
+
+export function updatepartlikenum(id, data) {
+    data.partid = id;
+    return dispatch => {
+        axios.post('/part/updatelikenum', data)
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(authSuccess(res.data.data))
+                } else {
                     message.error(res.data.msg, 5)
                 }
             })

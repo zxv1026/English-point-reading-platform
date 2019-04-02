@@ -24,6 +24,15 @@ Router.post('/remove', function (req, res) {
     })
 })
 
+Router.post('/updatelikenum', function (req, res) {
+    // console.log(req.body)
+    const body = req.body
+    const {partid} = req.body
+    Part.findOneAndUpdate(partid, body, function (err, doc) {
+        return res.json({code:0, data: body})
+    })
+})
+
 Router.post('/update', function (req, res) {
     // console.log(req.body)
     const body = req.body
@@ -35,12 +44,12 @@ Router.post('/update', function (req, res) {
 
 Router.post('/create', function (req, res) {
     console.log(req.body)
-    const { partid, name, created } = req.body;
+    const { partid, name, created,likenum } = req.body;
     Part.findOne({partid},function (err, doc) {
         if(doc) {
             return res.json({msg: 'PartID已经存在，请换一个'})
         }
-        Part.create({partid, name, created },function (e, d) {
+        Part.create({partid, name, created,likenum },function (e, d) {
             if(e) {
                 return res.json({msg: '后端出错'})
             }

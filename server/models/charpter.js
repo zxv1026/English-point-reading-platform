@@ -5,6 +5,7 @@ const CharpterSchema = new Schema({
     charpterid:{ type: Number, required: true },
     partid:{ type: Number, required: true },
     name:{ type: String, required: true },
+    likenum:{ type:Number, required: true },
     created:{ type: Date },
 });
 
