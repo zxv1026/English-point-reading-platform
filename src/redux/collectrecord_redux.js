@@ -1,21 +1,20 @@
 import axios from 'axios';
 import { message } from 'antd';
 
-const LIKE_SUCCESS = 'LIKE_SUCCESS';
-const LIKEONE_ERROR = 'LIKEONE_ERROR';
+const COLLECTION_SUCCESS = 'COLLECTION_SUCCESS';
+const COLLECTION_ERROR = 'COLLECTION_ERROR';
 
 const initState={
-    like: '',
+    collect: '',
     created: '',
 }
 
 //reducer
-export function likerecord(state=initState, action) {
+export function collectrecord(state=initState, action) {
     switch (action.type) {
-        case LIKE_SUCCESS:
-            // console.log()
+        case COLLECTION_SUCCESS:
             return {...state, ...action.payload}
-        case LIKEONE_ERROR:
+        case COLLECTION_ERROR:
             return {...initState,}
         default:
             return state
@@ -23,36 +22,36 @@ export function likerecord(state=initState, action) {
 }
 
 function authSuccess(data){
-	return { type:LIKE_SUCCESS, payload:data}
+	return { type:COLLECTION_SUCCESS, payload:data}
 }
-function LikeoneError(){
-	return { type:LIKEONE_ERROR }
+function CollectiononeError(){
+	return { type:COLLECTION_ERROR }
 }
 
-//查看该用户在该detail下的是否点过赞(如：在起床这个话题是否点过赞)
-export function getone(data) {
+//查看该用户在该detail下的是否点过赞
+export function getCollectionOne(data) {
     return dispatch => {
-        axios.post('/likerecord/one', data)
+        axios.post('/collectrecord/one', data)
             .then(res => {
                 if (res.status === 200 && res.data.code === 0) {
                     dispatch(authSuccess(res.data.data))
                 } else {
-                    dispatch(LikeoneError())
+                    dispatch(CollectiononeError())
                 }
             })
     }
 }
 
-export function remove(id) {
+export function removeCollection(id) {
     const data = {
         _id: id
     }
     return dispatch=>{
-        axios.post('/likerecord/remove', data)
+        axios.post('/collectrecord/remove', data)
             .then(res=>{
                 if (res.status===200&&res.data.code===0) {
-                    dispatch(LikeoneError())
-                    message.success(res.data.success, 5);
+                    dispatch(CollectiononeError())
+                    message.success(res.data.success);
 				}else{
                     message.error(res.data.msg)
                 }
@@ -60,12 +59,12 @@ export function remove(id) {
     }
 }
 
-export function create({userID,detailID,like,created}) {
+export function createCollection({userID,detailID,collect,created}) {
     return dispatch=>{
-        axios.post('/likerecord/create',{userID,detailID,like,created})
+        axios.post('/collectrecord/create',{userID,detailID,collect,created})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({userID,detailID,like,created}))
+                dispatch(authSuccess({userID,detailID,collect,created}))
                 message.success(res.data.success);
             }else{
                 message.error(res.data.msg)

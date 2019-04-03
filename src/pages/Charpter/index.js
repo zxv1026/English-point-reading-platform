@@ -18,7 +18,7 @@ class Charpter extends Component {
         const { charpterlistone } = this.props
         return (
             <div>
-                <Header/>
+                <Header path={this.props.location.pathname}/>
                 <ListCharpter
                     list={charpterlistone}
                 />

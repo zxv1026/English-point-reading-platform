@@ -34,6 +34,7 @@ class contentModal extends Component{
                 if (typeof onOk === "function") {
                     if(create){
                         values.created = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+                        values.likenum = 0;
                     }
                     onOk(values);
                     console.log(values)

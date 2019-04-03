@@ -35,6 +35,7 @@ class charpterModal extends Component{
                     if(create){
                         values.created = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
                         values.likenum = 0;
+                        values.collectnum =0;
                     }
                     onOk(values);
                     console.log(values)

@@ -18,13 +18,13 @@ class Header extends Component {
         this.handleInputBlur = this.handleInputBlur.bind(this)
     }
     render() {
-        const { username } = this.props
+        const { username,path } = this.props
         return (
             <HeaderWrapper>
                 <Link to="/"><Logo/></Link>
                 <Nav>
                     <Link to="/"><NavItem className='left active'>首页</NavItem></Link>
-                    {username? null:<Link to="/login"><NavItem className='right'>登录</NavItem></Link>}
+                    {username? null:<Link to={{pathname:'/login', link:path}}><NavItem className='right'>登录</NavItem></Link>}
                     <SearchWrapper>
                         <CSSTransition
                             in={this.state.focused}
@@ -44,7 +44,7 @@ class Header extends Component {
                     {username? 
                         <span style={{float: "right", marginRight: 30 }}>
                             <Avatar/>
-                        </span> :<Link to="/register"><Button>注册</Button></Link>}
+                        </span> :<Link to={{pathname:'/register',link:path}}><Button>注册</Button></Link>}
                 </Addition>
             </HeaderWrapper>
         )

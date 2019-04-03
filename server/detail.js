@@ -45,7 +45,7 @@ Router.post('/updatenum', function (req, res) {
     const body = req.body
     const {_id} = req.body
     Detail.findByIdAndUpdate(_id, body, function (err, doc) {
-        return res.json({code:0, data: body,success:'创建Detail成功'})
+        return res.json({code:0, data: body})
     })
 })
 
@@ -66,14 +66,14 @@ Router.post('/update', function (req, res) {
 
 Router.post('/create', function (req, res) {
     console.log(req.body)
-    const { detailid, charpterid, name, mp3, created,num } = req.body;
+    const { detailid, charpterid, name, mp3, created,num,collectnum } = req.body;
     Charpter.findOne({'charpterid': charpterid},function (err, doc) {
         if(doc){
             Detail.findOne({detailid},function (err, doc) {
                 if(doc) {
                     return res.json({msg: '创建Detail失败，DetailID已经存在，请换一个'})
                 }
-                Detail.create({detailid, charpterid, name, mp3, created,num },function (e, d) {
+                Detail.create({detailid, charpterid, name, mp3, created,num,collectnum },function (e, d) {
                     if(e) {
                         return res.json({msg: '后端出错'})
                     }

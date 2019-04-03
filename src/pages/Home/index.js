@@ -22,7 +22,7 @@ class Home extends Component {
         const { partlist } = this.props
         return (
             <div>
-                <Header/>
+                <Header path={this.props.location.pathname}/>
                 <HomeWrapper>
                     <HomeLeft>
                         <Carousel autoplay dots>

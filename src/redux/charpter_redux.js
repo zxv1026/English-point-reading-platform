@@ -11,6 +11,7 @@ const initState={
     name: '',
     created: '',
     likenum: 0,
+    collectnum: 0,
     charpterlist: [],
     charpterlistone:[],
 }
@@ -57,6 +58,7 @@ export function remove(data) {
     }
 }
 
+//更新点赞数和收藏数
 export function updatecharpterlikenum(id, data) {
     data.charpterid = id;
     return dispatch => {
@@ -117,15 +119,15 @@ export function getCharpterListOne(data) {
     }
 }
 
-export function create({charpterid,partid,name,created}) {
+export function create({charpterid,partid,name,created,likenum,collectnum}) {
     if(!charpterid || !partid ||!name) {
         message.error('CharpterID,PartID和名称必须输入', 5)
     }
     return dispatch=>{
-        axios.post('/charpter/create',{charpterid,partid,name,created})
+        axios.post('/charpter/create',{charpterid,partid,name,created,likenum,collectnum})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({charpterid,partid,name,created}))
+                dispatch(authSuccess({charpterid,partid,name,created,likenum,collectnum}))
                 message.success(res.data.success, 5);
                 axios.get('/charpter/list')
                     .then(res => {

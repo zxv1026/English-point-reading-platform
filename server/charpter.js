@@ -62,7 +62,7 @@ Router.post('/update', function (req, res) {
 Router.post('/create', function (req, res) {
     // console.log("charpter创建")
     // console.log(req.body)
-    const { charpterid, partid, name, created, likenum } = req.body;
+    const { charpterid, partid, name, created, likenum, collectnum } = req.body;
     Charpter.findOne({charpterid},function (err, doc) {
         if(doc) {
             return res.json({msg: '创建charpter失败，CharpterID已经存在，请换一个'})
@@ -73,7 +73,7 @@ Router.post('/create', function (req, res) {
             // console.log(doc.name)
             if(doc){
                 console.log(charpterid)
-                Charpter.create({charpterid, partid, name, created, likenum },function (e, d) {
+                Charpter.create({charpterid, partid, name, created, likenum, collectnum },function (e, d) {
                     console.log(d)
                     if(e) {
                         return res.json({msg: '后端出错'})

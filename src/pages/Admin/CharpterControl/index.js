@@ -56,6 +56,11 @@ class CharpterControl extends Component {
                 key: 'likenum',
             },
             {
+                title: '收藏数',
+                dataIndex: 'collectnum',
+                key: 'collectnum',
+            },
+            {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',

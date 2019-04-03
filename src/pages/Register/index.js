@@ -47,9 +47,10 @@ class Register extends Component {
     }
     render() {
         const { msg, redirectTo } = this.props;
+        const link = this.props.location.link;
         return (
             <Layout className="full-layout register-page login-page">
-                {redirectTo?<Redirect to="/"/>:null}
+                {link&&redirectTo?<Redirect to={link}/>:null}
                 <Content>
                     <Form  className="login-form">
                         <div className="user-img">
@@ -108,7 +109,7 @@ class Register extends Component {
                             >
                                 注册
                             </Button>
-                            <Link className="fr" to="/login">
+                            <Link className="fr" to={{pathname:"/login",link:link}}>
                                 使用已有账户登录
                             </Link>
                         </FormItem>

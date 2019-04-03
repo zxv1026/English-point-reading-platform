@@ -9,6 +9,7 @@ const initState={
     name: '',
     created: '',
     likenum: 0,
+    collectnum: 0,
     partlist: [],
 }
 
@@ -49,6 +50,7 @@ export function remove(data) {
     }
 }
 
+//更新点赞数和收藏数
 export function updatepartlikenum(id, data) {
     data.partid = id;
     return dispatch => {
@@ -93,15 +95,15 @@ export function getPartList() {
     }
 }
 
-export function create({partid,name,created}) {
+export function create({partid,name,created,likenum,collectnum}) {
     if(!partid || !name) {
         message.error('PartID和名称必须输入', 5)
     }
     return dispatch=>{
-        axios.post('/part/create',{partid,name,created})
+        axios.post('/part/create',{partid,name,created,likenum,collectnum})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({partid,name,created}))
+                dispatch(authSuccess({partid,name,created,likenum,collectnum}))
                 message.success(res.data.success,5);
                 axios.get('/part/list')
                     .then(res => {

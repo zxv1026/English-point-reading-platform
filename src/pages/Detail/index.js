@@ -20,7 +20,7 @@ class Detail extends Component {
         const { detaillist } = this.props
         return (
             <div>
-                <Header/>
+                <Header path={this.props.location.pathname}/>
                 <ListDetail
                     list={detaillist}
                     partid={this.props.match.params.partId}

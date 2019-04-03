@@ -36,10 +36,12 @@ class Login extends Component {
     }
     render() {
         const path = this.props.location.pathname;
+        const link = this.props.location.link;
+        console.log(this.props)
         const { msg, redirectTo } = this.props;
         return (
             <Layout className="full-layout login-page">
-                {redirectTo?<Redirect to="/"/>:null}
+                {link&&redirectTo?<Redirect to={link}/>:null}
                 {console.log(path)}
                 <Content>
                     <Form  className="login-form">
@@ -85,7 +87,7 @@ class Login extends Component {
                                 登录
                             </Button>
                             <div className="new-user">
-                                新用户？<Link to="/register">现在注册</Link>
+                                新用户？<Link to={{pathname:"/register",link:link}}>现在注册</Link>
                             </div>
                         </FormItem>
                     </Form>
