@@ -10,6 +10,8 @@ import Charpter from './pages/Charpter';
 import Detail from './pages/Detail';
 import Content from './pages/Content';
 import AdminHome from './pages/Admin/index';
+import PersonalCenter from './pages/PersonalCenter';
+import AvatarChoose from './components/AvatarChoose'
 import { GlobalStyle_Icon } from "./assets/iconfont/iconfont";
 import reducers from './reducer';
 
@@ -35,6 +37,8 @@ class App extends Component {
                   <Route exact path='/' component={Home}/>
                   <Route exact path='/login' component={Login}/>
                   <Route exact path='/register' component={Register}/>
+                  <Route exact path='/personalcenter' component={PersonalCenter}/>
+                  <Route exact path='/personalcenter/avatarchoose' component={AvatarChoose}/>
                   <Route exact path="/parts/:partId/charpters" component={Charpter} />
                   <Route exact path="/parts/:partId/charpters/:charpterId/details" component={Detail} />
                   <Route exact path="/parts/:partId/charpters/:charpterId/details/:detailId/contents" component={Content} />

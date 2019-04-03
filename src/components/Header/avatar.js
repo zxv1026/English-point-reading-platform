@@ -17,7 +17,7 @@ class Avatar extends Component {
                     overlay={
                         <Menu>
                             <Menu.Item>
-                                <Link>
+                                <Link to='/personalcenter'>
                                     <Icon type="user" /> 个人中心
                                 </Link>
                             </Menu.Item>

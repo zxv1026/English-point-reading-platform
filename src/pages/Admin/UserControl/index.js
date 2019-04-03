@@ -73,7 +73,7 @@ class UserControl extends Component {
                             <Link to={{
                                 pathname:'/admin/avatarchoose',
                                 state:{
-                                    path: 'admin',
+                                    path: '/admin',
                                     id: record._id,
                                     avatar: record.avatar
                                 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Icon, Button, Row, Col, message } from "antd";
+import Header from '../Header';
 import { connect } from 'react-redux';
 import { update } from "../../redux/user_redux";
 import './index.less'
@@ -39,13 +40,15 @@ class AvatarChoose extends Component{
                                 avatar: require(`../../assets/images/user/${v}.jpg`),
                                 text: v 
                             }))
-        const id = this.props.location.state.id;
+        const {id,path} = this.props.location.state;
         const { msg } = this.props;
+        console.log(path)
         return (
             <div>
                 {msg==="true"?message.success("保存用户头像成功",5): null}
+                {path==='/personalcenter'?<Header/>:null}
                 <Link to={{
-                    pathname: "/"+this.props.location.state.path
+                    pathname: path
                 }}>
                     <Icon type="caret-left"/>
                     Back
