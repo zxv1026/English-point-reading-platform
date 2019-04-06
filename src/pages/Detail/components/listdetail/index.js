@@ -1,15 +1,17 @@
 import React,{Component} from 'react';
 import { Link } from "react-router-dom";
-import { Icon, List } from "antd";
+import { Icon, List,Tooltip } from "antd";
 
 class ListDetail extends Component {
     
     render() {
         const { list,partid } = this.props
-        const IconText = ({ type, text }) => (
+        const IconText = ({ type, text,title }) => (
             <span>
-                <Icon type={type} style={{ marginRight: 8 }} />
-                {text}
+                <Tooltip title={title}>
+                    <Icon type={type} style={{ marginRight: 8 }} />
+                    {text}
+                </Tooltip>
             </span>
         );
         return (
@@ -32,7 +34,10 @@ class ListDetail extends Component {
                     renderItem={item => (
                         <List.Item
                             key={"detail_"+item.detailid}
-                            actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+                            actions={[
+                                <IconText type="heart-o" text={item.collectnum} title="收藏"/>, 
+                                <IconText type="like-o" text={item.num} title="点赞" />, 
+                                <IconText type="message" text="2" />]}
                             extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
                         >
                             <Link to={{
