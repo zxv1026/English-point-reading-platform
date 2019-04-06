@@ -4,7 +4,7 @@ import ListContent from './components/listcontent';
 import { Link } from "react-router-dom";
 import { Icon, Tooltip } from "antd";
 import { connect } from 'react-redux';
-import { getContentListOne } from "../../redux/content_redux";
+import { getContentListOne,changeScrollTopShow } from "../../redux/content_redux";
 import { getDetailOne,updatenum } from "../../redux/detail_redux";
 import { create,remove,getone } from "../../redux/likerecord_redux";
 import { createCollection,removeCollection,getCollectionOne } from "../../redux/collectrecord_redux";
@@ -16,6 +16,7 @@ import './index.less';
 @connect(
     state => ({
         userID: state.user._id,
+        showScroll: state.content.showScroll,
         contentlist: state.content.contentlist,
         detailID: state.detail._id,
         num: state.detail.num,
@@ -28,7 +29,7 @@ import './index.less';
         collect: state.collectrecord.collect,
         collectID: state.collectrecord._id,
     }),
-    {getContentListOne,getDetailOne,create,remove,getone,updatenum,updatecharpterlikenum,updatepartlikenum,createCollection,removeCollection,getCollectionOne}
+    {getContentListOne,changeScrollTopShow,getDetailOne,create,remove,getone,updatenum,updatecharpterlikenum,updatepartlikenum,createCollection,removeCollection,getCollectionOne}
 )
 class Content extends Component {
     componentDidMount() {
@@ -36,8 +37,17 @@ class Content extends Component {
         state.id = this.props.match.params.detailId
         this.props.getDetailOne(state)
         this.props.getContentListOne(state)
-        console.log(this.props.userID)
-        console.log(this.props.detailID)
+        this.bindEvents();
+    }
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.props.changeScrollTopShow);
+    }
+    handleScrollTop(){
+        window.scrollTo(0, 0);
+    }
+    bindEvents() {
+        console.log('bindevents')
+        window.addEventListener('scroll', this.props.changeScrollTopShow);
     }
     //点赞
     like(like, userID, detailID, likeID, num, charpterlikenum,partlikenum) {
@@ -243,9 +253,15 @@ class Content extends Component {
                     charpterid={this.props.match.params.charpterId}
                     mp3={mp3}
                 />
+                { this.props.showScroll 
+                    ? <div className='showScroll' onClick={this.handleScrollTop}>
+                            <Tooltip placement="left" title="回到顶部">
+                                <Icon type='up'/>
+                            </Tooltip>
+                      </div> : null}
             </div>
         )
     }
-}
+} 
 
 export default Content;

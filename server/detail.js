@@ -4,6 +4,49 @@ const Charpter = require('./models/charpter');
 const Detail = require('./models/detail');
 const Content = require('./models/content');
 
+//取最新加进去的前4个
+Router.get('/findlist',function (req,res) {
+    Detail.find({})
+        .populate({
+            path:'charpterID',
+            populate: { path: 'partID' }
+        })
+        .sort({'_id': -1})
+        .limit(4)
+        .exec(function (err,doc) {
+            console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+//取点赞数最多的10个
+Router.get('/findlikenumlist',function (req,res) {
+    Detail.find({})
+        .populate({
+            path:'charpterID',
+            populate: { path: 'partID' }
+        })
+        .sort({'num': -1})
+        .limit(10)
+        .exec(function (err,doc) {
+            console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+//取收藏数最多的10个
+Router.get('/findcollectnumlist',function (req,res) {
+    Detail.find({})
+        .populate({
+            path:'charpterID',
+            populate: { path: 'partID' }
+        })
+        .sort({'collectnum': -1})
+        .limit(10)
+        .exec(function (err,doc) {
+            console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+
 Router.get('/list',function (req, res) {
     // DetailPart.remove({},function (err,doc) {})
     Detail.find({}, function (err, doc) {

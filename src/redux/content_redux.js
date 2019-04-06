@@ -3,6 +3,7 @@ import { message } from 'antd';
 
 const CONTENTLIST_SUCCESS = 'CONTENTLIST_SUCCESS';
 const CONTENT_SUCCESS = 'CONTENT_SUCCESS';
+const ScrollTop = 'ScrollTop';
 
 const initState={
     contentid:'',
@@ -15,11 +16,14 @@ const initState={
     duration: '',
     created: '',
     contentlist: [],
+    showScroll: false,
 }
 
 //reducer
 export function content(state=initState, action) {
     switch (action.type) {
+        case ScrollTop:
+            return {...state,showScroll:action.payload}
         case CONTENT_SUCCESS:
             return {...state,...action.payload}
         case CONTENTLIST_SUCCESS:
@@ -34,7 +38,20 @@ function getcontentlistSuccess(data) {
 function authSuccess(data){
 	return { type:CONTENT_SUCCESS, payload:data}
 }
+function scrollTop(data) {
+	return { type:ScrollTop, payload:data}
+}
 
+export function changeScrollTopShow(data) {
+    return dispatch=>{
+        if (document.documentElement.scrollTop > 100) {
+            dispatch(scrollTop(true))
+        } else {
+            dispatch(scrollTop(false))
+        }
+
+    }
+}
 
 export function remove(data) {
     return dispatch=>{

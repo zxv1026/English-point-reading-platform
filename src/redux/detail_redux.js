@@ -3,6 +3,9 @@ import { message } from 'antd';
 
 const DETAILLIST_SUCCESS = 'DETAILLIST_SUCCESS';
 const DETAIL_SUCCESS = 'DETAIL_SUCCESS';
+const DETAILNEWLIST_SUCCESS = 'DETAILNEWLIST_SUCCESS';
+const DETAILLIKELIST_SUCCESS = 'DETAILLIKELIST_SUCCESS';
+const DETAILCOLLECTLIST_SUCCESS = 'DETAILCOLLECTLIST_SUCCESS';
 
 const initState={
     detailid:'',
@@ -13,6 +16,9 @@ const initState={
     collectnum: 0,
     created: '',
     detaillist: [],
+    newlist: [],
+    likelist: [],
+    collectlist: [],
 }
 
 //reducer
@@ -22,12 +28,27 @@ export function detail(state=initState, action) {
             return {...state,...action.payload}
         case DETAILLIST_SUCCESS:
             return {...state,detaillist:action.payload, ...action.payload}
+        case DETAILNEWLIST_SUCCESS:
+            return {...state,newlist:action.payload}
+        case DETAILLIKELIST_SUCCESS:
+            return {...state,likelist:action.payload}
+        case DETAILCOLLECTLIST_SUCCESS:
+            return {...state,collectlist:action.payload}
         default:
             return state
     }
 }
 function getdetaillistSuccess(data) {
     return { type:DETAILLIST_SUCCESS, payload:data}
+}
+function getdetailnewlistSuccess(data) {
+    return { type:DETAILNEWLIST_SUCCESS, payload:data}
+}
+function getdetaillikelistSuccess(data) {
+    return { type:DETAILLIKELIST_SUCCESS, payload:data}
+}
+function getdetailcollectlistSuccess(data) {
+    return { type:DETAILCOLLECTLIST_SUCCESS, payload:data}
 }
 function authSuccess(data){
 	return { type:DETAIL_SUCCESS, payload:data}
@@ -86,6 +107,39 @@ export function update(_id,data) {
 				}else{
                     message.error(res.data.msg, 5)
 				}
+            })
+    }
+}
+//获取最新的4个
+export function getDetailNewestList() {
+    return dispatch=>{
+        axios.get('/detail/findlist')
+            .then(res=>{
+                if(res.status===200&&res.data.code===0){
+                    dispatch(getdetailnewlistSuccess(res.data.data))
+                }
+            })
+    }
+}
+//获取点赞数前10
+export function getDetailLikeList() {
+    return dispatch=>{
+        axios.get('/detail/findlikenumlist')
+            .then(res=>{
+                if(res.status===200&&res.data.code===0){
+                    dispatch(getdetaillikelistSuccess(res.data.data))
+                }
+            })
+    }
+}
+//获取收藏数前10
+export function getDetailCollectList() {
+    return dispatch=>{
+        axios.get('/detail/findcollectnumlist')
+            .then(res=>{
+                if(res.status===200&&res.data.code===0){
+                    dispatch(getdetailcollectlistSuccess(res.data.data))
+                }
             })
     }
 }
