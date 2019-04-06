@@ -3,7 +3,7 @@ import Header from '../../components/Header/index';
 import ListPart from './components/listpart/index';
 import { Link } from "react-router-dom";
 import { Icon, List,Tooltip } from 'antd';
-import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont } from "./style";
+import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont,SlideShow } from "./style";
 import { connect } from 'react-redux';
 import { getPartList } from "../../redux/part_redux";
 import { getDetailNewestList,getDetailLikeList,getDetailCollectList } from '../../redux/detail_redux'
@@ -24,6 +24,12 @@ class Home extends Component {
         this.props.getDetailLikeList();
         this.props.getDetailCollectList();
     }
+    handlePrev = () => {
+        this.refs.img.prev(); //ref = img
+    }
+    handleNext = () => {
+        this.refs.img.next();
+    }
     render() {
         const { partlist,detailnewlist,detaillikelist,detailcollectlist } = this.props
         console.log(detailnewlist)
@@ -34,15 +40,19 @@ class Home extends Component {
                 <Header path={this.props.location.pathname}/>
                 <HomeWrapper>
                     <HomeLeft>
-                        <CarouselCompont autoplay >
-                            {detailnewlist.map((detail)=>(
-                                <div >
-                                    <Link to={{
-                                        pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
-                                    }}><h3>{detail.name}</h3></Link>
-                                </div>
-                            ))}
-                        </CarouselCompont>
+                        <SlideShow>
+                            <Icon type="left" theme="outlined" style={{ fontSize: '30px'}} onClick={this.handlePrev}/>
+                            <CarouselCompont autoplay ref='img'>
+                                {detailnewlist.map((detail)=>(
+                                    <span>
+                                        <Link to={{
+                                            pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
+                                        }}><h3>{detail.name}</h3></Link>
+                                    </span>
+                                ))}
+                            </CarouselCompont>
+                            <Icon type="right" theme="outlined"  style={{ fontSize: '30px'}} onClick={this.handleNext}/>
+                        </SlideShow>
                         <ListPart
                             list={partlist}
                         />

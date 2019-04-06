@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Carousel } from 'antd'
-import img from "../../assets/images/ch40.jpg";
+import img from "../../assets/images/ch06.jpg";
 
 export const HomeWrapper = styled.div`
     overflow: hidden;
@@ -19,12 +19,20 @@ export const HomeLeft = styled.div `
     }
 `;
 
+export const SlideShow = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+`
+
 export const CarouselCompont = styled(Carousel)`
     text-align: center;
+    width: 565px;
     height: 270px;
     line-height: 160px;
     background: url(${img});
-    background-size:625px 270px;
+    background-size:565px 270px;
     overflow: hidden;
 `
 
