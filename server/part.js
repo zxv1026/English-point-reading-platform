@@ -28,7 +28,7 @@ Router.post('/updatelikenum', function (req, res) {
     // console.log(req.body)
     const body = req.body
     const {partid} = req.body
-    Part.findOneAndUpdate(partid, body, function (err, doc) {
+    Part.findOneAndUpdate({'partid': partid}, body, function (err, doc) {
         return res.json({code:0, data: body})
     })
 })

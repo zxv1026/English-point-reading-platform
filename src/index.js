@@ -1,10 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App'
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from 'redux-thunk';
+import { Provider } from "react-redux";
+import reducers from './reducer';
+import { GlobalStyle_Icon } from "./assets/iconfont/iconfont";
 import * as serviceWorker from './serviceWorker';
 
+const store = createStore(reducers, compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension?window.devToolsExtension(): f=>f
+))
 ReactDOM.render(
-    <App/>, 
+    <Provider store={store}>
+        <BrowserRouter >
+            <GlobalStyle_Icon/>
+            <App/>
+        </BrowserRouter>
+    </Provider>, 
     document.getElementById('root')
 );
 

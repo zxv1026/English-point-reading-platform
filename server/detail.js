@@ -21,9 +21,15 @@ Router.post('/listone',function (req, res) {
 
 Router.post('/one',function (req, res) {
     const {id} = req.body
-    Detail.findOne({'detailid': id},function (err, doc) {
-        return res.json({code: 0, data:doc})
-    })
+    Detail.findOne({'detailid': id})
+        .populate({
+            path:'charpterID',
+            populate: { path: 'partID' }
+        })
+        .exec(function (err,doc) {
+            console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
 })
 
 Router.post('/remove', function (req, res) {
@@ -69,11 +75,12 @@ Router.post('/create', function (req, res) {
     const { detailid, charpterid, name, mp3, created,num,collectnum } = req.body;
     Charpter.findOne({'charpterid': charpterid},function (err, doc) {
         if(doc){
+            const charpterID = doc._id;
             Detail.findOne({detailid},function (err, doc) {
                 if(doc) {
                     return res.json({msg: '创建Detail失败，DetailID已经存在，请换一个'})
                 }
-                Detail.create({detailid, charpterid, name, mp3, created,num,collectnum },function (e, d) {
+                Detail.create({detailid, charpterid, name, mp3, created,num,collectnum,charpterID },function (e, d) {
                     if(e) {
                         return res.json({msg: '后端出错'})
                     }

@@ -2,6 +2,26 @@ const express = require('express');
 const Router = express.Router();
 const CollectRecord= require('./models/collectrecord');
 
+//根据用户ID来查找用户收藏的话题
+Router.post('/list',function (req, res) {
+    const {userID} = req.body
+    console.log(userID)
+    CollectRecord.find({userID})
+        .populate({
+            path:'detailID',
+            populate: {
+                path: 'charpterID',
+                populate: {
+                    path: 'partID'
+                }
+            }
+        })
+        .sort({'_id': -1})//因为mongodb的_id字段里其实已经包含了时间信息，所以可以通过_id来进行时间的排序
+        .exec(function (err,doc) {
+            console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
 
 Router.post('/one',function (req, res) {
     const {detailID,userID} = req.body

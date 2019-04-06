@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 // const path = require('path');
 mongoose.connect('mongodb://localhost/english', { useFindAndModify: false , useNewUrlParser:true},function (err) {
@@ -21,6 +22,7 @@ const CollectRecordRouter = require('./collectrecord');
 const app = express();
 
 // app.use(express.static(path.join(__dirname, "../static")))
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use('/user',userRouter)
 // app.use('/tag', TagRouter)

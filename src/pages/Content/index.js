@@ -22,10 +22,7 @@ import './index.less';
         detailcollectnum: state.detail.collectnum,
         detailname: state.detail.name,
         mp3: state.detail.mp3,
-        charpterlikenum: state.charpter.likenum,
-        charptercollectnum: state.charpter.collectnum,
-        partlikenum: state.part.likenum,
-        partcollectnum: state.part.collectnum,
+        data: state.detail.charpterID,
         like: state.likerecord.like,
         likeID: state.likerecord._id,
         collect: state.collectrecord.collect,
@@ -43,11 +40,13 @@ class Content extends Component {
         console.log(this.props.detailID)
     }
     //点赞
-    like(like, userID, detailID, likeID, num, charpterlikenum, partlikenum) {
+    like(like, userID, detailID, likeID, num, charpterlikenum,partlikenum) {
         if(like){
             this.props.remove(likeID)
             num = num - 1;
+            console.log("-1前" + charpterlikenum)
             charpterlikenum = charpterlikenum - 1;
+            console.log("-1后" + charpterlikenum)
             partlikenum = partlikenum - 1;
             const detail = {
                 num: num
@@ -59,18 +58,26 @@ class Content extends Component {
                 likenum: partlikenum
             }
             this.props.updatenum(detailID, detail);
+            console.log('点赞更新')
+            console.log(this.props.match.params.charpterId)
+            console.log(charpter)
             this.props.updatecharpterlikenum(this.props.match.params.charpterId, charpter);
             this.props.updatepartlikenum(this.props.match.params.partId, part);
+            let state={id:0};
+            state.id = this.props.match.params.detailId
+            this.props.getDetailOne(state)
         }else{
-            let data={
+            let likedata={
                 userID: userID,
                 detailID: detailID,
                 like: 'liked',
                 created: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
             };
-            this.props.create(data)
+            this.props.create(likedata)
             num = num + 1;
+            console.log("+1前" + charpterlikenum)
             charpterlikenum = charpterlikenum + 1;
+            console.log("+1后"+charpterlikenum)
             partlikenum = partlikenum + 1;
             const detail={
                 num: num
@@ -82,13 +89,19 @@ class Content extends Component {
                 likenum: partlikenum
             }
             this.props.updatenum(detailID,detail)
+            console.log('点赞更新')
+            console.log(this.props.match.params.charpterId)
+            console.log(charpter)
             this.props.updatecharpterlikenum(this.props.match.params.charpterId, charpter);
             this.props.updatepartlikenum(this.props.match.params.partId, part);
+            let state={id:0};
+            state.id = this.props.match.params.detailId
+            this.props.getDetailOne(state)
         }
     }
 
     //收藏
-    collect(collect, userID, detailID, collectID, detailcollectnum, charptercollectnum, partcollectnum) {
+    collect(collect, userID, detailID, collectID, detailcollectnum,charptercollectnum,partcollectnum) {
         if (collect) {
             this.props.removeCollection(collectID)
             detailcollectnum = detailcollectnum - 1;
@@ -106,14 +119,17 @@ class Content extends Component {
             this.props.updatenum(detailID, detail);
             this.props.updatecharpterlikenum(this.props.match.params.charpterId, charpter);
             this.props.updatepartlikenum(this.props.match.params.partId, part);
+            let state={id:0};
+            state.id = this.props.match.params.detailId
+            this.props.getDetailOne(state)
         } else {
-            let data = {
+            let collectdata = {
                 userID: userID,
                 detailID: detailID,
                 collect: 'collected',
                 created: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
             };
-            this.props.createCollection(data)
+            this.props.createCollection(collectdata)
             detailcollectnum = detailcollectnum + 1;
             charptercollectnum = charptercollectnum + 1;
             partcollectnum = partcollectnum + 1;
@@ -129,23 +145,22 @@ class Content extends Component {
             this.props.updatenum(detailID, detail)
             this.props.updatecharpterlikenum(this.props.match.params.charpterId, charpter);
             this.props.updatepartlikenum(this.props.match.params.partId, part);
+            let state={id:0};
+            state.id = this.props.match.params.detailId
+            this.props.getDetailOne(state)
         }
     }
 
     render() {
-        const { contentlist,mp3,detailname,num,detailID,userID,like,likeID,charpterlikenum,partlikenum,collect,collectID,detailcollectnum,charptercollectnum,partcollectnum} = this.props
-        console.log(this.props)
-        console.log(mp3)
-        console.log(detailID)
-        console.log(userID)
-        let data = {
+        const { contentlist,mp3,detailname,num,detailID,userID,like,likeID,collect,collectID,detailcollectnum,data} = this.props
+        
+        let detaildata = {
             userID: userID,
             detailID: detailID,
         };
-        this.props.getone(data)
-        this.props.getCollectionOne(data)
-        console.log(like)
-        console.log(this.props.location.pathname)
+        this.props.getone(detaildata)
+        this.props.getCollectionOne(detaildata)
+       
         return (
             <div>
                 <Header path={this.props.location.pathname}/>
@@ -157,13 +172,13 @@ class Content extends Component {
                 <div>
                     <h2>{detailname}</h2>
                     {userID?<span>
-                                <span>
+                                <span style={{ marginRight: 8 }}>
                                     <Tooltip title="点赞">
                                         <Icon
                                             type="like-o" 
                                             theme={like === 'liked' ? 'twoTone' : 'outlined'}
                                             twoToneColor = "#eb2f96"
-                                            onClick={() =>this.like(like, userID, detailID, likeID,num,charpterlikenum,partlikenum)}
+                                            onClick={() =>this.like(like, userID, detailID, likeID,num,data.likenum,data.partID.likenum)}
                                         />
                                     </Tooltip>
                                     <span style={{ paddingLeft: 8, cursor: 'auto' }}>
@@ -176,7 +191,7 @@ class Content extends Component {
                                             type="heart-o" 
                                             theme={collect === 'collected' ? 'twoTone' : 'outlined'}
                                             twoToneColor = "#eb2f96"
-                                            onClick={() =>this.collect(collect, userID, detailID, collectID,detailcollectnum,charptercollectnum,partcollectnum)}
+                                            onClick={() =>this.collect(collect, userID, detailID, collectID,detailcollectnum,data.collectnum,data.partID.collectnum)}
                                         />
                                     </Tooltip>
                                     <span style={{ paddingLeft: 8, cursor: 'auto' }}>

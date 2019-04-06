@@ -39,7 +39,9 @@ Router.post('/updatelikenum', function (req, res) {
     // console.log(req.body)
     const body = req.body
     const {charpterid} = req.body
-    Charpter.findOneAndUpdate(charpterid, body, function (err, doc) {
+    console.log('更新chapter点赞数')
+    console.log(body)
+    Charpter.findOneAndUpdate({'charpterid': charpterid}, body, function (err, doc) {
         return res.json({code:0, data: body})
     })
 })
@@ -63,27 +65,27 @@ Router.post('/create', function (req, res) {
     // console.log("charpter创建")
     // console.log(req.body)
     const { charpterid, partid, name, created, likenum, collectnum } = req.body;
-    Charpter.findOne({charpterid},function (err, doc) {
-        if(doc) {
-            return res.json({msg: '创建charpter失败，CharpterID已经存在，请换一个'})
-        }
-        Part.findOne({'partid': partid},function (err,doc) {
-            // console.log(charpterid)
-            // console.log(doc)
-            // console.log(doc.name)
-            if(doc){
-                console.log(charpterid)
-                Charpter.create({charpterid, partid, name, created, likenum, collectnum },function (e, d) {
+    Part.findOne({'partid': partid},function (err,doc) {
+        // console.log(charpterid)
+        // console.log(doc)
+        // console.log(doc.name)
+        if(doc){
+            const partID = doc._id;
+            Charpter.findOne({charpterid},function (err, doc) {
+                if(doc) {
+                    return res.json({msg: '创建charpter失败，CharpterID已经存在，请换一个'})
+                }
+                Charpter.create({charpterid, partid, name, created, likenum, collectnum,partID },function (e, d) {
                     console.log(d)
                     if(e) {
                         return res.json({msg: '后端出错'})
                     }
                     return res.json({code:0,success:'创建charpter成功'})
                 })
-            }else{
-                return res.json({msg: '创建charpter失败，PartID不存在'})
-            }
-        })
+            })
+        }else{
+            return res.json({msg: '创建charpter失败，PartID不存在'})
+        }
     })
 })
 

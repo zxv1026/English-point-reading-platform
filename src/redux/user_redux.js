@@ -5,6 +5,7 @@ const USERLIST_SUCCESS = 'USERLIST_SUCCESS';
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const LOG_OUT = 'LOG_OUT';
 const ERROR_MSG = 'ERROR_MSG';
+const LOAD_INFO = 'LOAD_INFO';
 const initState={
     redirectTo: '',
     msg: '',
@@ -20,6 +21,8 @@ const initState={
 //reducer
 export function user(state=initState, action) {
     switch (action.type) {
+        case LOAD_INFO:
+            return {...state,...action.payload}
         case AUTH_SUCCESS:
             return {...state,redirectTo:action.payload,listone:action.payload,...action.payload}
         case USERLIST_SUCCESS:
@@ -41,10 +44,24 @@ function authSuccess(data){
 function errorMsg(msg) {
     return { msg, type: ERROR_MSG }
 }
-
-export function logout(){
-    message.success('退出成功');
+function loadInfo(data) {
+    return { type:LOAD_INFO, payload:data}
+}
+function logOut() {
     return { type: LOG_OUT }
+}
+
+//用户退出
+export function logout(){
+    return dispatch=>{
+        axios.get('/user/logout')
+            .then(res=>{
+                if (res.status===200&&res.data.code===0) {
+                    dispatch(logOut())
+                    message.success(res.data.success);
+                }
+            })
+    }
 }
 
 export function remove(data) {
@@ -140,5 +157,17 @@ export function register({username,password,repeatpassword,type,avatar,created})
                 message.error(res.data.msg);
             }
         })
+    }
+}
+
+//查找有没有cookie
+export function loadinfo() {
+    return dispatch=>{
+        axios.get('/user/info')
+            .then(res=>{
+                if(res.status===200 && res.data.code===0){
+                    dispatch(loadInfo(res.data.data))
+                }
+            })
     }
 }

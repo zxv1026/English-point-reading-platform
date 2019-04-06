@@ -54,6 +54,7 @@ Router.post('/login', function (req, res) {
         if(!doc) {
             return res.json({msg:'用户名或密码错误'})
         }
+        res.cookie('userid', doc._id)
         return res.json({code: 0,data: doc, success:'登录成功'})
     })
 })
@@ -65,13 +66,38 @@ Router.post('/register',function (req, res) {
         if(doc) {
             return res.json({msg: '用户名已经存在，请换一个'})
         }
-        User.create({username, password: md5Pwd(password), type, avatar, created },function (e, d) {
+        const userModel = new User({username,type,password:md5Pwd(password),avatar, created})
+        userModel.save(function (e,d) {
             if(e) {
                 return res.json({msg: '后端出错'})
             }
-            return res.json({code:0,success:'用户注册成功'})
+            res.cookie('userid', d._id)
+            return res.json({code:0,data:d,success:'用户注册成功'})
         })
     })
+})
+
+Router.get('/info',function(req, res){
+    const {userid} = req.cookies
+    //用户没有cookie
+	if (!userid) {
+		return res.json({code:1})
+    }
+    //有cookie，把数据库中的数据保持到redux的store中
+	User.findOne({_id:userid}, function(err,doc){
+		if (err) {
+			return res.json({code:1, msg:'后端出错了'})
+		}
+		if (doc) {
+			return res.json({code:0,data:doc})
+		}
+	})
+	
+})
+
+Router.get('/logout',function (req, res) {
+    res.cookie("userid", "", { expires: new Date(0)});
+    return res.json({code:0, success:'退出成功'});
 })
 
 //在用户的密码后面加上复杂的字符串并进行加密

@@ -10,7 +10,8 @@ const ContentSchema = new Schema({
     duration:{ type: Number, required: true },
     detailID: {
         type: Schema.Types.ObjectId,
-        ref: 'Detail'
+        ref: 'Detail',
+        required: true
     },
     created:{ type: Date },
     icon:{ type: String },

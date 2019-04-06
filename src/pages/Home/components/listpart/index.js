@@ -14,7 +14,8 @@ class Listpart extends Component {
         return (
             <div>
                 <List
-                    itemLayout="vertical"
+                    // itemLayout="vertical"
+                    itemLayout="horizontal"
                     size="large"
                     pagination={{
                         onChange: (page) => {
