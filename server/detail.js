@@ -4,6 +4,25 @@ const Charpter = require('./models/charpter');
 const Detail = require('./models/detail');
 const Content = require('./models/content');
 
+//根据输入的内容查询
+Router.post('/find',function(req,res) {
+    const {find} = req.body
+    const reg = new RegExp(find, 'i')
+    console.log(find)
+    Detail.find({name: reg})
+        .populate({
+            path:'charpterID',
+            populate: { path: 'partID' }
+        })
+        .sort({'_id': -1})
+        .exec(function (err,doc) {
+            if(err){
+                return res.json({msg: '后端出错'})
+            }
+            return res.json({code: 0,data:doc})
+        })
+})
+
 //取最新加进去的前4个
 Router.get('/findlist',function (req,res) {
     Detail.find({})

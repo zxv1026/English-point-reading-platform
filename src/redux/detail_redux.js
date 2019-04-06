@@ -6,6 +6,7 @@ const DETAIL_SUCCESS = 'DETAIL_SUCCESS';
 const DETAILNEWLIST_SUCCESS = 'DETAILNEWLIST_SUCCESS';
 const DETAILLIKELIST_SUCCESS = 'DETAILLIKELIST_SUCCESS';
 const DETAILCOLLECTLIST_SUCCESS = 'DETAILCOLLECTLIST_SUCCESS';
+const DETAILFINDLIST_SUCCESS = 'DETAILFINDLIST_SUCCESS';
 
 const initState={
     detailid:'',
@@ -19,6 +20,7 @@ const initState={
     newlist: [],
     likelist: [],
     collectlist: [],
+    detailfindlist: []
 }
 
 //reducer
@@ -34,6 +36,8 @@ export function detail(state=initState, action) {
             return {...state,likelist:action.payload}
         case DETAILCOLLECTLIST_SUCCESS:
             return {...state,collectlist:action.payload}
+        case DETAILFINDLIST_SUCCESS:
+            return {...state,detailfindlist:action.payload}
         default:
             return state
     }
@@ -50,10 +54,26 @@ function getdetaillikelistSuccess(data) {
 function getdetailcollectlistSuccess(data) {
     return { type:DETAILCOLLECTLIST_SUCCESS, payload:data}
 }
+function getdetailfindlistSuccess(data) {
+    return { type:DETAILFINDLIST_SUCCESS, payload:data}
+}
 function authSuccess(data){
 	return { type:DETAIL_SUCCESS, payload:data}
 }
 
+export function find(data) {
+    return dispatch=>{
+        axios.post('/detail/find',data)
+            .then(res=>{
+                console.log(data)
+                if(res.status===200&res.data.code===0) {
+                    dispatch(getdetailfindlistSuccess(res.data.data))
+                }else{
+                    message.error(res.data.msg)
+                }
+            })
+    }
+}
 
 export function remove(data) {
     return dispatch=>{

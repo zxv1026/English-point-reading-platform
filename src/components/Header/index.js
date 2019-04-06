@@ -4,21 +4,39 @@ import { CSSTransition } from 'react-transition-group';
 import { HeaderWrapper,Logo,Nav,NavItem,NavSearch,Addition,Button,SearchWrapper } from "./style";
 import Avatar from './avatar';
 import { connect } from 'react-redux';
+import { find } from '../../redux/detail_redux'
 
 @connect(
-    state=>state.user,
+    state=>({
+        username: state.user.username,
+        detailfindlist: state.detail.detailfindlist
+    }),
+    {find}
 )
 class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
             focused: false,
+            find: ''
         }
         this.handleInputFocus = this.handleInputFocus.bind(this)
         this.handleInputBlur = this.handleInputBlur.bind(this)
     }
+    changeFind(value){
+        let { find } = this.state;
+        find = value;
+        this.setState({find})
+    }
+    find() {
+        const { find } = this.state
+        if(find){
+            this.props.find(this.state)
+        }
+    }
     render() {
-        const { username,path } = this.props
+        const { username,path,detailfindlist } = this.props
+        console.log(this.props.detailfindlist)
         return (
             <HeaderWrapper>
                 <Link to="/"><Logo/></Link>
@@ -35,9 +53,20 @@ class Header extends Component {
                                 className={this.state.focused ? 'focused' : ''}
                                 onFocus={this.handleInputFocus}
                                 onBlur={this.handleInputBlur}
-                            ></NavSearch>
+                                onChange={(e) => {
+                                    this.changeFind(e.target.value)
+                                }}
+                            >
+                            </NavSearch>
                         </CSSTransition>
-                        <i className={this.state.focused ? 'focused iconfont' : 'iconfont'}>&#xe60b;</i>
+                        <Link to={{
+                            pathname: '/find',
+                            detailfindlist: detailfindlist
+                        }}>
+                            <i 
+                                className={this.state.focused ? 'focused iconfont' : 'iconfont'}
+                                onClick={()=>this.find()}>&#xe60b;</i>
+                        </Link>
                     </SearchWrapper>
                 </Nav>
                 <Addition>
