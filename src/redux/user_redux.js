@@ -6,6 +6,8 @@ const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const LOG_OUT = 'LOG_OUT';
 const ERROR_MSG = 'ERROR_MSG';
 const LOAD_INFO = 'LOAD_INFO';
+const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+const EMPTY = 'EMPTY';
 const initState={
     redirectTo: '',
     msg: '',
@@ -16,6 +18,7 @@ const initState={
     created: '',
     list: [],
     listone: [],
+    changeTo: '',
 }
 
 //reducer
@@ -28,9 +31,13 @@ export function user(state=initState, action) {
         case USERLIST_SUCCESS:
             return {...state,list:action.payload, ...action.payload}
         case LOG_OUT:
-            return {...initState,}
+            return {...initState,} 
+        case CHANGE_PASSWORD:
+            return {...initState,changeTo:action.payload} 
         case ERROR_MSG:
             return {...state, msg:action.msg}
+        case EMPTY:
+            return {msg:'',changeTo:''}
         default:
             return state
     }
@@ -49,6 +56,13 @@ function loadInfo(data) {
 }
 function logOut() {
     return { type: LOG_OUT }
+}
+function changePassword(data){
+    return { type:CHANGE_PASSWORD, payload:data}
+}
+
+export function empty(){
+    return { type:EMPTY }
 }
 
 //用户退出
@@ -81,6 +95,26 @@ export function remove(data) {
             })
     }
 }
+//更改用户密码
+export function changepassword(id, data) {
+    data.id = id;
+    if(data.password!==data.repeatpassword){
+        message.error('修改后的密码和确认密码不同');
+        return errorMsg('修改后的密码和确认密码不同')
+    }
+    return dispatch => {
+        axios.post('/user/changepassword', data)
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(changePassword(res.data.data))
+                    message.success(res.data.success, 5);
+                } else {
+                    dispatch(errorMsg(res.data.msg))
+                    message.error(res.data.msg);
+                }
+            })
+    }
+}
 
 export function update(id,data) {
     data.id = id;
@@ -90,6 +124,7 @@ export function update(id,data) {
                 if (res.status===200&&res.data.code===0) {
                     dispatch(authSuccess(res.data.data))
                     message.success(res.data.success, 5);
+                    //在后台管理中，当管理员更改用户后刷新用户列表
                     axios.get('/user/list')
                         .then(res => {
                             dispatch(getuserlistSuccess(res.data.data))
@@ -140,7 +175,7 @@ export function register({username,password,repeatpassword,type,avatar,created})
     }
     if(password!==repeatpassword){
         message.error('密码和确认密码不同');
-        return errorMsg('用户名密码必须输入')
+        return errorMsg('密码和确认密码不同')
     }
     return dispatch=>{
         axios.post('/user/register',{username,password,type,avatar,created})
@@ -148,6 +183,7 @@ export function register({username,password,repeatpassword,type,avatar,created})
             if(res.status===200 && res.data.code===0){
                 dispatch(authSuccess({username,password,type,avatar,created}))
                 message.success(res.data.success);
+                //在后台管理中，当管理员创建用户后刷新用户列表
                 axios.get('/user/list')
                     .then(res => {
                         dispatch(getuserlistSuccess(res.data.data))

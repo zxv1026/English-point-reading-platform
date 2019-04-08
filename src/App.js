@@ -9,6 +9,7 @@ import Content from './pages/Content';
 import AdminHome from './pages/Admin/index';
 import PersonalCenter from './pages/PersonalCenter';
 import AvatarChoose from './components/AvatarChoose';
+import ChangePassword from './pages/PersonalCenter/changPassword';
 import Find from './pages/Find';
 import { connect } from 'react-redux';
 import { loadinfo } from "./redux/user_redux";
@@ -40,6 +41,7 @@ class App extends Component {
           <Route exact path='/find' component={Find}/>
           <Route exact path='/personalcenter' component={PersonalCenter}/>
           <Route exact path='/personalcenter/avatarchoose' component={AvatarChoose}/>
+          <Route exact path='/personalcenter/changepassword' component={ChangePassword}/>
           <Route exact path="/parts/:partId/charpters" component={Charpter} />
           <Route exact path="/parts/:partId/charpters/:charpterId/details" component={Detail} />
           <Route exact path="/parts/:partId/charpters/:charpterId/details/:detailId/contents" component={Content} />

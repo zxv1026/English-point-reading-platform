@@ -44,7 +44,15 @@ class Information extends Component {
                     </Col>
                     <Col span={4} push={3}>
                         <div style={{ marginTop:10,marginBottom:20 }}>
-                            <Button type="primary">修改密码</Button>
+                            <Link to={{
+                                pathname:'/personalcenter/changepassword',
+                                state:{
+                                    path: '/personalcenter',
+                                    id: userid,
+                                }
+                            }}>
+                                <Button type="primary">修改密码</Button>
+                            </Link>
                         </div>
                     </Col>
                 </Row>

@@ -39,6 +39,29 @@ Router.post('/remove', function (req, res) {
     })
 })
 
+Router.post('/changepassword', function (req, res) {
+    const {id} = req.body
+    const pas = md5Pwd(req.body.oldpassword)
+    const password = md5Pwd(req.body.password)
+    User.findById(id,function (err, doc) {
+        console.log(pas)
+        console.log(password)
+        console.log(doc.password)
+        const body = {
+            password: password
+        }
+        console.log(body)
+        if(pas === doc.password){
+            User.findByIdAndUpdate(id, body, function (err, doc) {
+                console.log(body)
+                return res.json({code:0, data: body, success:'修改密码成功'})
+            })
+        }else{
+            return res.json({msg:'密码错误'})
+        }
+    })
+})
+
 Router.post('/update', function (req, res) {
     // console.log(req.body)
     const body = req.body

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Form,Input,Button,Popover,Layout,Alert } from 'antd';
 import { connect } from 'react-redux';
-import { register } from "../../redux/user_redux";
+import { register,empty } from "../../redux/user_redux";
 import './index.less';
 import logoImg from '../../assets/images/logo.svg';
 import moment from 'moment';
@@ -11,7 +11,7 @@ const FormItem = Form.Item;
 
 @connect(
     state => state.user,
-    {register}
+    {register,empty}
 )
 class Register extends Component {
     
@@ -26,6 +26,9 @@ class Register extends Component {
             created: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
         }
         this.handleRegister = this.handleRegister.bind(this)
+    }
+    componentDidMount(){
+        this.props.empty();
     }
     changeUsername = (value) => {
         let { username } = this.state;
