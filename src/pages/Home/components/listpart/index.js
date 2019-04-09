@@ -36,7 +36,7 @@ class Listpart extends Component {
                             extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
                         >
                             <Link to={{
-                                pathname: "/parts/"+item.partid+"/charpters",
+                                pathname: "/parts/"+item.partid+"/charpters"
                             }} ><h3>{item.name}</h3></Link>
                         </List.Item>
                     )}

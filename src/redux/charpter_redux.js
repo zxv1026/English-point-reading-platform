@@ -96,6 +96,18 @@ export function update(_id,data) {
     }
 }
 
+export function getCharpterOne(data) {
+    console.log(data)
+    return dispatch => {
+        axios.post('/charpter/one', data)
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(authSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function getCharpterList() {
     return dispatch=>{
         axios.get('/charpter/list')

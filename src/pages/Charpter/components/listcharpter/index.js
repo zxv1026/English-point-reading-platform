@@ -16,10 +16,6 @@ class ListCharpters extends Component {
         );
         return (
             <div>
-                <Link className="close-charpter" to="/">
-                    <Icon type="caret-left"/>
-                    Back
-                </Link>
                 <List
                     itemLayout="vertical"
                     size="large"

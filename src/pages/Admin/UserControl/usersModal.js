@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input , Alert } from 'antd';
+import { Modal, Form, Input , Alert,Select } from 'antd';
 import moment from 'moment';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 class usersModal extends Component{
     constructor(props) {
@@ -103,9 +104,13 @@ class usersModal extends Component{
                                     message: '请输入类别'
                                 }]
                             })(
-                                <Input
-                                    size="large"
-                                />
+                                // <Input
+                                //     size="large"
+                                // />
+                                <Select>
+                                    <Option value='user'>user</Option>
+                                    <Option value='admin'>admin</Option>
+                                </Select>
                             )}
                         </FormItem>
                         <FormItem

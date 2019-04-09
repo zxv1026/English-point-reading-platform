@@ -39,6 +39,15 @@ class Content extends Component {
         this.props.getContentListOne(state)
         this.bindEvents();
     }
+    componentDidUpdate(){
+        const { userID,detailID } = this.props;
+        let detaildata = {
+            userID: userID,
+            detailID: detailID,
+        };
+        this.props.getone(detaildata)
+        this.props.getCollectionOne(detaildata)
+    }
     componentWillUnmount() {
         window.removeEventListener('scroll', this.props.changeScrollTopShow);
     }
@@ -163,13 +172,6 @@ class Content extends Component {
 
     render() {
         const { contentlist,mp3,detailname,num,detailID,userID,like,likeID,collect,collectID,detailcollectnum,data} = this.props
-        
-        let detaildata = {
-            userID: userID,
-            detailID: detailID,
-        };
-        this.props.getone(detaildata)
-        this.props.getCollectionOne(detaildata)
        
         return (
             <div>
@@ -249,8 +251,6 @@ class Content extends Component {
                 </div>
                 <ListContent
                     list={contentlist}
-                    partid={this.props.match.params.partId}
-                    charpterid={this.props.match.params.charpterId}
                     mp3={mp3}
                 />
                 { this.props.showScroll 

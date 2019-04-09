@@ -13,7 +13,6 @@ const initState={
 export function likerecord(state=initState, action) {
     switch (action.type) {
         case LIKE_SUCCESS:
-            // console.log()
             return {...state, ...action.payload}
         case LIKEONE_ERROR:
             return {...initState,}
@@ -42,7 +41,7 @@ export function getone(data) {
             })
     }
 }
-
+//用户已经在该话题下点赞过，清除
 export function remove(id) {
     const data = {
         _id: id
@@ -59,7 +58,7 @@ export function remove(id) {
             })
     }
 }
-
+//用户没有在该话题下点赞过，创建
 export function create({userID,detailID,like,created}) {
     return dispatch=>{
         axios.post('/likerecord/create',{userID,detailID,like,created})

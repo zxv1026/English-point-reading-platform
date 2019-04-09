@@ -35,8 +35,9 @@ class Header extends Component {
         }
     }
     render() {
-        const { username,path,detailfindlist } = this.props
-        console.log(this.props.detailfindlist)
+        const { username,path } = this.props;
+        const { find } = this.state;
+        // console.log(this.props.detailfindlist)
         return (
             <HeaderWrapper>
                 <Link to="/"><Logo/></Link>
@@ -59,14 +60,15 @@ class Header extends Component {
                             >
                             </NavSearch>
                         </CSSTransition>
-                        <Link to={{
+                        {find?<Link to={{
                             pathname: '/find',
-                            detailfindlist: detailfindlist
                         }}>
                             <i 
                                 className={this.state.focused ? 'focused iconfont' : 'iconfont'}
                                 onClick={()=>this.find()}>&#xe60b;</i>
-                        </Link>
+                        </Link>:<i 
+                            className={this.state.focused ? 'focused iconfont' : 'iconfont'}
+                            style={{cursor: 'pointer'}}>&#xe60b;</i>}
                     </SearchWrapper>
                 </Nav>
                 <Addition>

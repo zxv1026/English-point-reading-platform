@@ -98,6 +98,10 @@ export function remove(data) {
 //更改用户密码
 export function changepassword(id, data) {
     data.id = id;
+    if (!data.oldpassword || !data.password || !data.repeatpassword) {
+        message.error('密码、确认密码必须输入');
+        return errorMsg('密码、确认密码必须输入')
+    }
     if(data.password!==data.repeatpassword){
         message.error('修改后的密码和确认密码不同');
         return errorMsg('修改后的密码和确认密码不同')

@@ -13,6 +13,16 @@ Router.get('/list',function (req, res) {
         return res.json({code: 0, data:doc})
     })
 })
+
+Router.post('/one',function (req, res) {
+    const {id} = req.body
+    Charpter.findOne({'charpterid': id})
+        .exec(function (err,doc) {
+            console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+
 //获取与前端传过来的partid相同的的charpter信息
 Router.post('/listone',function (req, res) {
     const {id} = req.body

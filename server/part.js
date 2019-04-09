@@ -10,6 +10,15 @@ Router.get('/list',function (req, res) {
     })
 })
 
+Router.post('/one',function (req, res) {
+    const {id} = req.body
+    Part.findOne({'partid': id})
+        .exec(function (err,doc) {
+            console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+
 Router.post('/remove', function (req, res) {
     const {_id,partid} = req.body
     console.log(req.body);

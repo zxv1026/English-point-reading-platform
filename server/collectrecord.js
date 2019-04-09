@@ -7,6 +7,7 @@ Router.post('/list',function (req, res) {
     const {userID} = req.body
     console.log(userID)
     CollectRecord.find({userID})
+        //通过populate关联表
         .populate({
             path:'detailID',
             populate: {

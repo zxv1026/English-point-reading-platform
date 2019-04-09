@@ -2,7 +2,7 @@ const express = require('express');
 const Router = express.Router();
 const LikeRecord = require('./models/likerecord');
 
-
+//通过userID,detailID获取用户在该话题下是否点过赞
 Router.post('/one',function (req, res) {
     const {detailID,userID} = req.body
     console.log(detailID)

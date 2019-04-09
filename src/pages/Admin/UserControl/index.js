@@ -103,7 +103,6 @@ class UserControl extends Component {
         ];
         return (
             <div>
-                {msg&&msg!=='true'?message.error("编辑用户失败！ "+msg,5): null}
                 <h3 style={{ margin: '0px 0 20px' }}>用户管理</h3>
                 <div className="whitebox" >
                     <UsersModal

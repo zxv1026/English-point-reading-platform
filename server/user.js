@@ -52,6 +52,7 @@ Router.post('/changepassword', function (req, res) {
         }
         console.log(body)
         if(pas === doc.password){
+            //输入的之前密码正确进行
             User.findByIdAndUpdate(id, body, function (err, doc) {
                 console.log(body)
                 return res.json({code:0, data: body, success:'修改密码成功'})
@@ -77,6 +78,7 @@ Router.post('/login', function (req, res) {
         if(!doc) {
             return res.json({msg:'用户名或密码错误'})
         }
+        //用cookie保存用户的ID来保持刷新页面时用户登录状态
         res.cookie('userid', doc._id)
         return res.json({code: 0,data: doc, success:'登录成功'})
     })

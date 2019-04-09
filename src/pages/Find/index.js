@@ -8,11 +8,12 @@ import { connect } from 'react-redux';
 @connect(
     state=>({
         // userID: state.user._id
+        detailfindlist: state.detail.detailfindlist
     }),
 )
 class Find extends Component {
     render() {
-        const { detailfindlist } = this.props.location
+        const { detailfindlist } = this.props
         console.log(detailfindlist)
         const IconText = ({ type, text }) => (
             <span>

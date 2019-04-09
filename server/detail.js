@@ -7,15 +7,17 @@ const Content = require('./models/content');
 //根据输入的内容查询
 Router.post('/find',function(req,res) {
     const {find} = req.body
-    const reg = new RegExp(find, 'i')
+    //通过使用RegExp，来构建正则表达式对象，来模糊查询
+    const reg = new RegExp(find,'i')//
     console.log(find)
-    Detail.find({name: reg})
+    Detail.find({$or:[{name: {$regex: reg}}]})
         .populate({
             path:'charpterID',
             populate: { path: 'partID' }
         })
         .sort({'_id': -1})
         .exec(function (err,doc) {
+            console.log(doc)
             if(err){
                 return res.json({msg: '后端出错'})
             }

@@ -16,11 +16,6 @@ class ListDetail extends Component {
         );
         return (
             <div>
-                <Link className="close-detail" to={{
-                    pathname: "/parts/" + partid + "/charpters"
-                }}>
-                    <Icon type="caret-left"/>Back
-                </Link>
                 <List
                     itemLayout="vertical"
                     size="large"
