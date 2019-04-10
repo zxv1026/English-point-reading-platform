@@ -70,11 +70,13 @@ class DetailControl extends Component {
                 title: '点赞数',
                 dataIndex: 'num',
                 key: 'num',
+                sorter: (a, b) => a.num - b.lnum,
             },
             {
                 title: '收藏数',
                 dataIndex: 'collectnum',
                 key: 'collectnum',
+                sorter: (a, b) => a.collectnum - b.collectnum,
             },
             {
                 title: '创建时间',

@@ -50,11 +50,13 @@ class PartControl extends Component {
                 title: '点赞数',
                 dataIndex: 'likenum',
                 key: 'likenum',
+                sorter: (a, b) => a.likenum - b.likenum,
             },
             {
                 title: '收藏数',
                 dataIndex: 'collectnum',
                 key: 'collectnum',
+                sorter: (a, b) => a.collectnum - b.collectnum,
             },
             {
                 title: '创建时间',
