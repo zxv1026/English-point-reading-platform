@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import AvatarChoose from '../../components/AvatarChoose';
+import AudioChoose from '../../components/AudioChoose';
 import UserControl from './UserControl/index';
 import TagControl from './TagControl';
 import PartControl from './PartControl/index';
@@ -46,12 +47,12 @@ class AdminHome extends Component {
                                 <span className="nav-text">用户管理</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="2">
+                        {/* <Menu.Item key="2">
                             <Link to='/admin/tag'>
                                 <Icon type="tag" />
                                 <span className="nav-text">标签管理</span>
                             </Link>
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item key="3">
                             <Link to='/admin/part'>
                                 <Icon type="book" />
@@ -92,6 +93,7 @@ class AdminHome extends Component {
                             <Switch>
                                 <Route exact path='/admin' component={UserControl}/>
                                 <Route exact path='/admin/avatarchoose' component={AvatarChoose}/>
+                                <Route exact path='/admin/audiochoose' component={AudioChoose}/>
                                 <Route exact path='/admin/part' component={PartControl}/>
                                 <Route exact path='/admin/charpter' component={CharpterControl}/>
                                 <Route exact path='/admin/detail' component={DetailControl}/>

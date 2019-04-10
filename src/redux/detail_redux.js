@@ -112,6 +112,25 @@ export function updatenum(_id, data) {
     }
 }
 
+export function updateMp3(_id, data) {
+    data._id = _id;
+    return dispatch => {
+        axios.post('/detail/updatemp3', data)
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(authSuccess(res.data.data))
+                    message.success(res.data.success, 5);
+                    axios.get('/detail/list')
+                        .then(res => {
+                            dispatch(getdetaillistSuccess(res.data.data))
+                        })
+                } else {
+                    message.error(res.data.msg, 5)
+                }
+            })
+    }
+}
+
 export function update(_id,data) {
     data._id = _id;
     return dispatch=>{

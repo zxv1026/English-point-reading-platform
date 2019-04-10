@@ -119,6 +119,15 @@ Router.post('/updatenum', function (req, res) {
     })
 })
 
+Router.post('/updatemp3', function (req, res) {
+    // console.log(req.body)
+    const body = req.body
+    const {_id} = req.body
+    Detail.findByIdAndUpdate(_id, body, function (err, doc) {
+        return res.json({code:0, data: body,success:'更新音频成功'})
+    })
+})
+
 Router.post('/update', function (req, res) {
     // console.log(req.body)
     const body = req.body

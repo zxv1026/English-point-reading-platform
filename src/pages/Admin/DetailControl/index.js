@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Table, Popconfirm } from "antd";
 import moment from 'moment';
 import DetailModal from './detailModal';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { create, update, remove, getDetailList } from "../../../redux/detail_redux";
 import { Howl } from 'howler';
@@ -94,7 +95,15 @@ class DetailControl extends Component {
                                 type="primary" 
                                 onClick={() =>this.SoundPlay(record.mp3)}
                             >播放音频</Button>
-                            <Button className='button' type="primary">修改音频</Button>
+                            <Link to={{
+                                pathname:'/admin/audiochoose',
+                                state:{
+                                    path: '/admin/detail',
+                                    id: record._id,
+                                    mp3: record.mp3,
+                                    detailname: record.name
+                                }
+                            }}><Button className='button' type="primary">修改音频</Button></Link>
                             <DetailModal
                                 onOk={(detail) =>{
                                     this.updateDetail(record._id, detail);
