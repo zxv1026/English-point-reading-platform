@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from '../../components/Header/index';
 import ListPart from './components/listpart/index';
 import { Link } from "react-router-dom";
-import { Icon, List,Tooltip } from 'antd';
+import { Icon,Tooltip } from 'antd';
 import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont,SlideShow } from "./style";
 import { connect } from 'react-redux';
 import { getPartList } from "../../redux/part_redux";
@@ -43,12 +43,15 @@ class Home extends Component {
                         <SlideShow>
                             <Icon type="left" theme="outlined" style={{ fontSize: '30px'}} onClick={this.handlePrev}/>
                             <CarouselCompont autoplay ref='img'>
-                                {detailnewlist.map((detail)=>(
-                                    <span>
-                                        <Link to={{
-                                            pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
-                                        }}><h3>{detail.name}</h3></Link>
-                                    </span>
+                                {detailnewlist.map((detail,i=0)=>(
+                                    <div className='wrapper'>
+                                        <img src={require(`../../assets/images/ch0${i+1}.jpg`)} alt=''/>
+                                        <div className='wrapper1'>
+                                            <Link to={{
+                                                pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
+                                            }}><p>{detail.name}</p></Link>
+                                        </div>
+                                    </div>
                                 ))}
                             </CarouselCompont>
                             <Icon type="right" theme="outlined"  style={{ fontSize: '30px'}} onClick={this.handleNext}/>

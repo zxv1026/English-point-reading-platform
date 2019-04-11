@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Row,Col,Button } from 'antd';
-import { Rowstyled } from './style'
+import { Rowstyled } from './style';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 @connect(
     state => ({

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, message } from "antd";
+import { Button, Table, Popconfirm } from "antd";
 import moment from 'moment';
 import UsersModal from './usersModal';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ class UserControl extends Component {
         this.props.register(user);
     }
     render() {
-        const { msg,list } = this.props
+        const { list } = this.props
         const { create } = this.state
         const columns = [
             {

@@ -82,7 +82,7 @@ class AudioChoose extends Component{
                                 <Select
                                     style={{ minWidth: 400 }}
                                     value={mp3}
-                                    onChange={(e)=>this.handleChange(e)}
+                                    onChange={(v)=>this.handleChange(v)}
                                     >
                                     {Object.keys(AudioMapper).map(key => {
                                         return <Option
