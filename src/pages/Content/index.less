@@ -4,11 +4,20 @@
 .showScroll{
     position: fixed;
     right: 50px;
-    bottom: 100px;
+    bottom: 160px;
     width: 60px;
     height: 60px;
     line-height: 60px;
     text-align: center;
-    border: 1px solid #ccc;
-    font-size: 14px;
+    border: 1px solid #dcdcdc;
+    border-bottom: none;
+    background-color: #fff;
+    font-size: 20px;
+    &.top{
+        bottom: 220px;
+    }
+    &.bottom{
+        border: 1px solid #dcdcdc;
+        bottom: 100px;
+    }
 }

@@ -110,7 +110,7 @@ class Home extends Component {
                         </div>
                     </HomeRight>
                     { this.props.showScroll 
-                        ? <div className='showScroll' onClick={this.handleScrollTop}>
+                        ? <div className='showScroll bottom' onClick={this.handleScrollTop}>
                                 <Tooltip placement="left" title="回到顶部">
                                     <Icon type='up'/>
                                 </Tooltip>

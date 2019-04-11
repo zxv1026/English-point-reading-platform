@@ -188,8 +188,8 @@ class Content extends Component {
                                     <Tooltip title="点赞">
                                         <Icon
                                             type="like-o" 
-                                            theme={like === 'liked' ? 'twoTone' : 'outlined'}
-                                            twoToneColor = "#eb2f96"
+                                            theme={like === 'liked' ? 'filled' : 'outlined'}
+                                            style={ like === 'liked' ? { color: "#ea6f5a" }: null}
                                             onClick={() =>this.like(like, userID, detailID, likeID,num,data.likenum,data.partID.likenum)}
                                         />
                                     </Tooltip>
@@ -201,8 +201,8 @@ class Content extends Component {
                                     <Tooltip title="收藏">
                                         <Icon
                                             type="heart-o" 
-                                            theme={collect === 'collected' ? 'twoTone' : 'outlined'}
-                                            twoToneColor = "#eb2f96"
+                                            theme={collect === 'collected' ? 'filled' : 'outlined'}
+                                            style={ collect === 'collected' ? { color: "#ea6f5a" }: null}
                                             onClick={() =>this.collect(collect, userID, detailID, collectID,detailcollectnum,data.collectnum,data.partID.collectnum)}
                                         />
                                     </Tooltip>
@@ -253,12 +253,37 @@ class Content extends Component {
                     list={contentlist}
                     mp3={mp3}
                 />
-                { this.props.showScroll 
-                    ? <div className='showScroll' onClick={this.handleScrollTop}>
+                {this.props.showScroll 
+                    ? <div className={userID? 'showScroll top' : 'showScroll bottom'} onClick={this.handleScrollTop}>
                             <Tooltip placement="left" title="回到顶部">
                                 <Icon type='up'/>
                             </Tooltip>
                       </div> : null}
+                {
+                    userID?
+                        <div>
+                            <div className='showScroll' onClick={() =>this.collect(collect, userID, detailID, collectID,detailcollectnum,data.collectnum,data.partID.collectnum)}>
+                                <Tooltip placement="left" title={collect === 'collected' ? '取消收藏' : '收藏'}>
+                                    <Icon
+                                        className='icon'
+                                        type='heart-o'
+                                        theme={collect === 'collected' ? 'filled' : 'outlined'}
+                                        style={ collect === 'collected' ? { color: "#ea6f5a" }: null}
+                                    />
+                                </Tooltip>
+                            </div>
+                            <div className='showScroll bottom' onClick={() =>this.like(like, userID, detailID, likeID,num,data.likenum,data.partID.likenum)}>
+                                <Tooltip placement="left" title={like === 'liked' ? '取消点赞' : '点赞'}>
+                                    <Icon 
+                                        type='like-o'
+                                        theme={like === 'liked' ? 'filled' : 'outlined'}
+                                        style={ like === 'liked' ? { color: "#ea6f5a" }: null}
+                                    />
+                                </Tooltip>
+                            </div>
+                        </div>
+                    : null
+                }
             </div>
         )
     }
