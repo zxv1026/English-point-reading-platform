@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm } from "antd";
+import { Button, Table, Popconfirm, Icon } from "antd";
 import moment from 'moment';
 import DetailModal from './detailModal';
 import { Link } from 'react-router-dom';
@@ -116,6 +116,7 @@ class DetailControl extends Component {
                             </DetailModal>
                             <Popconfirm
                                 title="确定删除吗?"
+                                icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                                 cancelText="取消"
                                 okText="确认"
                                 onConfirm={() => {

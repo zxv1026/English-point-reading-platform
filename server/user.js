@@ -39,6 +39,26 @@ Router.post('/remove', function (req, res) {
     })
 })
 
+Router.post('/resetpassword', function (req, res) {
+    const {id,oldpassword} = req.body
+    const password = md5Pwd(req.body.password)
+    User.findById(id,function (err, doc) {
+        const body = {
+            password: password
+        }
+        console.log(body)
+        if(oldpassword === doc.password){
+            //输入的之前密码正确进行
+            User.findByIdAndUpdate(id, body, function (err, doc) {
+                console.log(body)
+                return res.json({code:0, data: body, success:'重置密码成功'})
+            })
+        }else{
+            return res.json({msg:'密码错误'})
+        }
+    })
+})
+
 Router.post('/changepassword', function (req, res) {
     const {id} = req.body
     const pas = md5Pwd(req.body.oldpassword)

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm } from "antd";
+import { Button, Table, Popconfirm, Icon } from "antd";
 import moment from 'moment';
 import ContentModal from './contentModal';
 import { connect } from 'react-redux';
@@ -109,6 +109,7 @@ class ContentControl extends Component {
                             </ContentModal>
                             <Popconfirm
                                 title="确定删除吗?"
+                                icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                                 cancelText="取消"
                                 okText="确认"
                                 onConfirm={() => {

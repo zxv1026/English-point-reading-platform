@@ -95,6 +95,27 @@ export function remove(data) {
             })
     }
 }
+//重置用户密码
+export function resetpassword(id, data) {
+    data.id = id;
+    return dispatch => {
+        axios.post('/user/resetpassword', data)
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(authSuccess(res.data.data))
+                    message.success(res.data.success, 5);
+                    //在后台管理中，当管理员更改用户后刷新用户列表
+                    axios.get('/user/list')
+                        .then(res => {
+                            dispatch(getuserlistSuccess(res.data.data))
+                        })
+                } else {
+                    dispatch(errorMsg(res.data.msg))
+                    message.error(res.data.msg);
+                }
+            })
+    }
+}
 //更改用户密码
 export function changepassword(id, data) {
     data.id = id;

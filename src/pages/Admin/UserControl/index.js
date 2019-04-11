@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm } from "antd";
+import { Button, Table, Popconfirm, Icon } from "antd";
 import moment from 'moment';
 import UsersModal from './usersModal';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { register, update, remove, getUserList } from "../../../redux/user_redux";
+import { register, update, remove, getUserList, resetpassword } from "../../../redux/user_redux";
 import './index.less';
 
 @connect(
     state => state.user,
-    {register, update, remove, getUserList}
+    {register, update, remove, getUserList, resetpassword}
 )
 class UserControl extends Component {
     constructor(props) {
@@ -29,6 +29,13 @@ class UserControl extends Component {
     }
     createUser(user){
         this.props.register(user);
+    }
+    resetPasswords(id,pas){
+        const data = {
+            oldpassword: pas,
+            password: 12345678,
+        }
+        this.props.resetpassword(id, data);
     }
     render() {
         const { list } = this.props
@@ -67,6 +74,7 @@ class UserControl extends Component {
             {
                 title: '操作',
                 key: 'operation',
+                width: 250,
                 render: (text, record)=>{
                     return (
                         <span>
@@ -87,7 +95,18 @@ class UserControl extends Component {
                                 <Button className='button' type="primary">修改</Button>
                             </UsersModal>
                             <Popconfirm
+                                title="确定重置密码吗?"
+                                cancelText="取消"
+                                okText="确认"
+                                onConfirm={() => {
+                                    this.resetPasswords(record._id,record.password);
+                                }}
+                            >
+                                <Button className='button' type="primary">重置密码</Button>
+                            </Popconfirm>
+                            <Popconfirm
                                 title="确定删除吗?"
+                                icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                                 cancelText="取消"
                                 okText="确认"
                                 onConfirm={() => {
