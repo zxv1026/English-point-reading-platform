@@ -5,10 +5,10 @@ const LikeRecord = require('./models/likerecord');
 //通过userID,detailID获取用户在该话题下是否点过赞
 Router.post('/one',function (req, res) {
     const {detailID,userID} = req.body
-    console.log(detailID)
-    console.log(userID)
+    // console.log(detailID)
+    // console.log(userID)
     LikeRecord.findOne({detailID,userID},function (err, doc) {
-        console.log(doc)
+        // console.log(doc)
         if(doc){
             return res.json({code: 0, data:doc})
         }else{
@@ -19,21 +19,21 @@ Router.post('/one',function (req, res) {
 
 Router.post('/remove', function (req, res) {
     const {_id} = req.body
-    console.log(_id);
+    // console.log(_id);
     LikeRecord.findByIdAndRemove(_id, function (err, doc) {
         return res.json({code:0,success:'取消点赞成功'})
     })
 })
 
 Router.post('/create', function (req, res) {
-    console.log(req.body)
+    // console.log(req.body)
     const { like,created,userID,detailID } = req.body;
     const LikeRecordMoadl = new LikeRecord({like,created,userID,detailID})
     LikeRecordMoadl.save(function (e, d) {
         if(e) {
             return res.json({msg: '后端出错'})
         }
-        console.log(d)
+        // console.log(d)
         return res.json({code:0,data:d,success:'点赞成功'})
     })
 })

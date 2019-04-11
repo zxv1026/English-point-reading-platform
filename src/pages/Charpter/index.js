@@ -16,6 +16,7 @@ import { getPartOne } from "../../redux/part_redux";
 )
 class Charpter extends Component {
     componentDidMount() {
+        window.scrollTo(0, 0);
         let state={id:1};
         state.id = this.props.match.params.partId
         this.props.getCharpterListOne(state)

@@ -3,6 +3,7 @@ import { message } from 'antd';
 
 const PARTLIST_SUCCESS = 'PARTLIST_SUCCESS';
 const PART_SUCCESS = 'PART_SUCCESS';
+const PART_ScrollTop = 'PART_ScrollTop';
 
 const initState={
     partid:'',
@@ -11,11 +12,14 @@ const initState={
     likenum: 0,
     collectnum: 0,
     partlist: [],
+    showScroll: false,
 }
 
 //reducer
 export function part(state=initState, action) {
     switch (action.type) {
+        case PART_ScrollTop:
+            return {...state,showScroll:action.payload}
         case PART_SUCCESS:
             return {...state, ...action.payload}
         case PARTLIST_SUCCESS:
@@ -30,7 +34,20 @@ function getpartlistSuccess(data) {
 function authSuccess(data){
 	return { type:PART_SUCCESS, payload:data}
 }
+function scrollTop(data) {
+	return { type:PART_ScrollTop, payload:data}
+}
 
+export function changePartScrollTopShow(data) {
+    return dispatch => {
+        if (document.documentElement.scrollTop > 100) {
+            dispatch(scrollTop(true))
+        } else {
+            dispatch(scrollTop(false))
+        }
+
+    }
+}
 
 export function remove(data) {
     return dispatch=>{

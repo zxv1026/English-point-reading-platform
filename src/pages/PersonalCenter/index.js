@@ -56,16 +56,18 @@ class PersonalCenter extends Component {
         this.props.removeCollection(collectID,userID)
     }
     render() {
-        const { avatar,username,list,userID } = this.props
-        const IconText = ({ type, text,theme }) => (
+        const { username,list } = this.props
+        const IconText = ({ type, text, theme, title }) => (
             <span>
-                <Icon
-                    type={type}
-                    style={{ marginRight: 8 }}
-                    theme={theme === 'collected' ? 'twoTone' : 'outlined'}
-                    twoToneColor = "#eb2f96"
-                />
-                {text}
+                <Tooltip title={title}>
+                    <Icon
+                        type={type}
+                        style={{ marginRight: 8 }}
+                        theme={theme === 'collected' ? 'twoTone' : 'outlined'}
+                        twoToneColor = "#eb2f96"
+                    />
+                    <span style={{ marginRight: 20 }}>{text}</span>
+                </Tooltip>
             </span>
         );
         console.log(this.props)
@@ -92,19 +94,38 @@ class PersonalCenter extends Component {
                                 renderItem={item => (
                                     <List.Item
                                         key={item.detailID.detailname}
-                                        actions={[<IconText type="heart-o" text={item.detailID.collectnum} theme={item.collect}/>]}
+                                        actions={[<IconText type="heart-o" text={item.detailID.collectnum} theme={item.collect} title='收藏数'/>]}
                                     >
-                                        <List.Item.Meta style={{marginLeft:100}}
+                                        <List.Item.Meta style={{marginLeft:20}}
+                                            title={<Link to={{
+                                                        pathname: "/parts/"+item.detailID.charpterID.partID.partid+"/charpters",
+                                                    }}>{item.detailID.charpterID.partID.name}</Link>}
+                                        />
+                                        <List.Item.Meta
+                                            title={<Link to={{
+                                                        pathname: "/parts/"+item.detailID.charpterID.partID.partid+"/charpters/"+item.detailID.charpterID.charpterid+"/details",
+                                                    }}>{item.detailID.charpterID.name}</Link>}
+                                        />
+                                        <List.Item.Meta
                                             title={<Link to={{
                                                         pathname: "/parts/"+item.detailID.charpterID.partID.partid+"/charpters/"+item.detailID.charpterID.charpterid+"/details/"+item.detailID.detailid+'/contents',
                                                     }}>{item.detailID.name}</Link>}
                                         />
+                                        <div>
+                                            <span>收藏时间:</span>
+                                            <span style={{marginRight:100}}>{moment(item.created).format('YYYY-MM-DD HH:mm:ss')}</span>
+                                        </div>
                                         <Tooltip title="取消收藏">
                                             <Button onClick={()=>this.cancelCollect(item.userID,item.detailID._id, item._id, item.detailID.collectnum, item.detailID.charpterID.collectnum, item.detailID.charpterID.partID.collectnum)}>取消收藏</Button>
                                         </Tooltip>
                                     </List.Item>
                                 )}
                             />
+                        </TabPane>
+                        <TabPane tab={<span><Icon type="like" />点赞的话题</span>} key="3">
+                            <div>
+                                TODO
+                            </div>
                         </TabPane>
                     </Tabs>
                 </div>:<Redirect to='/'/>}

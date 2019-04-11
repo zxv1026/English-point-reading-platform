@@ -35,7 +35,7 @@ Router.get('/findlist',function (req,res) {
         .sort({'_id': -1})
         .limit(4)
         .exec(function (err,doc) {
-            console.log(doc)
+            // console.log(doc)
             return res.json({code: 0, data:doc})
         })
 })
@@ -49,7 +49,7 @@ Router.get('/findlikenumlist',function (req,res) {
         .sort({'num': -1})
         .limit(10)
         .exec(function (err,doc) {
-            console.log(doc)
+            // console.log(doc)
             return res.json({code: 0, data:doc})
         })
 })
@@ -63,7 +63,7 @@ Router.get('/findcollectnumlist',function (req,res) {
         .sort({'collectnum': -1})
         .limit(10)
         .exec(function (err,doc) {
-            console.log(doc)
+            // console.log(doc)
             return res.json({code: 0, data:doc})
         })
 })

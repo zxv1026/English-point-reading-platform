@@ -5,17 +5,18 @@ import { Link } from "react-router-dom";
 import { Icon,Tooltip } from 'antd';
 import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont,SlideShow } from "./style";
 import { connect } from 'react-redux';
-import { getPartList } from "../../redux/part_redux";
+import { getPartList,changePartScrollTopShow } from "../../redux/part_redux";
 import { getDetailNewestList,getDetailLikeList,getDetailCollectList } from '../../redux/detail_redux'
 
 @connect(
     state => ({
         partlist: state.part.partlist,
+        showScroll: state.part.showScroll,
         detailnewlist: state.detail.newlist,
         detaillikelist: state.detail.likelist,
         detailcollectlist: state.detail.collectlist,
     }),
-    {getPartList,getDetailNewestList,getDetailLikeList,getDetailCollectList}
+    {getPartList,changePartScrollTopShow,getDetailNewestList,getDetailLikeList,getDetailCollectList}
 )
 class Home extends Component {
     componentDidMount() {
@@ -23,7 +24,21 @@ class Home extends Component {
         this.props.getDetailNewestList();
         this.props.getDetailLikeList();
         this.props.getDetailCollectList();
+        this.bindEvents();
     }
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.props.changePartScrollTopShow);
+    }
+    handleScrollTop() {
+        window.scrollTo(0, 0);
+    }
+    bindEvents() {
+        console.log('bindevents')
+        window.addEventListener('scroll', this.props.changePartScrollTopShow);
+        // console.log(window)
+        // console.log(window.scroll)
+    }
+
     handlePrev = () => {
         this.refs.img.prev(); //ref = img
     }
@@ -94,6 +109,12 @@ class Home extends Component {
                             ))}
                         </div>
                     </HomeRight>
+                    { this.props.showScroll 
+                        ? <div className='showScroll' onClick={this.handleScrollTop}>
+                                <Tooltip placement="left" title="回到顶部">
+                                    <Icon type='up'/>
+                                </Tooltip>
+                        </div> : null}
                 </HomeWrapper>
             </div>
         )

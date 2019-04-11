@@ -19,12 +19,12 @@ class ListCharpters extends Component {
                 <List
                     itemLayout="vertical"
                     size="large"
-                    pagination={{
-                        onChange: (page) => {
-                            console.log(page);
-                        },
-                        pageSize: 3,
-                    }}
+                    // pagination={{
+                    //     onChange: (page) => {
+                    //         console.log(page);
+                    //     },
+                    //     pageSize: 3,
+                    // }}
                     dataSource={list}
                     renderItem={item => (
                         <List.Item
