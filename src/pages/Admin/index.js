@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
+import Avatar from '../../components/Header/avatar';
 import AvatarChoose from '../../components/AvatarChoose';
 import AudioChoose from '../../components/AudioChoose';
 import UserControl from './UserControl/index';
@@ -87,6 +88,9 @@ class AdminHome extends Component {
                             onClick={this.toggle}
                             style={{cursor: 'pointer'}}
                         />
+                        <span style={{ float: "right", marginRight: 30 }}>
+                            <Avatar/>
+                        </span>
                     </Header>
                     <Content style={{ margin: '0 16px' }}>
                         <div style={{ padding: 24, background: '#fff', minHeight: 780 }}>
