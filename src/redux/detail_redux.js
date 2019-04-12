@@ -30,6 +30,7 @@ export function detail(state=initState, action) {
             return {...state,...action.payload}
         case DETAILLIST_SUCCESS:
             return {...state,detaillist:action.payload, ...action.payload}
+        //最新的4个
         case DETAILNEWLIST_SUCCESS:
             return {...state,newlist:action.payload}
         case DETAILLIKELIST_SUCCESS:

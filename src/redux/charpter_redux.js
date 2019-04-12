@@ -2,6 +2,8 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const CHARPTERLIST_SUCCESS = 'CHARPTERLIST_SUCCESS';
+const CHARPTERLIKELIST_SUCCESS = 'CHARPTERLIKELIST_SUCCESS';
+const CHARPTERCOLLECTLIST_SUCCESS = 'CHARPTERCOLLECTLIST_SUCCESS';
 const CHARPTERLISTONE_SUCCESS = 'CHARPTERLISTONE_SUCCESS';
 const CHARPTER_SUCCESS = 'CHARPTER_SUCCESS';
 
@@ -13,6 +15,8 @@ const initState={
     likenum: 0,
     collectnum: 0,
     charpterlist: [],
+    likelist: [],
+    collectlist: [],
     charpterlistone:[],
 }
 
@@ -23,6 +27,10 @@ export function charpter(state=initState, action) {
             return {...state,...action.payload}
         case CHARPTERLIST_SUCCESS:
             return {...state,charpterlist:action.payload, ...action.payload}
+        case CHARPTERLIKELIST_SUCCESS:
+            return {...state,likelist:action.payload}
+        case CHARPTERCOLLECTLIST_SUCCESS:
+            return {...state,collectlist:action.payload}
         case CHARPTERLISTONE_SUCCESS:
             return {...state,charpterlistone:action.payload}
         default:
@@ -31,6 +39,12 @@ export function charpter(state=initState, action) {
 }
 function getcharpterlistoneSuccess(data) {
     return { type:CHARPTERLISTONE_SUCCESS, payload:data}
+}
+function getcharpterlikelistSuccess(data) {
+    return { type:CHARPTERLIKELIST_SUCCESS, payload:data}
+}
+function getcharptercollectlistSuccess(data) {
+    return { type:CHARPTERCOLLECTLIST_SUCCESS, payload:data}
 }
 function getcharpterlistSuccess(data) {
     return { type:CHARPTERLIST_SUCCESS, payload:data}
@@ -103,6 +117,29 @@ export function getCharpterOne(data) {
             .then(res => {
                 if (res.status === 200 && res.data.code === 0) {
                     dispatch(authSuccess(res.data.data))
+                }
+            })
+    }
+}
+
+//获取点赞数前10
+export function getCharpterLikeList() {
+    return dispatch => {
+        axios.get('/charpter/findlikenumlist')
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(getcharpterlikelistSuccess(res.data.data))
+                }
+            })
+    }
+}
+//获取收藏数前10
+export function getCharpterCollectList() {
+    return dispatch => {
+        axios.get('/charpter/findcollectnumlist')
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(getcharptercollectlistSuccess(res.data.data))
                 }
             })
     }

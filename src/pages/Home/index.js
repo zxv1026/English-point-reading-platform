@@ -2,28 +2,39 @@ import React, { Component } from "react";
 import Header from '../../components/Header/index';
 import ListPart from './components/listpart/index';
 import { Link } from "react-router-dom";
-import { Icon,Tooltip } from 'antd';
+import { Icon,Tooltip,Tabs } from 'antd';
 import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont,SlideShow } from "./style";
 import { connect } from 'react-redux';
-import { getPartList,changePartScrollTopShow } from "../../redux/part_redux";
+import { getPartList,changePartScrollTopShow,getPartLikeList,getPartCollectList } from "../../redux/part_redux";
+import { getCharpterLikeList,getCharpterCollectList } from "../../redux/charpter_redux";
 import { getDetailNewestList,getDetailLikeList,getDetailCollectList } from '../../redux/detail_redux'
+
+const TabPane = Tabs.TabPane;
 
 @connect(
     state => ({
         partlist: state.part.partlist,
+        partlikelist: state.part.likelist,
+        partcollectlist: state.part.collectlist,
         showScroll: state.part.showScroll,
+        charpterlikelist: state.charpter.likelist,
+        charptercollectlist: state.charpter.collectlist,
         detailnewlist: state.detail.newlist,
         detaillikelist: state.detail.likelist,
         detailcollectlist: state.detail.collectlist,
     }),
-    {getPartList,changePartScrollTopShow,getDetailNewestList,getDetailLikeList,getDetailCollectList}
+    {getPartList,changePartScrollTopShow,getDetailNewestList,getDetailLikeList,getDetailCollectList,getCharpterLikeList,getCharpterCollectList,getPartLikeList,getPartCollectList}
 )
 class Home extends Component {
     componentDidMount() {
         this.props.getPartList();
+        this.props.getPartLikeList();
+        this.props.getPartCollectList();
         this.props.getDetailNewestList();
         this.props.getDetailLikeList();
         this.props.getDetailCollectList();
+        this.props.getCharpterLikeList();
+        this.props.getCharpterCollectList();
         this.bindEvents();
     }
     componentWillUnmount() {
@@ -35,8 +46,6 @@ class Home extends Component {
     bindEvents() {
         console.log('bindevents')
         window.addEventListener('scroll', this.props.changePartScrollTopShow);
-        // console.log(window)
-        // console.log(window.scroll)
     }
 
     handlePrev = () => {
@@ -46,10 +55,7 @@ class Home extends Component {
         this.refs.img.next();
     }
     render() {
-        const { partlist,detailnewlist,detaillikelist,detailcollectlist } = this.props
-        console.log(detailnewlist)
-        console.log('like',detaillikelist)
-        console.log('collect',detailcollectlist)
+        const { partlist,detailnewlist,detaillikelist,detailcollectlist,charpterlikelist,charptercollectlist,partlikelist,partcollectlist } = this.props
         return (
             <div>
                 <Header path={this.props.location.pathname}/>
@@ -78,35 +84,103 @@ class Home extends Component {
                     <HomeRight>
                         <div style={{marginBottom:20}}>
                             <h3>点赞排行推荐</h3>
-                            {detaillikelist.map((detail)=>(
-                                <div>
-                                    <Link to={{
-                                        pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
-                                    }}><span>{detail.name}</span></Link>
-                                    <div style={{ float: "right" }}>
-                                        <Tooltip title='点赞数'>
-                                            <Icon type='like-o' style={{ marginRight: 8 }}/>
-                                            {detail.num}
-                                        </Tooltip>
-                                    </div>
-                                </div>
-                            ))}
+                            <Tabs>
+                                <TabPane tab={<span><Icon type="book"/>章节</span>} key="1">
+                                    {partlikelist.map((part)=>(
+                                        <div>
+                                            <Link to={{
+                                                pathname: "/parts/"+part.partid+"/charpters",
+                                            }}><span>{part.name}</span></Link>
+                                            <div style={{ float: "right" }}>
+                                                <Tooltip title='点赞数'>
+                                                    <Icon type='like-o' style={{ marginRight: 8 }}/>
+                                                    {part.likenum}
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </TabPane>
+                                <TabPane tab={<span><Icon type="file"/>Charpter</span>} key="2">
+                                    {charpterlikelist.map((charpter)=>(
+                                        <div>
+                                            <Link to={{
+                                                pathname: "/parts/"+charpter.partID.partid+"/charpters/"+charpter.charpterid,
+                                            }}><span>{charpter.name}</span></Link>
+                                            <div style={{ float: "right" }}>
+                                                <Tooltip title='点赞数'>
+                                                    <Icon type='like-o' style={{ marginRight: 8 }}/>
+                                                    {charpter.likenum}
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </TabPane>
+                                <TabPane tab={<span><Icon type="bars"/>话题</span>} key="3">
+                                    {detaillikelist.map((detail)=>(
+                                        <div>
+                                            <Link to={{
+                                                pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
+                                            }}><span>{detail.name}</span></Link>
+                                            <div style={{ float: "right" }}>
+                                                <Tooltip title='点赞数'>
+                                                    <Icon type='like-o' style={{ marginRight: 8 }}/>
+                                                    {detail.num}
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </TabPane>
+                            </Tabs>
                         </div>
                         <div style={{marginBottom:20}}>
                             <h3>收藏排行推荐</h3>
-                            {detailcollectlist.map((detail)=>(
-                                <div>
-                                    <Link to={{
-                                        pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
-                                    }}><span>{detail.name}</span></Link>
-                                    <div style={{ float: "right" }}>
-                                        <Tooltip title='收藏数'>
-                                            <Icon type='heart-o' style={{ marginRight: 8 }}/>
-                                            {detail.collectnum}
-                                        </Tooltip>
-                                    </div>
-                                </div>
-                            ))}
+                            <Tabs>
+                                <TabPane tab={<span><Icon type="book"/>章节</span>} key="1">
+                                    {partcollectlist.map((part)=>(
+                                        <div>
+                                            <Link to={{
+                                                pathname: "/parts/"+part.partid+"/charpters",
+                                            }}><span>{part.name}</span></Link>
+                                            <div style={{ float: "right" }}>
+                                                <Tooltip title='点赞数'>
+                                                    <Icon type='heart-o' style={{ marginRight: 8 }}/>
+                                                    {part.collectnum}
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </TabPane>
+                                <TabPane tab={<span><Icon type="file"/>Charpter</span>} key="2">
+                                    {charptercollectlist.map((charpter)=>(
+                                        <div>
+                                            <Link to={{
+                                                pathname: "/parts/"+charpter.partID.partid+"/charpters/"+charpter.charpterid,
+                                            }}><span>{charpter.name}</span></Link>
+                                            <div style={{ float: "right" }}>
+                                                <Tooltip title='点赞数'>
+                                                    <Icon type='heart-o' style={{ marginRight: 8 }}/>
+                                                    {charpter.collectnum}
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </TabPane>
+                                <TabPane tab={<span><Icon type="bars"/>话题</span>} key="3">
+                                    {detailcollectlist.map((detail)=>(
+                                        <div>
+                                            <Link to={{
+                                                pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
+                                            }}><span>{detail.name}</span></Link>
+                                            <div style={{ float: "right" }}>
+                                                <Tooltip title='收藏数'>
+                                                    <Icon type='heart-o' style={{ marginRight: 8 }}/>
+                                                    {detail.collectnum}
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </TabPane>
+                            </Tabs>
                         </div>
                     </HomeRight>
                     { this.props.showScroll 

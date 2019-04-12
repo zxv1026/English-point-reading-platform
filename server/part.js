@@ -3,6 +3,28 @@ const Router = express.Router();
 const Part = require('./models/part');
 const Charpter = require('./models/charpter');
 
+
+//取点赞数最多的5个
+Router.get('/findlikenumlist',function (req,res) {
+    Part.find({})
+        .sort({'likenum': -1})
+        .limit(5)
+        .exec(function (err,doc) {
+            // console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+//取收藏数最多的5个
+Router.get('/findcollectnumlist',function (req,res) {
+    Part.find({})
+        .sort({'collectnum': -1})
+        .limit(5)
+        .exec(function (err,doc) {
+            // console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+
 Router.get('/list',function (req, res) {
     // Part.remove({},function (err,doc) {})
     Part.find({},null,{sort: {'partid': 1}},function (err,doc) {

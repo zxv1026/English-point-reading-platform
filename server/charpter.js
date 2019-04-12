@@ -6,6 +6,34 @@ const Part = require('./models/part');
 const Charpter = require('./models/charpter');
 const Detail = require('./models/detail')
 
+
+//取点赞数最多的10个
+Router.get('/findlikenumlist',function (req,res) {
+    Charpter.find({})
+        .populate({
+            path:'ppartID',
+        })
+        .sort({'likenum': -1})
+        .limit(10)
+        .exec(function (err,doc) {
+            // console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+//取收藏数最多的10个
+Router.get('/findcollectnumlist',function (req,res) {
+    Charpter.find({})
+        .populate({
+            path:'partID',
+        })
+        .sort({'collectnum': -1})
+        .limit(10)
+        .exec(function (err,doc) {
+            // console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
+})
+
 //获取全部charpter信息
 Router.get('/list',function (req, res) {
     // Charpter.remove({},function (err,doc) {})

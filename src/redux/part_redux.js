@@ -2,6 +2,8 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const PARTLIST_SUCCESS = 'PARTLIST_SUCCESS';
+const PARTLIKELIST_SUCCESS = 'PARTLIKELIST_SUCCESS';
+const PARTCOLLECTLIST_SUCCESS = 'PARTCOLLECTLIST_SUCCESS';
 const PART_SUCCESS = 'PART_SUCCESS';
 const PART_ScrollTop = 'PART_ScrollTop';
 
@@ -12,6 +14,8 @@ const initState={
     likenum: 0,
     collectnum: 0,
     partlist: [],
+    likelist: [],
+    collectlist: [],
     showScroll: false,
 }
 
@@ -24,12 +28,22 @@ export function part(state=initState, action) {
             return {...state, ...action.payload}
         case PARTLIST_SUCCESS:
             return {...state, partlist:action.payload, ...action.payload}
+        case  PARTLIKELIST_SUCCESS:
+            return {...state,likelist:action.payload}
+        case  PARTCOLLECTLIST_SUCCESS:
+            return {...state,collectlist:action.payload}
         default:
             return state
     }
 }
 function getpartlistSuccess(data) {
     return { type:PARTLIST_SUCCESS, payload:data}
+}
+function getpartlikelistSuccess(data) {
+    return { type: PARTLIKELIST_SUCCESS, payload:data}
+}
+function getpartcollectlistSuccess(data) {
+    return { type: PARTCOLLECTLIST_SUCCESS, payload:data}
 }
 function authSuccess(data){
 	return { type:PART_SUCCESS, payload:data}
@@ -108,6 +122,29 @@ export function getPartOne(data) {
             .then(res => {
                 if (res.status === 200 && res.data.code === 0) {
                     dispatch(authSuccess(res.data.data))
+                }
+            })
+    }
+}
+
+//获取点赞数前5
+export function getPartLikeList() {
+    return dispatch => {
+        axios.get('/part/findlikenumlist')
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(getpartlikelistSuccess(res.data.data))
+                }
+            })
+    }
+}
+//获取收藏数前5
+export function getPartCollectList() {
+    return dispatch => {
+        axios.get('/part/findcollectnumlist')
+            .then(res => {
+                if (res.status === 200 && res.data.code === 0) {
+                    dispatch(getpartcollectlistSuccess(res.data.data))
                 }
             })
     }
