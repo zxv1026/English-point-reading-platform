@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import Information from './components/information';
 import { connect } from 'react-redux';
 import { getCollectionList,removeCollection } from '../../redux/collectrecord_redux';
+import { getLikeList,remove } from '../../redux/likerecord_redux';
 import { updatenum } from "../../redux/detail_redux";
 import { updatecharpterlikenum } from "../../redux/charpter_redux";
 import { updatepartlikenum } from "../../redux/part_redux";
@@ -17,9 +18,10 @@ const TabPane = Tabs.TabPane;
         userID: state.user._id,
         username: state.user.username,
         avatar: state.user.avatar,
-        list: state.collectrecord.list
+        collectlist: state.collectrecord.list,
+        likelist: state.likerecord.list,
     }),
-    {getCollectionList,removeCollection,updatenum,updatecharpterlikenum,updatepartlikenum}
+    {getCollectionList,removeCollection,updatenum,updatecharpterlikenum,updatepartlikenum,getLikeList,remove}
 )
 class PersonalCenter extends Component {
     
@@ -34,10 +36,11 @@ class PersonalCenter extends Component {
         const data = {
             userID: userID
         }
-        this.props.getCollectionList(data)
-        console.log(this.props.list)
+        this.props.getCollectionList(data);
+        this.props.getLikeList(data);
     }
-    cancelCollect(userID,detailID, collectID, detailcollectnum, charptercollectnum, partcollectnum) {
+    cancelCollect(userID,detailID, collectID, detailcollectnum, charptercollectnum, partcollectnum,charpterId,partId) {
+        this.props.removeCollection(collectID,userID);
         detailcollectnum = detailcollectnum - 1;
         charptercollectnum = charptercollectnum - 1;
         partcollectnum = partcollectnum - 1;
@@ -51,12 +54,32 @@ class PersonalCenter extends Component {
             collectnum: partcollectnum
         }
         this.props.updatenum(detailID, detail);
-        this.props.updatecharpterlikenum(this.props.match.params.charpterId, charpter);
-        this.props.updatepartlikenum(this.props.match.params.partId, part);
-        this.props.removeCollection(collectID,userID)
+        this.props.updatecharpterlikenum(charpterId, charpter);
+        this.props.updatepartlikenum(partId, part);
+    }
+    cancelLike(userID,detailID, likeID, detaillikenum, charpterlikenum, partlikenum,charpterId,partId){
+        this.props.remove(likeID, userID);
+        detaillikenum = detaillikenum - 1;
+        console.log("-1前" + charpterlikenum);
+        charpterlikenum = charpterlikenum - 1;
+        console.log("-1后" + charpterlikenum);
+        partlikenum = partlikenum - 1;
+        const detail = {
+            num: detaillikenum
+        }
+        const charpter = {
+            likenum: charpterlikenum
+        }
+        const part = {
+            likenum: partlikenum
+        }
+        console.log(charpter)
+        this.props.updatenum(detailID, detail);
+        this.props.updatecharpterlikenum(charpterId, charpter);
+        this.props.updatepartlikenum(partId, part);
     }
     render() {
-        const { username,list } = this.props
+        const { username,collectlist,likelist } = this.props
         const IconText = ({ type, text, theme, title }) => (
             <span>
                 <Tooltip title={title}>
@@ -70,7 +93,6 @@ class PersonalCenter extends Component {
             </span>
         );
         console.log(this.props)
-        console.log(this.props.list)
         return (
             <div>
                 {username?
@@ -89,7 +111,7 @@ class PersonalCenter extends Component {
                                     },
                                     pageSize: 10,
                                 }}
-                                dataSource={list}
+                                dataSource={collectlist}
                                 renderItem={item => (
                                     <List.Item
                                         key={item.detailID.detailname}
@@ -115,16 +137,52 @@ class PersonalCenter extends Component {
                                             <span style={{marginRight:100}}>{moment(item.created).format('YYYY-MM-DD HH:mm:ss')}</span>
                                         </div>
                                         <Tooltip title="取消收藏">
-                                            <Button onClick={()=>this.cancelCollect(item.userID,item.detailID._id, item._id, item.detailID.collectnum, item.detailID.charpterID.collectnum, item.detailID.charpterID.partID.collectnum)}>取消收藏</Button>
+                                            <Button onClick={()=>this.cancelCollect(item.userID,item.detailID._id, item._id, item.detailID.collectnum, item.detailID.charpterID.collectnum, item.detailID.charpterID.partID.collectnum,item.detailID.charpterID.charpterid,item.detailID.charpterID.partID.partid)}>取消收藏</Button>
                                         </Tooltip>
                                     </List.Item>
                                 )}
                             />
                         </TabPane>
                         <TabPane tab={<span><Icon type="like" />点赞的话题</span>} key="3">
-                            <div>
-                                TODO
-                            </div>
+                            <List
+                                itemLayout="horizontal"
+                                pagination={{
+                                    onChange: (page) => {
+                                        console.log(page);
+                                    },
+                                    pageSize: 10,
+                                }}
+                                dataSource={likelist}
+                                renderItem={item => (
+                                    <List.Item
+                                        key={item.detailID.detailname}
+                                        actions={[<IconText type="like-o" text={item.detailID.num} theme={item.like} title='点赞数'/>]}
+                                    >
+                                        <List.Item.Meta style={{marginLeft:20}}
+                                            title={<Link to={{
+                                                        pathname: "/parts/"+item.detailID.charpterID.partID.partid+"/charpters",
+                                                    }}>{item.detailID.charpterID.partID.name}</Link>}
+                                        />
+                                        <List.Item.Meta
+                                            title={<Link to={{
+                                                        pathname: "/parts/"+item.detailID.charpterID.partID.partid+"/charpters/"+item.detailID.charpterID.charpterid+"/details",
+                                                    }}>{item.detailID.charpterID.name}</Link>}
+                                        />
+                                        <List.Item.Meta
+                                            title={<Link to={{
+                                                        pathname: "/parts/"+item.detailID.charpterID.partID.partid+"/charpters/"+item.detailID.charpterID.charpterid+"/details/"+item.detailID.detailid+'/contents',
+                                                    }}>{item.detailID.name}</Link>}
+                                        />
+                                        <div>
+                                            <span>点赞时间:</span>
+                                            <span style={{marginRight:100}}>{moment(item.created).format('YYYY-MM-DD HH:mm:ss')}</span>
+                                        </div>
+                                        <Tooltip title="取消点赞">
+                                            <Button onClick={()=>this.cancelLike(item.userID,item.detailID._id, item._id, item.detailID.num, item.detailID.charpterID.likenum, item.detailID.charpterID.partID.likenum,item.detailID.charpterID.charpterid,item.detailID.charpterID.partID.partid)}>取消点赞</Button>
+                                        </Tooltip>
+                                    </List.Item>
+                                )}
+                            />
                         </TabPane>
                     </Tabs>
                 </div>:<Redirect to='/'/>}
