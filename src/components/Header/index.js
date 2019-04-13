@@ -34,6 +34,14 @@ class Header extends Component {
         const { find } = this.props;
         this.setState({find});
     }
+    componentWillReceiveProps(nextProps) {
+        const prevFind = this.props.find;
+        const nextFind = nextProps.find;
+        if (nextFind!==prevFind) {
+            // console.log(this.state.find)
+            this.setState({ find : nextFind? nextFind : '' })
+        }
+    }
     changeFind(value){
         let { find } = this.state;
         find = value;
@@ -131,6 +139,7 @@ class Header extends Component {
         const { username,path } = this.props;
         const { find } = this.state;
         // console.log(find);
+        // console.log(this.props.find);
         // console.log(this.props.detailfindlist)
         // console.log(this.props.headerlist)
         return (
