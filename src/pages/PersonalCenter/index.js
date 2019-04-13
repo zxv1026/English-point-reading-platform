@@ -62,9 +62,8 @@ class PersonalCenter extends Component {
                 <Tooltip title={title}>
                     <Icon
                         type={type}
-                        style={{ marginRight: 8 }}
-                        theme={theme === 'collected' ? 'twoTone' : 'outlined'}
-                        twoToneColor = "#eb2f96"
+                        theme={ theme ? 'filled' : 'outlined' }
+                        style={ theme ? { color: "#ea6f5a",marginRight: 8 }: { marginRight: 8 }}
                     />
                     <span style={{ marginRight: 20 }}>{text}</span>
                 </Tooltip>

@@ -54,7 +54,7 @@ class Find extends Component {
                                         <List.Item.Meta style={{marginLeft:100}}
                                             title={<Link to={{
                                                         pathname: "/parts/"+item.partid+"/charpters",
-                                                    }}>{item.name}</Link>}
+                                                    }}><span style={{color: '#ea6f5a'}}>{item.name}</span></Link>}
                                         />
                                     </List.Item>
                                 )}
@@ -80,10 +80,15 @@ class Find extends Component {
                                             key={item.name}
                                             actions={[<IconText type="heart-o" text={item.collectnum} />,<IconText type="like-o" text={item.likenum} />]}
                                         >
-                                            <List.Item.Meta style={{marginLeft:100}}
+                                            <List.Item.Meta style={{marginLeft:20}}
+                                                title={<Link to={{
+                                                            pathname: "/parts/"+item.partID.partid+"/charpters",
+                                                        }}>{item.partID.name}</Link>}
+                                            />
+                                            <List.Item.Meta
                                                 title={<Link to={{
                                                             pathname: "/parts/"+item.partid+"/charpters/"+item.charpterid+"/details",
-                                                        }}>{item.name}</Link>}
+                                                        }}><span style={{color: '#ea6f5a'}}>{item.name}</span></Link>}
                                             />
                                         </List.Item>
                                     )}
@@ -109,10 +114,20 @@ class Find extends Component {
                                         key={item.name}
                                         actions={[<IconText type="heart-o" text={item.collectnum} />,<IconText type="like-o" text={item.num} />]}
                                     >
-                                        <List.Item.Meta style={{marginLeft:100}}
+                                        <List.Item.Meta style={{marginLeft:20}}
+                                            title={<Link to={{
+                                                        pathname: "/parts/"+item.charpterID.partID.partid+"/charpters",
+                                                    }}>{item.charpterID.partID.name}</Link>}
+                                        />
+                                        <List.Item.Meta
+                                            title={<Link to={{
+                                                        pathname: "/parts/"+item.charpterID.partID.partid+"/charpters/"+item.charpterID.charpterid+"/details",
+                                                    }}>{item.charpterID.name}</Link>}
+                                        />
+                                        <List.Item.Meta 
                                             title={<Link to={{
                                                         pathname: "/parts/"+item.charpterID.partID.partid+"/charpters/"+item.charpterID.charpterid+"/details/"+item.detailid+'/contents',
-                                                    }}>{item.name}</Link>}
+                                                    }}><span style={{color: '#ea6f5a'}}>{item.name}</span></Link>}
                                         />
                                     </List.Item>
                                 )}
