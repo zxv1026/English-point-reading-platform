@@ -6,7 +6,25 @@ const Part = require('./models/part');
 const Charpter = require('./models/charpter');
 const Detail = require('./models/detail')
 
-
+//根据输入的内容查询
+Router.post('/find',function(req,res) {
+    const {find} = req.body
+    //通过使用RegExp，来构建正则表达式对象，来模糊查询
+    const reg = new RegExp(find,'i')//
+    console.log(find)
+    Charpter.find({$or:[{name: {$regex: reg}}]})
+        .populate({
+            path:'partID',
+        })
+        .sort({'_id': -1})
+        .exec(function (err,doc) {
+            console.log(doc)
+            if(err){
+                return res.json({msg: '后端出错'})
+            }
+            return res.json({code: 0,data:doc})
+        })
+})
 //取点赞数最多的10个
 Router.get('/findlikenumlist',function (req,res) {
     Charpter.find({})

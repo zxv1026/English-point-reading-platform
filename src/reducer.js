@@ -8,5 +8,6 @@ import { content } from "./redux/content_redux";
 // import { tag } from "./redux/tag_redux";
 import { likerecord } from "./redux/likerecord_redux";
 import { collectrecord } from "./redux/collectrecord_redux";
+import { header } from "./redux/header_redux";
 
-export default combineReducers({user,part,charpter,detail,content,likerecord,collectrecord})
+export default combineReducers({user,part,charpter,detail,content,likerecord,collectrecord,header})

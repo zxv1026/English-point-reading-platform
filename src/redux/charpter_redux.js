@@ -6,6 +6,7 @@ const CHARPTERLIKELIST_SUCCESS = 'CHARPTERLIKELIST_SUCCESS';
 const CHARPTERCOLLECTLIST_SUCCESS = 'CHARPTERCOLLECTLIST_SUCCESS';
 const CHARPTERLISTONE_SUCCESS = 'CHARPTERLISTONE_SUCCESS';
 const CHARPTER_SUCCESS = 'CHARPTER_SUCCESS';
+const CHARPTERFINDLIST_SUCCESS = 'CHARPTERFINDLIST_SUCCESS';
 
 const initState={
     charpterid:'',
@@ -18,6 +19,7 @@ const initState={
     likelist: [],
     collectlist: [],
     charpterlistone:[],
+    findlist: [],
 }
 
 //reducer
@@ -33,6 +35,8 @@ export function charpter(state=initState, action) {
             return {...state,collectlist:action.payload}
         case CHARPTERLISTONE_SUCCESS:
             return {...state,charpterlistone:action.payload}
+        case CHARPTERFINDLIST_SUCCESS:
+            return {...state,findlist:action.payload}
         default:
             return state
     }
@@ -49,10 +53,26 @@ function getcharptercollectlistSuccess(data) {
 function getcharpterlistSuccess(data) {
     return { type:CHARPTERLIST_SUCCESS, payload:data}
 }
+function getcharpterfindlistSuccess(data) {
+    return { type:CHARPTERFINDLIST_SUCCESS, payload:data}
+}
 function authSuccess(data){
 	return { type:CHARPTER_SUCCESS, payload:data}
 }
 
+export function charpterFind(data) {
+    return dispatch => {
+        axios.post('/charpter/find', data)
+            .then(res => {
+                console.log(data)
+                if (res.status === 200 & res.data.code === 0) {
+                    dispatch(getcharpterfindlistSuccess(res.data.data))
+                } else {
+                    message.error(res.data.msg)
+                }
+            })
+    }
+}
 
 export function remove(data) {
     return dispatch=>{

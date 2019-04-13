@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import logoPic from "../../assets/images/logo.svg";
 
 export const HeaderWrapper = styled.div `
+    z-index: 1;
     position: relative;
     height: 56px;
     border-bottom: 1px solid #fofofo;
@@ -46,7 +47,7 @@ export const NavItem = styled.div `
 export const SearchWrapper = styled.div `
     position: relative;
     float: left;
-    .iconfont {
+    .zoom {
         position: absolute;
         right: 5px;
         bottom: 5px;
@@ -68,7 +69,7 @@ export const NavSearch = styled.input.attrs({
 `
     width: 160px;
     height: 38px;
-    padding: 0 30px 0 20px;
+    padding: 0 40px 0 20px;
     margin-top: 9px;
     margin-left: 20px;
     box-sizing: border-box;
@@ -77,7 +78,6 @@ export const NavSearch = styled.input.attrs({
     border-radius: 19px;
     background: #eee;
     font-size: 14px;
-    color: #666;
     &::placeholder {
         color: #999;
     }
@@ -85,16 +85,82 @@ export const NavSearch = styled.input.attrs({
         width: 220px;
     }
     &.slide-enter {
-        transition: all .2s ease-out;
+        transition: all .5s ease-out;
     }
     &.slide-enter-active {
         width: 220px;
     }
     &.slide-exit {
-        transition: all .2s ease-out;
+        transition: all .5s ease-out;
     }
     &.slide-exit-active {
         width: 160px;
+    }
+`;
+
+export const SearchInfo = styled.div `
+	position: absolute;
+	left: 20px;
+	top: 59px;
+	width: 250px;
+	padding: 0 20px 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+    border-radius: 4px;
+    background-color: #fff;
+    .arrow {   
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 12px solid transparent;
+        border-bottom-color: #fff;
+        left: 20px;
+        bottom: 99%; 
+    }  
+`;
+
+export const SearchInfoTitle = styled.div `
+	margin-top: 20px;
+	margin-bottom: 15px;
+	line-height: 20px;
+	font-size: 14px;
+	color: #969696;
+`;
+
+export const SearchInfoSwitch = styled.span `
+	float: right;
+	font-size: 13px;
+	cursor: pointer;
+	.spin {
+		display: block;
+		float: left;
+		font-size: 12px;
+		margin-right: 2px;
+		transition: all .2s ease-in;
+		transform-origin: center center;
+    }
+    :hover {
+        color: #2f2f2f;
+    }
+`;
+
+export const SearchInfoList = styled.div `
+	overflow: hidden;
+`;
+
+export const SearchInfoItem = styled.span `
+	display: block;
+	float: left;
+	line-height: 20px;
+	padding: 0 5px;
+	margin-right: 10px;
+	margin-bottom: 15px;
+	font-size: 12px;
+	border: 1px solid #ddd;
+	color: #787878;
+    border-radius: 3px;
+    :hover {
+        color: #333;
+        border-color: #b4b4b4;
     }
 `;
 

@@ -4,6 +4,7 @@ import { message } from 'antd';
 const PARTLIST_SUCCESS = 'PARTLIST_SUCCESS';
 const PARTLIKELIST_SUCCESS = 'PARTLIKELIST_SUCCESS';
 const PARTCOLLECTLIST_SUCCESS = 'PARTCOLLECTLIST_SUCCESS';
+const PARTFINDLIST_SUCCESS = 'PARTFINDLIST_SUCCESS';
 const PART_SUCCESS = 'PART_SUCCESS';
 const PART_ScrollTop = 'PART_ScrollTop';
 
@@ -16,6 +17,7 @@ const initState={
     partlist: [],
     likelist: [],
     collectlist: [],
+    findlist: [],
     showScroll: false,
 }
 
@@ -32,6 +34,8 @@ export function part(state=initState, action) {
             return {...state,likelist:action.payload}
         case  PARTCOLLECTLIST_SUCCESS:
             return {...state,collectlist:action.payload}
+        case PARTFINDLIST_SUCCESS:
+            return {...state,findlist:action.payload}
         default:
             return state
     }
@@ -44,6 +48,9 @@ function getpartlikelistSuccess(data) {
 }
 function getpartcollectlistSuccess(data) {
     return { type: PARTCOLLECTLIST_SUCCESS, payload:data}
+}
+function getpartfindlistSuccess(data) {
+    return { type:PARTFINDLIST_SUCCESS, payload:data}
 }
 function authSuccess(data){
 	return { type:PART_SUCCESS, payload:data}
@@ -60,6 +67,20 @@ export function changePartScrollTopShow(data) {
             dispatch(scrollTop(false))
         }
 
+    }
+}
+
+export function partFind(data) {
+    return dispatch => {
+        axios.post('/part/find', data)
+            .then(res => {
+                console.log(data)
+                if (res.status === 200 & res.data.code === 0) {
+                    dispatch(getpartfindlistSuccess(res.data.data))
+                } else {
+                    message.error(res.data.msg)
+                }
+            })
     }
 }
 

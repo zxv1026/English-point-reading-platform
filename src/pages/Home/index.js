@@ -65,7 +65,7 @@ class Home extends Component {
                             <Icon type="left" theme="outlined" style={{ fontSize: '30px'}} onClick={this.handlePrev}/>
                             <CarouselCompont autoplay ref='img'>
                                 {detailnewlist.map((detail,i=0)=>(
-                                    <div className='wrapper'>
+                                    <div className='wrapper' key={'detailnrewlist'+detail.detailid}>
                                         <img src={require(`../../assets/images/ch0${i+1}.jpg`)} alt=''/>
                                         <div className='wrapper1'>
                                             <Link to={{
@@ -87,7 +87,7 @@ class Home extends Component {
                             <Tabs>
                                 <TabPane tab={<span><Icon type="book"/>章节</span>} key="1">
                                     {partlikelist.map((part)=>(
-                                        <div>
+                                        <div key={'partlike'+part.partid}>
                                             <Link to={{
                                                 pathname: "/parts/"+part.partid+"/charpters",
                                             }}><span>{part.name}</span></Link>
@@ -102,7 +102,7 @@ class Home extends Component {
                                 </TabPane>
                                 <TabPane tab={<span><Icon type="file"/>Charpter</span>} key="2">
                                     {charpterlikelist.map((charpter)=>(
-                                        <div>
+                                        <div key={'charpterike'+charpter.charpterid}>
                                             <Link to={{
                                                 pathname: "/parts/"+charpter.partID.partid+"/charpters/"+charpter.charpterid,
                                             }}><span>{charpter.name}</span></Link>
@@ -117,7 +117,7 @@ class Home extends Component {
                                 </TabPane>
                                 <TabPane tab={<span><Icon type="bars"/>话题</span>} key="3">
                                     {detaillikelist.map((detail)=>(
-                                        <div>
+                                        <div key={'detaillike'+detail.detailid}>
                                             <Link to={{
                                                 pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
                                             }}><span>{detail.name}</span></Link>
@@ -137,7 +137,7 @@ class Home extends Component {
                             <Tabs>
                                 <TabPane tab={<span><Icon type="book"/>章节</span>} key="1">
                                     {partcollectlist.map((part)=>(
-                                        <div>
+                                        <div key={'partcollect'+part.partid}>
                                             <Link to={{
                                                 pathname: "/parts/"+part.partid+"/charpters",
                                             }}><span>{part.name}</span></Link>
@@ -152,7 +152,7 @@ class Home extends Component {
                                 </TabPane>
                                 <TabPane tab={<span><Icon type="file"/>Charpter</span>} key="2">
                                     {charptercollectlist.map((charpter)=>(
-                                        <div>
+                                        <div key={'charptercollect'+charpter.charpterid}>
                                             <Link to={{
                                                 pathname: "/parts/"+charpter.partID.partid+"/charpters/"+charpter.charpterid,
                                             }}><span>{charpter.name}</span></Link>
@@ -167,7 +167,7 @@ class Home extends Component {
                                 </TabPane>
                                 <TabPane tab={<span><Icon type="bars"/>话题</span>} key="3">
                                     {detailcollectlist.map((detail)=>(
-                                        <div>
+                                        <div key={'detailcollect'+detail.detailid}>
                                             <Link to={{
                                                 pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
                                             }}><span>{detail.name}</span></Link>

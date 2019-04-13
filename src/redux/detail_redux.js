@@ -62,7 +62,7 @@ function authSuccess(data){
 	return { type:DETAIL_SUCCESS, payload:data}
 }
 
-export function find(data) {
+export function detailFind(data) {
     return dispatch=>{
         axios.post('/detail/find',data)
             .then(res=>{
