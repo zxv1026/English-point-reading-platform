@@ -15,7 +15,7 @@ class Avatar extends Component {
             <div>
                 <Dropdown
                     overlay={
-                        <Menu>
+                        <Menu style={{marginTop:15}}>
                             <Menu.Item>
                                 <Link to='/personalcenter'>
                                     <Icon type="user" /> 个人中心
