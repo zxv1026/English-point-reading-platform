@@ -7,7 +7,7 @@ export const HomeWrapper = styled.div`
     margin: 0 auto;
 `;
 
-export const HomeLeft = styled.div `
+export const HomeLeft = styled.div`
     margin-left: 15px;
     margin-top: 30px;
     width: 625px;
@@ -54,8 +54,13 @@ export const CarouselCompont = styled(Carousel)`
     }
 `
 
-export const HomeRight = styled.div `
+export const HomeRight = styled.div`
     margin: 30px;
     width: 240px;
     float: right;
 `;
+
+export const TabSpan = styled.span`
+    font-size:14px;
+    color:#333;
+`

@@ -3,10 +3,10 @@ import Header from '../../components/Header/index';
 import ListPart from './components/listpart/index';
 import { Link } from "react-router-dom";
 import { Icon,Tooltip,Tabs } from 'antd';
-import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont,SlideShow } from "./style";
+import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont,SlideShow,TabSpan } from "./style";
 import { connect } from 'react-redux';
 import { getPartList,changePartScrollTopShow,getPartLikeList,getPartCollectList } from "../../redux/part_redux";
-import { getCharpterLikeList,getCharpterCollectList } from "../../redux/charpter_redux";
+import { getCharpterLikeList,getCharpterCollectList,getCharpterList } from "../../redux/charpter_redux";
 import { getDetailNewestList,getDetailLikeList,getDetailCollectList } from '../../redux/detail_redux'
 
 const TabPane = Tabs.TabPane;
@@ -17,13 +17,14 @@ const TabPane = Tabs.TabPane;
         partlikelist: state.part.likelist,
         partcollectlist: state.part.collectlist,
         showScroll: state.part.showScroll,
+        charpterlist: state.charpter.charpterlist,
         charpterlikelist: state.charpter.likelist,
         charptercollectlist: state.charpter.collectlist,
         detailnewlist: state.detail.newlist,
         detaillikelist: state.detail.likelist,
         detailcollectlist: state.detail.collectlist,
     }),
-    {getPartList,changePartScrollTopShow,getDetailNewestList,getDetailLikeList,getDetailCollectList,getCharpterLikeList,getCharpterCollectList,getPartLikeList,getPartCollectList}
+    {getPartList,changePartScrollTopShow,getDetailNewestList,getDetailLikeList,getDetailCollectList,getCharpterLikeList,getCharpterCollectList,getCharpterList,getPartLikeList,getPartCollectList}
 )
 class Home extends Component {
     componentDidMount() {
@@ -35,6 +36,7 @@ class Home extends Component {
         this.props.getDetailCollectList();
         this.props.getCharpterLikeList();
         this.props.getCharpterCollectList();
+        this.props.getCharpterList();
         this.bindEvents();
     }
     componentWillUnmount() {
@@ -55,7 +57,7 @@ class Home extends Component {
         this.refs.img.next();
     }
     render() {
-        const { partlist,detailnewlist,detaillikelist,detailcollectlist,charpterlikelist,charptercollectlist,partlikelist,partcollectlist } = this.props
+        const { partlist,charpterlist,detailnewlist,detaillikelist,detailcollectlist,charpterlikelist,charptercollectlist,partlikelist,partcollectlist } = this.props
         return (
             <div>
                 <Header path={this.props.location.pathname}/>
@@ -79,6 +81,7 @@ class Home extends Component {
                         </SlideShow>
                         <ListPart
                             list={partlist}
+                            charpterlist={charpterlist}
                         />
                     </HomeLeft>
                     <HomeRight>
@@ -90,7 +93,7 @@ class Home extends Component {
                                         <div key={'partlike'+part.partid}>
                                             <Link to={{
                                                 pathname: "/parts/"+part.partid+"/charpters",
-                                            }}><span>{part.name}</span></Link>
+                                            }}><TabSpan>{part.name}</TabSpan></Link>
                                             <div style={{ float: "right" }}>
                                                 <Tooltip title='点赞数'>
                                                     <Icon type='like-o' style={{ marginRight: 8 }}/>
@@ -105,7 +108,7 @@ class Home extends Component {
                                         <div key={'charpterike'+charpter.charpterid}>
                                             <Link to={{
                                                 pathname: "/parts/"+charpter.partID.partid+"/charpters/"+charpter.charpterid,
-                                            }}><span>{charpter.name}</span></Link>
+                                            }}><TabSpan>{charpter.name}</TabSpan></Link>
                                             <div style={{ float: "right" }}>
                                                 <Tooltip title='点赞数'>
                                                     <Icon type='like-o' style={{ marginRight: 8 }}/>
@@ -120,7 +123,7 @@ class Home extends Component {
                                         <div key={'detaillike'+detail.detailid}>
                                             <Link to={{
                                                 pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
-                                            }}><span>{detail.name}</span></Link>
+                                            }}><TabSpan>{detail.name}</TabSpan></Link>
                                             <div style={{ float: "right" }}>
                                                 <Tooltip title='点赞数'>
                                                     <Icon type='like-o' style={{ marginRight: 8 }}/>
@@ -140,7 +143,7 @@ class Home extends Component {
                                         <div key={'partcollect'+part.partid}>
                                             <Link to={{
                                                 pathname: "/parts/"+part.partid+"/charpters",
-                                            }}><span>{part.name}</span></Link>
+                                            }}><TabSpan>{part.name}</TabSpan></Link>
                                             <div style={{ float: "right" }}>
                                                 <Tooltip title='点赞数'>
                                                     <Icon type='heart-o' style={{ marginRight: 8 }}/>
@@ -155,7 +158,7 @@ class Home extends Component {
                                         <div key={'charptercollect'+charpter.charpterid}>
                                             <Link to={{
                                                 pathname: "/parts/"+charpter.partID.partid+"/charpters/"+charpter.charpterid,
-                                            }}><span>{charpter.name}</span></Link>
+                                            }}><TabSpan>{charpter.name}</TabSpan></Link>
                                             <div style={{ float: "right" }}>
                                                 <Tooltip title='点赞数'>
                                                     <Icon type='heart-o' style={{ marginRight: 8 }}/>
@@ -170,7 +173,7 @@ class Home extends Component {
                                         <div key={'detailcollect'+detail.detailid}>
                                             <Link to={{
                                                 pathname: "/parts/"+detail.charpterID.partid+"/charpters/"+detail.charpterid+"/details/"+detail.detailid+'/contents',
-                                            }}><span>{detail.name}</span></Link>
+                                            }}><TabSpan>{detail.name}</TabSpan></Link>
                                             <div style={{ float: "right" }}>
                                                 <Tooltip title='收藏数'>
                                                     <Icon type='heart-o' style={{ marginRight: 8 }}/>
