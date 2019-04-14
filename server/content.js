@@ -5,10 +5,18 @@ const Content = require('./models/content');
 
 Router.get('/list',function (req, res) {
     // Content.remove({},function (err,doc) {})
-    Content.find({}).populate('detailID').exec(function (err,doc) {
-        console.log(doc)
-        return res.json({code: 0, data:doc})
-    })
+    Content.find({})
+        .populate({
+            path: 'detailID',
+            populate:({
+                path:'charpterID',
+                populate: { path: 'partID' }
+            })
+        })
+        .exec(function (err,doc) {
+            console.log(doc)
+            return res.json({code: 0, data:doc})
+        })
 })
 //获取与前端传过来的detailid相同的的content信息
 Router.post('/listone',function (req, res) {

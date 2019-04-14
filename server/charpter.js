@@ -55,9 +55,14 @@ Router.get('/findcollectnumlist',function (req,res) {
 //获取全部charpter信息
 Router.get('/list',function (req, res) {
     // Charpter.remove({},function (err,doc) {})
-    Charpter.find({}, function (err, doc) {
-        return res.json({code: 0, data:doc})
-    })
+    Charpter.find({})
+        .populate({
+            path: 'partID',
+        })
+        .sort({'_id': -1})
+        .exec(function (err, doc) {
+            return res.json({code: 0,data: doc})
+        })
 })
 
 Router.post('/one',function (req, res) {

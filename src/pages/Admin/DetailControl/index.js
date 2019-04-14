@@ -51,15 +51,31 @@ class DetailControl extends Component {
                 render: text => <a href=" ">{text}</a>,
             },
             {
+                title: 'Detail名',
+                dataIndex: 'name',
+                key: 'name',
+            },
+            {
                 title: 'CharpterID',
                 dataIndex: 'charpterid',
                 key: 'charpterid',
                 sorter: (a,b) => a.charpterid - b.charpterid,
             },
             {
-                title: 'Detail名',
-                dataIndex: 'name',
-                key: 'name',
+                title: 'Charpter名称',
+                dataIndex: 'charpterID.name',
+                key: 'charptername',
+            },
+            {
+                title: '章节ID',
+                dataIndex: 'charpterID.partid',
+                key: 'partid',
+                sorter: (a, b) => a.charpterID.partid - b.charpterID.partid,
+            },
+            {
+                title: '章节名称',
+                dataIndex: 'charpterID.partID.name',
+                key: 'partname',
             },
             {
                 title: '音频',

@@ -51,24 +51,57 @@ class ContentControl extends Component {
                 title: 'ContentID',
                 dataIndex: 'contentid',
                 key: 'contentid',
+                fixed: 'left',
+                width: 50,
                 sorter: (a,b) => a.contentid - b.contentid,
                 render: text => <a href=" ">{text}</a>,
-            },
-            {
-                title: 'DetailID',
-                dataIndex: 'detailid',
-                key: 'detailid',
-                sorter: (a,b) => a.detailid - b.detailid,
             },
             {
                 title: '中文语句',
                 dataIndex: 'chinese',
                 key: 'chinese',
+                fixed: 'left',
+                width: 100,
             },
             {
                 title: '英文语句',
                 dataIndex: 'english',
                 key: 'english',
+                fixed: 'left',
+                width: 100,
+            },
+            {
+                title: '话题ID',
+                dataIndex: 'detailid',
+                key: 'detailid',
+                sorter: (a,b) => a.detailid - b.detailid,
+            },
+            {
+                title: '话题名称',
+                dataIndex: 'detailID.name',
+                key: 'detailname',
+            },
+            {
+                title: 'CharpterID',
+                dataIndex: 'detailID.charpterid',
+                key: 'charpterid',
+                sorter: (a,b) => a.detailID.charpterid - b.detailID.charpterid,
+            },
+            {
+                title: 'Charpter名称',
+                dataIndex: 'detailID.charpterID.name',
+                key: 'charptername',
+            },
+            {
+                title: '章节ID',
+                dataIndex: 'detailID.charpterID.partid',
+                key: 'partid',
+                sorter: (a,b) => a.detailID.charpterID.partid - b.detailID.charpterID.partid,
+            },
+            {
+                title: '章节名称',
+                dataIndex: 'detailID.charpterID.partID.name',
+                key: 'partname',
             },
             {
                 title: '音频偏移时间',
@@ -91,6 +124,8 @@ class ContentControl extends Component {
             {
                 title: '操作',
                 key: 'operation',
+                fixed: 'right',
+                width: 100,
                 render: (text, record)=>{
                     return (
                         <span>
@@ -141,6 +176,7 @@ class ContentControl extends Component {
                         columns={columns}
                         dataSource={contentlist}
                         rowKey="id"
+                        scroll={{ x: 1500 }}
                     />
                 </div>
             </div>

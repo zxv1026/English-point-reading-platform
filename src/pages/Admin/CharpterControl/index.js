@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import { create, update, remove, getCharpterList } from "../../../redux/charpter_redux";
 
 @connect(
-    state => state.charpter,
+    state => ({
+        charpterlist:state.charpter.charpterlist,
+    }),
     {create, update, remove, getCharpterList}
 )
 class CharpterControl extends Component {
@@ -40,15 +42,20 @@ class CharpterControl extends Component {
                 render: text => <a href=" ">{text}</a>,
             },
             {
+                title: 'Charpter名',
+                dataIndex: 'name',
+                key: 'name',
+            },
+            {
                 title: 'PartID',
                 dataIndex: 'partid',
                 key: 'partid',
                 sorter: (a,b) => a.partid - b.partid,
             },
             {
-                title: 'Charpter名',
-                dataIndex: 'name',
-                key: 'name',
+                title: '章节名称',
+                dataIndex: 'partID.name',
+                key: 'partname',
             },
             {
                 title: '点赞数',

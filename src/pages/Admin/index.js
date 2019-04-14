@@ -12,8 +12,16 @@ import ContentControl from './ContentControl';
 import { Layout, Menu, Icon } from 'antd';
 import logo from '../../assets/images/logo.svg';
 import './index.less';
+import { connect } from 'react-redux';
+
 const { Header, Content, Footer, Sider } = Layout;
 
+@connect(
+  state => ({
+      username: state.user.username,
+  }),
+  {  }
+)
 class AdminHome extends Component {
     constructor(props) {
         super(props)
@@ -22,7 +30,7 @@ class AdminHome extends Component {
             mode: 'inline',
         }
     }
-   
+
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
@@ -89,7 +97,7 @@ class AdminHome extends Component {
                             style={{cursor: 'pointer'}}
                         />
                         <span style={{ float: "right", marginRight: 30 }}>
-                            <Avatar/>
+                            {this.props.username?<Avatar/>:null}
                         </span>
                     </Header>
                     <Content style={{ margin: '0 16px' }}>

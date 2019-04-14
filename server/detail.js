@@ -70,9 +70,15 @@ Router.get('/findcollectnumlist',function (req,res) {
 
 Router.get('/list',function (req, res) {
     // DetailPart.remove({},function (err,doc) {})
-    Detail.find({}, function (err, doc) {
-        return res.json({code: 0, data:doc})
-    })
+    Detail.find({})
+        .populate({
+            path:'charpterID',
+            populate: { path: 'partID' }
+        })
+        .sort({'_id': -1})
+        .exec(function (err, doc) {
+            return res.json({code: 0, data:doc})
+        })
 })
 //获取与前端传过来的charpterid相同的的detail信息
 Router.post('/listone',function (req, res) {
