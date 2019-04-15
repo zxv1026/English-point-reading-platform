@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Header from '../../components/Header/index';
 import ListPart from './components/listpart/index';
 import { Link } from "react-router-dom";
-import { Icon,Tooltip,Tabs } from 'antd';
-import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont,SlideShow,TabSpan } from "./style";
+import { Icon,Tooltip,Tabs,Row,Col } from 'antd';
+import { HomeWrapper,HomeLeft,HomeRight,CarouselCompont,SlideShow,TabSpan,TabList } from "./style";
 import { connect } from 'react-redux';
 import { getPartList,changePartScrollTopShow,getPartLikeList,getPartCollectList } from "../../redux/part_redux";
 import { getCharpterLikeList,getCharpterCollectList,getCharpterList } from "../../redux/charpter_redux";
@@ -90,17 +90,26 @@ class Home extends Component {
                             <Tabs>
                                 <TabPane tab={<span><Icon type="book"/>章节</span>} key="1">
                                     {partlikelist.map((part)=>(
-                                        <div key={'partlike'+part.partid}>
-                                            <Link to={{
-                                                pathname: "/parts/"+part.partid+"/charpters",
-                                            }}><TabSpan>{part.name}</TabSpan></Link>
-                                            <div style={{ float: "right" }}>
-                                                <Tooltip title='点赞数'>
-                                                    <Icon type='like-o' style={{ marginRight: 8 }}/>
-                                                    {part.likenum}
-                                                </Tooltip>
-                                            </div>
-                                        </div>
+                                        <TabList key={'partlike'+part.partid}>
+                                            <Row type="flex" justify="space-around" align="middle">
+                                                <Col span={20}>
+                                                    <Link to={{
+                                                        pathname: "/parts/"+part.partid+"/charpters",
+                                                    }}>
+                                                        <img alt="partlogo" src={require(`../../assets/images/part/part${part.partid}.jpg`)}/>
+                                                        <p>{part.name}</p>
+                                                    </Link>
+                                                </Col>
+                                                <Col span={4}>
+                                                    <div style={{ float: "right" }}>
+                                                        <Tooltip title='点赞数'>
+                                                            <Icon type='like-o' style={{ marginRight: 8 }}/>
+                                                            {part.likenum}
+                                                        </Tooltip>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </TabList>
                                     ))}
                                 </TabPane>
                                 <TabPane tab={<span><Icon type="file"/>Charpter</span>} key="2">
@@ -140,17 +149,26 @@ class Home extends Component {
                             <Tabs>
                                 <TabPane tab={<span><Icon type="book"/>章节</span>} key="1">
                                     {partcollectlist.map((part)=>(
-                                        <div key={'partcollect'+part.partid}>
-                                            <Link to={{
-                                                pathname: "/parts/"+part.partid+"/charpters",
-                                            }}><TabSpan>{part.name}</TabSpan></Link>
-                                            <div style={{ float: "right" }}>
-                                                <Tooltip title='点赞数'>
-                                                    <Icon type='heart-o' style={{ marginRight: 8 }}/>
-                                                    {part.collectnum}
-                                                </Tooltip>
-                                            </div>
-                                        </div>
+                                        <TabList key={'partcollect'+part.partid}>
+                                            <Row type="flex" justify="space-around" align="middle">
+                                                <Col span={20}>
+                                                    <Link to={{
+                                                        pathname: "/parts/"+part.partid+"/charpters",
+                                                    }}>
+                                                        <img alt="partlogo" src={require(`../../assets/images/part/part${part.partid}.jpg`)}/>
+                                                        <p>{part.name}</p>
+                                                    </Link>
+                                                </Col>
+                                                <Col span={4}>
+                                                    <div style={{ float: "right" }}>
+                                                        <Tooltip title='点赞数'>
+                                                            <Icon type='heart-o' style={{ marginRight: 8 }}/>
+                                                            {part.collectnum}
+                                                        </Tooltip>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </TabList>
                                     ))}
                                 </TabPane>
                                 <TabPane tab={<span><Icon type="file"/>Charpter</span>} key="2">

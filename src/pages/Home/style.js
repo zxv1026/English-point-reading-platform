@@ -47,7 +47,7 @@ export const CarouselCompont = styled(Carousel)`
         left: 45%;
         p{
           text-align: center;
-          color: #fff;
+          color: #000000;
           font-size: 20px;
         }
       }
@@ -59,6 +59,18 @@ export const HomeRight = styled.div`
     width: 240px;
     float: right;
 `;
+
+export const TabList = styled.div`
+    text-align: center;
+    img{
+        width:60px;
+        height:50px;
+    }
+    p{
+        font-size:14px;
+        color:#333;
+    }
+`
 
 export const TabSpan = styled.span`
     font-size:14px;

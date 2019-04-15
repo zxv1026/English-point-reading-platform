@@ -59,7 +59,7 @@ Router.get('/list',function (req, res) {
         .populate({
             path: 'partID',
         })
-        .sort({'_id': -1})
+        .sort({'_id': 1})
         .exec(function (err, doc) {
             return res.json({code: 0,data: doc})
         })

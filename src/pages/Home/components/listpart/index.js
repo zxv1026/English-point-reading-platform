@@ -55,7 +55,7 @@ class Listpart extends Component {
                                 <IconText type="heart-o" text={item.collectnum} title="收藏"/>, 
                                 <IconText type="like-o" text={item.likenum} title="点赞" />, 
                                 <IconText type="message" text="2" />]}
-                            extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+                            extra={<img height={200} width={272} alt="partlogo" src={require(`../../../../assets/images/part/part${item.partid}.jpg`)}/>}
                         >
                             <Link to={{
                                 pathname: "/parts/"+item.partid+"/charpters"
