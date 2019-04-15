@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from '../../components/Header/index';
 import ListContent from './components/listcontent';
 import { Link } from "react-router-dom";
-import { Icon, Tooltip } from "antd";
+import { Icon, Tooltip,List,Row,Col } from "antd";
 import { connect } from 'react-redux';
 import { getContentListOne,changeScrollTopShow } from "../../redux/content_redux";
 import { getDetailOne,updatenum } from "../../redux/detail_redux";
@@ -172,7 +172,6 @@ class Content extends Component {
 
     render() {
         const { contentlist,mp3,detailname,num,detailID,userID,like,likeID,collect,collectID,detailcollectnum,data} = this.props
-       
         return (
             <div>
                 <Header path={this.props.location.pathname}/>
@@ -181,22 +180,9 @@ class Content extends Component {
                 }}>
                     <Icon type="caret-left"/>Back
                 </Link>
-                <div>
+                <div style={{textAlign:'center'}}>
                     <h2>{detailname}</h2>
                     {userID?<span>
-                                <span style={{ marginRight: 8 }}>
-                                    <Tooltip title="点赞">
-                                        <Icon
-                                            type="like-o" 
-                                            theme={like === 'liked' ? 'filled' : 'outlined'}
-                                            style={ like === 'liked' ? { color: "#ea6f5a" }: null}
-                                            onClick={() =>this.like(like, userID, detailID, likeID,num,data.likenum,data.partID.likenum)}
-                                        />
-                                    </Tooltip>
-                                    <span style={{ paddingLeft: 8, cursor: 'auto' }}>
-                                        {num}
-                                    </span>
-                                </span>
                                 <span>
                                     <Tooltip title="收藏">
                                         <Icon
@@ -210,25 +196,21 @@ class Content extends Component {
                                         {detailcollectnum}
                                     </span>
                                 </span>
+                                <span className='centerp'></span>
+                                <span style={{ marginRight: 8 }}>
+                                    <Tooltip title="点赞">
+                                        <Icon
+                                            type="like-o" 
+                                            theme={like === 'liked' ? 'filled' : 'outlined'}
+                                            style={ like === 'liked' ? { color: "#ea6f5a" }: null}
+                                            onClick={() =>this.like(like, userID, detailID, likeID,num,data.likenum,data.partID.likenum)}
+                                        />
+                                    </Tooltip>
+                                    <span style={{ paddingLeft: 8, cursor: 'auto' }}>
+                                        {num}
+                                    </span>
+                                </span>
                             </span>:<span>
-                                        <span>
-                                            <Tooltip title="点赞">
-                                                <Link
-                                                    to={{
-                                                        pathname: '/login',
-                                                        link: this.props.location.pathname
-                                                    }}
-                                                    className='link' >
-                                                    <Icon
-                                                        type="like" 
-                                                        theme='outlined'
-                                                    />
-                                                </Link>
-                                            </Tooltip>
-                                            <span style={{ paddingLeft: 8, cursor: 'auto' }}>
-                                                {num}
-                                            </span>
-                                        </span>
                                         <span>
                                             <Tooltip title="收藏">
                                                 <Link 
@@ -247,12 +229,33 @@ class Content extends Component {
                                                 {num}
                                             </span>
                                         </span>
+                                        <span className='centerp'></span>
+                                        <span>
+                                            <Tooltip title="点赞">
+                                                <Link
+                                                    to={{
+                                                        pathname: '/login',
+                                                        link: this.props.location.pathname
+                                                    }}
+                                                    className='link' >
+                                                    <Icon
+                                                        type="like" 
+                                                        theme='outlined'
+                                                    />
+                                                </Link>
+                                            </Tooltip>
+                                            <span style={{ paddingLeft: 8, cursor: 'auto' }}>
+                                                {num}
+                                            </span>
+                                        </span>
                                     </span>}
                 </div>
-                <ListContent
-                    list={contentlist}
-                    mp3={mp3}
-                />
+                <div className='content'>
+                    <ListContent
+                        list={contentlist}
+                        mp3={mp3}
+                    />
+                </div>
                 {this.props.showScroll 
                     ? <div className={userID? 'showScroll top' : 'showScroll bottom'} onClick={this.handleScrollTop}>
                             <Tooltip placement="left" title="回到顶部">

@@ -63,8 +63,8 @@ export const HomeRight = styled.div`
 export const TabList = styled.div`
     text-align: center;
     img{
-        width:60px;
-        height:50px;
+        width:136px;
+        height:100px;
     }
     p{
         font-size:14px;
