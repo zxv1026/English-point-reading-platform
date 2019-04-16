@@ -79,9 +79,10 @@ class Comment extends Component{
         this.props.updatepartlikenum(partid, part);
     }
     render(){
+        const { link } = this.props
         return (
             <div>
-                <CommentInput onSubmit={this.handleSubmitComment.bind(this)} />
+                <CommentInput onSubmit={this.handleSubmitComment.bind(this)} link={link}/>
                 <CommentList onDeleteComment={this.handleDeleteComment.bind(this)}/>
             </div>
         )

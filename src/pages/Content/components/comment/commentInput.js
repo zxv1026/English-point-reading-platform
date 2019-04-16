@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Input, Button,Form } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -16,7 +17,7 @@ class commentInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            comment: ''
+            comment: '',
         }
     }
     handleChange(value) {
@@ -25,9 +26,9 @@ class commentInput extends Component {
         this.setState({comment});
     }
     handleSubmit() {
+        const { comment } = this.state;
+        const { userID, detailID } = this.props;
         if (this.props.onSubmit) {
-            const { comment } = this.state;
-            const { userID, detailID } = this.props;
             const data = {
                 userID: userID,
                 detailID: detailID,
@@ -39,27 +40,38 @@ class commentInput extends Component {
         this.setState({ comment: '' })
     }
     render(){
-        console.log(this.props.onSubmit)
+        const { userID,link } = this.props;
         return(
             <div>
-                <Form>
-                    <Form.Item>
-                        <div>评论内容：</div>
-                    </Form.Item>
-                    < Form.Item>
-                        <TextArea
-                            placeholder="请输入评论内容" 
-                            autosize={{ minRows: 4}}
-                            value={this.state.comment}
-                            onChange={(e) => {
-                                this.handleChange(e.target.value)
-                            }}
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button style={{float: 'right'}} type="primary" onClick={()=>this.handleSubmit()}>发布</Button>
-                    </Form.Item>
-                </Form>
+                {userID?
+                    <Form>
+                        <Form.Item>
+                            <div>评论内容：</div>
+                        </Form.Item>
+                        < Form.Item>
+                            <TextArea
+                                placeholder="请输入评论内容" 
+                                autosize={{ minRows: 4}}
+                                value={this.state.comment}
+                                onChange={(e) => {
+                                    this.handleChange(e.target.value)
+                                }}
+                            />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button style={{float: 'right'}} type="primary" onClick={()=>this.handleSubmit()}>发布</Button>
+                        </Form.Item>
+                    </Form>:<Form className='form'>
+                            <div style={{marginTop:20}}>
+                                <Link to={{
+                                    pathname: '/login',
+                                    link: link,
+                                }}>
+                                    <Button type='primary'>登录</Button>
+                                </Link>
+                                <span>  后发表评论</span>
+                            </div>
+                    </Form>}
             </div>
         )
     }

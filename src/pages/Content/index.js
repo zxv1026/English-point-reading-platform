@@ -259,6 +259,7 @@ class Content extends Component {
                     <Comment
                         charpterid={this.props.match.params.charpterId}
                         partid={this.props.match.params.partId}
+                        link={this.props.location.pathname}
                     />
                 </div>
                 {this.props.showScroll 
