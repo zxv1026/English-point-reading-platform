@@ -52,9 +52,9 @@ class Listpart extends Component {
                         <List.Item
                             key={"part_"+item.partid}
                             actions={[
-                                <IconText type="heart-o" text={item.collectnum} title="收藏"/>, 
-                                <IconText type="like-o" text={item.likenum} title="点赞" />, 
-                                <IconText type="message" text="2" />]}
+                                <IconText type="heart-o" text={item.collectnum} title="收藏数"/>, 
+                                <IconText type="like-o" text={item.likenum} title="点赞数" />, 
+                                <IconText type="message" text={item.commentnum} title="评论数"/>]}
                             extra={<img height={200} width={272} alt="partlogo" src={require(`../../../../assets/images/part/part${item.partid}.jpg`)}/>}
                         >
                             <Link to={{

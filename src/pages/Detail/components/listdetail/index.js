@@ -30,9 +30,9 @@ class ListDetail extends Component {
                         <List.Item
                             key={"detail_"+item.detailid}
                             actions={[
-                                <IconText type="heart-o" text={item.collectnum} title="收藏"/>, 
-                                <IconText type="like-o" text={item.num} title="点赞" />, 
-                                <IconText type="message" text="2" />]}
+                                <IconText type="heart-o" text={item.collectnum} title="收藏数"/>, 
+                                <IconText type="like-o" text={item.num} title="点赞数" />, 
+                                <IconText type="message" text={item.commentnum} title="评论数"/>]}
                             extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
                         >
                             <Link to={{
