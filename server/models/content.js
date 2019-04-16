@@ -15,6 +15,8 @@ const ContentSchema = new Schema({
     },
     created:{ type: Date },
     icon:{ type: String },
+    promptType:{ type: String },
+    prompt:{ type: String }
 });
 
 

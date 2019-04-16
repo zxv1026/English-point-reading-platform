@@ -114,6 +114,27 @@ class ContentControl extends Component {
                 key: 'duration',
             },
             {
+                title: 'Icon',
+                dataIndex: 'icon',
+                key: 'icon',
+                render: (v) => {
+                    return(
+                        <span>
+                            {v?<img className='img' alt='icon' src={require(`../../../assets/images/content/${v}.jpg`)}/>:null}
+                        </span>
+                    )}
+            },
+            {
+                title: '提示类别',
+                dataIndex: 'promptType',
+                key: 'promptType',
+            },
+            {
+                title: '提示内容',
+                dataIndex: 'prompt',
+                key: 'prompt',
+            },
+            {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',
@@ -176,7 +197,7 @@ class ContentControl extends Component {
                         columns={columns}
                         dataSource={contentlist}
                         rowKey="id"
-                        scroll={{ x: 1500 }}
+                        scroll={{ x: 1900 }}
                     />
                 </div>
             </div>

@@ -39,7 +39,7 @@ class ListContent extends Component {
                                             <Icon
                                                 type='star'
                                                 theme='filled'
-                                                style={item.promptType === '1' ? null: {fontSize:5}}
+                                                style={item.promptType === 'important' ? null: {fontSize:5}}
                                             />
                                             {item.prompt}
                                         </span>

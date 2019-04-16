@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input,Select } from 'antd';
 import moment from 'moment';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 class contentModal extends Component{
     constructor(props) {
@@ -164,6 +165,52 @@ class contentModal extends Component{
                                     required: true,
                                     pattern: new RegExp(/^[1-9]\d*$/, "g"),
                                     message: '请输入对于句子的音频的持续时间（单位：ms），只能输入正整数'
+                                }]
+                            })(
+                                <Input
+                                    size="large"
+                                />
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="Icon"
+                        >
+                            {getFieldDecorator('icon',{
+                                initialValue: record.icon,
+                                rules: [{
+                                    message: '请选择icon'
+                                }]
+                            })(
+                                <Select>
+                                    <Option value='dad'><img className='img' alt='icon' src={require(`../../../assets/images/content/dad.jpg`)}/></Option>
+                                    <Option value='gril_cry'><img className='img' alt='icon' src={require(`../../../assets/images/content/gril_cry.jpg`)}/></Option>
+                                    <Option value='gril'><img className='img' alt='icon' src={require(`../../../assets/images/content/gril.jpg`)}/></Option>
+                                    <Option value='mom'><img className='img' alt='icon' src={require(`../../../assets/images/content/mom.jpg`)}/></Option>
+                                </Select>
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="提示类别"
+                        >
+                            {getFieldDecorator('promptType',{
+                                initialValue: record.promptType,
+                                rules: [{
+                                    message: '请选择提示类别'
+                                }]
+                            })(
+                                <Select>
+                                    <Option value='important'>重要</Option>
+                                    <Option value='commonly'>一般</Option>
+                                </Select>
+                            )}
+                        </FormItem>
+                        <FormItem
+                            label="提示内容"
+                        >
+                            {getFieldDecorator('prompt',{
+                                initialValue: record.prompt,
+                                rules: [{
+                                    message: '请输入提示内容'
                                 }]
                             })(
                                 <Input

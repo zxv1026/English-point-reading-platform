@@ -101,7 +101,7 @@ class usersModal extends Component{
                                 initialValue: record.type,
                                 rules: [{
                                     required: true,
-                                    message: '请输入类别'
+                                    message: '请选择类别'
                                 }]
                             })(
                                 // <Input
