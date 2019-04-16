@@ -19,6 +19,7 @@ const initState={
     list: [],
     listone: [],
     changeTo: '',
+    logout: ''
 }
 
 //reducer
@@ -31,7 +32,7 @@ export function user(state=initState, action) {
         case USERLIST_SUCCESS:
             return {...state,list:action.payload, ...action.payload}
         case LOG_OUT:
-            return {...initState,} 
+            return {...initState,logout:true} 
         case CHANGE_PASSWORD:
             return {...initState,changeTo:action.payload} 
         case ERROR_MSG:

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import Avatar from '../../components/Header/avatar';
 import AvatarChoose from '../../components/AvatarChoose';
 import AudioChoose from '../../components/AudioChoose';
@@ -19,6 +19,8 @@ const { Header, Content, Footer, Sider } = Layout;
 @connect(
   state => ({
       username: state.user.username,
+      type: state.user.type,
+      logout: state.user.logout,
   }),
   {  }
 )
@@ -36,9 +38,11 @@ class AdminHome extends Component {
             collapsed: !this.state.collapsed,
         });
     }
-
     render() {
+        const { type,logout  } = this.props
         return (
+            <div>
+            {type==='admin'?
             <Layout>
                 <Sider
                     trigger={null}
@@ -118,7 +122,16 @@ class AdminHome extends Component {
                         英语点读后台管理 ©2019 Created by 31501315_zxv
                     </Footer>
                 </Layout>
-            </Layout>
+            </Layout>:<div style={{textAlign:'center',marginTop:100}}>
+                <h4>你不是管理员无法进入后台管理</h4>
+                <Link className="close-content" to={{
+                    pathname: '/'
+                }}>
+                    <Icon type="caret-left"/>返回首页
+                </Link>
+            </div>}
+            {logout ? <Redirect to='/'/>:null}
+            </div>
         );
     }
 }
