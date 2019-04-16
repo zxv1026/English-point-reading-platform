@@ -14,7 +14,7 @@ Router.get('/list',function (req, res) {
             })
         })
         .exec(function (err,doc) {
-            console.log(doc)
+            // console.log(doc)
             return res.json({code: 0, data:doc})
         })
 })

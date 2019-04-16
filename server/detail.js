@@ -97,7 +97,7 @@ Router.post('/one',function (req, res) {
             populate: { path: 'partID' }
         })
         .exec(function (err,doc) {
-            console.log(doc)
+            // console.log(doc)
             return res.json({code: 0, data:doc})
         })
 })

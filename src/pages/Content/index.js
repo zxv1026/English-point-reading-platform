@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from '../../components/Header/index';
 import ListContent from './components/listcontent';
+import Comment from './components/comment';
 import { Link } from "react-router-dom";
 import { Icon, Tooltip,List,Row,Col } from "antd";
 import { connect } from 'react-redux';
@@ -255,6 +256,7 @@ class Content extends Component {
                         list={contentlist}
                         mp3={mp3}
                     />
+                    <Comment/>
                 </div>
                 {this.props.showScroll 
                     ? <div className={userID? 'showScroll top' : 'showScroll bottom'} onClick={this.handleScrollTop}>
