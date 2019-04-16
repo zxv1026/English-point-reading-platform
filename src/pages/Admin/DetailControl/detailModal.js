@@ -36,7 +36,8 @@ class detailModal extends Component{
                         values.created = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
                         values.mp3 = 'Ch01-01';
                         values.num = 0;
-                        values.collectnum =0;
+                        values.collectnum = 0;
+                        values.commentnum = 0;
                     }
                     onOk(values);
                     console.log(values)

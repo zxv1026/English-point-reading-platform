@@ -91,12 +91,12 @@ Router.post('/update', function (req, res) {
 
 Router.post('/create', function (req, res) {
     console.log(req.body)
-    const { partid, name, created,likenum,collectnum } = req.body;
+    const { partid, name, created,likenum,collectnum,commentnum } = req.body;
     Part.findOne({partid},function (err, doc) {
         if(doc) {
             return res.json({msg: 'PartID已经存在，请换一个'})
         }
-        Part.create({partid, name, created,likenum,collectnum },function (e, d) {
+        Part.create({partid, name, created,likenum,collectnum,commentnum },function (e, d) {
             if(e) {
                 return res.json({msg: '后端出错'})
             }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, List, Button,Avatar,Popconfirm,Row,Col } from "antd";
+import { Icon, List, Button,Avatar,Popconfirm } from "antd";
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -8,22 +8,24 @@ import moment from 'moment';
         commentlist: state.comment.list,
         userID: state.user._id,
         usertype: state.user.type,
+        detailcommentnum: state.detail.commentnum,
     }),
     {}
 )
 class CommentList extends Component{
     delectComment(id) {
-        console.log('a')
         if (this.props.onDeleteComment) {
-            console.log('ab')
             this.props.onDeleteComment(id)
         }
     }
     render(){
         console.log(this.props.commentlist);
-        const { commentlist,userID,usertype } = this.props;
+        const { commentlist,userID,usertype,detailcommentnum } = this.props;
         return (
             <div style={{marginTop:30}}>
+                <div>
+                    <h4>{detailcommentnum+'条评论'}</h4>
+                </div>
                 <List
                     itemLayout="vertical"
                     size="large"

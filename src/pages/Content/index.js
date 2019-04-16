@@ -256,7 +256,10 @@ class Content extends Component {
                         list={contentlist}
                         mp3={mp3}
                     />
-                    <Comment/>
+                    <Comment
+                        charpterid={this.props.match.params.charpterId}
+                        partid={this.props.match.params.partId}
+                    />
                 </div>
                 {this.props.showScroll 
                     ? <div className={userID? 'showScroll top' : 'showScroll bottom'} onClick={this.handleScrollTop}>

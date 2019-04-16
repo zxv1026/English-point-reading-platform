@@ -67,6 +67,9 @@ export function removeComment(id, detailid) {
 }
 
 export function createComment({userID,detailID,comment,created}) {
+    if (!comment) {
+        message.error('请输入评论内容');
+    }
     return dispatch=>{
         axios.post('/comment/create',{userID,detailID,comment,created})
         .then(res=>{

@@ -8,6 +8,7 @@ const DetailSchema = new Schema({
     mp3:{ type: String, required: true },
     num:{ type: Number, required: true },
     collectnum:{ type: Number, required: true },
+    commentnum:{ type: Number,required: true },
     charpterID: {
         type: Schema.Types.ObjectId,
         ref: 'Charpter',

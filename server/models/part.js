@@ -6,6 +6,7 @@ const PartSchema = new Schema({
     name:{ type: String, required: true },
     likenum:{ type:Number, required: true },
     collectnum:{ type: Number, required: true },
+    commentnum:{ type: Number,required: true },
     created:{ type: Date },
 });
 

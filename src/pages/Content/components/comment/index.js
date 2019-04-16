@@ -3,13 +3,18 @@ import CommentInput from './commentInput';
 import CommentList from './commentList';
 import { connect } from 'react-redux';
 import { createComment,removeComment,getCommentList } from "../../../../redux/comment_redux";
-import { message } from 'antd';
+import { updatenum } from "../../../../redux/detail_redux";
+import { updatecharpterlikenum } from "../../../../redux/charpter_redux";
+import { updatepartlikenum } from "../../../../redux/part_redux";
 
 @connect(
     state => ({
-        detailID: state.detail._id
+        detailID: state.detail._id,
+        detailcommentnum: state.detail.commentnum,
+        charptercommentnum: state.charpter.commentnum,
+        partcommentnum: state.part.commentnum,
     }),
-    {createComment,removeComment,getCommentList}
+    {createComment,removeComment,getCommentList,updatenum,updatecharpterlikenum,updatepartlikenum}
 )
 class Comment extends Component{
     constructor() {
@@ -34,11 +39,44 @@ class Comment extends Component{
         this.props.getCommentList(data);
     }
     handleSubmitComment(comment) {
-        if (!comment.comment) return message('请输入评论内容')
+        const { charpterid,partid,detailID } = this.props;
         this.props.createComment(comment);
+        if(comment.comment){
+            let detailcommentnum = this.props.detailcommentnum + 1;
+            let charptercommentnum = this.props.charptercommentnum + 1;
+            let partcommentnum = this.props.partcommentnum + 1;
+            const detail = {
+                commentnum: detailcommentnum
+            }
+            const charpter = {
+                commentnum: charptercommentnum
+            }
+            const part = {
+                commentnum: partcommentnum
+            }
+            this.props.updatenum(detailID, detail);
+            this.props.updatecharpterlikenum(charpterid, charpter);
+            this.props.updatepartlikenum(partid, part);
+        }
     }
     handleDeleteComment(commentid) {
-        this.props.removeComment(commentid,this.props.detailID);
+        const { charpterid,partid,detailID } = this.props;
+        this.props.removeComment(commentid,detailID);
+        let detailcommentnum = this.props.detailcommentnum - 1;
+        let charptercommentnum = this.props.charptercommentnum - 1;
+        let partcommentnum = this.props.partcommentnum - 1;
+        const detail = {
+            commentnum: detailcommentnum
+        }
+        const charpter = {
+            commentnum: charptercommentnum
+        }
+        const part = {
+            commentnum: partcommentnum
+        }
+        this.props.updatenum(detailID, detail);
+        this.props.updatecharpterlikenum(charpterid, charpter);
+        this.props.updatepartlikenum(partid, part);
     }
     render(){
         return (

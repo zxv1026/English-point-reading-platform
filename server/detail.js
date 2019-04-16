@@ -151,7 +151,7 @@ Router.post('/update', function (req, res) {
 
 Router.post('/create', function (req, res) {
     console.log(req.body)
-    const { detailid, charpterid, name, mp3, created,num,collectnum } = req.body;
+    const { detailid, charpterid, name, mp3, created,num,collectnum,commentnum } = req.body;
     Charpter.findOne({'charpterid': charpterid},function (err, doc) {
         if(doc){
             const charpterID = doc._id;
@@ -159,7 +159,7 @@ Router.post('/create', function (req, res) {
                 if(doc) {
                     return res.json({msg: '创建Detail失败，DetailID已经存在，请换一个'})
                 }
-                Detail.create({detailid, charpterid, name, mp3, created,num,collectnum,charpterID },function (e, d) {
+                Detail.create({detailid, charpterid, name, mp3, created,num,collectnum,commentnum,charpterID },function (e, d) {
                     if(e) {
                         return res.json({msg: '后端出错'})
                     }

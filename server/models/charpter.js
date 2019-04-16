@@ -7,6 +7,7 @@ const CharpterSchema = new Schema({
     name:{ type: String, required: true },
     likenum:{ type:Number, required: true },
     collectnum:{ type: Number, required: true },
+    commentnum:{ type: Number,required: true },
     partID: {
         type: Schema.Types.ObjectId,
         ref: 'Part',

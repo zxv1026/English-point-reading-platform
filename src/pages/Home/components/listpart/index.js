@@ -62,7 +62,7 @@ class Listpart extends Component {
                             }} ><h3 style={{fontSize:18,fontWeight:'bold',color:'#333'}}>{item.name}</h3></Link>
                             <div style={{fontSize:13,color:'#999'}}>
                                 {item.charpter.slice(0,3).map((charpter)=>(
-                                    <p>{charpter}</p>
+                                    <p key={'charpter_'+charpter}>{charpter}</p>
                                 ))}
                                 {item.charpter.length>3?<p>....</p>:null}
                             </div>
