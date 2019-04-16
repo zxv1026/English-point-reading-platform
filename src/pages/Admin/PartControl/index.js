@@ -59,6 +59,12 @@ class PartControl extends Component {
                 sorter: (a, b) => a.collectnum - b.collectnum,
             },
             {
+                title: '评论数',
+                dataIndex: 'commentnum',
+                key: 'commentnum',
+                sorter: (a, b) => a.commentnum - b.commentnum,
+            },
+            {
                 title: '创建时间',
                 dataIndex: 'created',
                 key: 'created',
