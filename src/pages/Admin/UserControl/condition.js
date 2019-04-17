@@ -45,8 +45,7 @@ class Condition extends Component{
                                 message: '请输入用户名'
                             }]
                         })(
-                            <Input
-                            />
+                            <Input allowClear/>
                         )}
                     </FormItem>
                     <FormItem

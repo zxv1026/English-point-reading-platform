@@ -43,8 +43,7 @@ class Condition extends Component{
                                 message: '请输入PartID，只能输入非负整数'
                             }]
                         })(
-                            <Input
-                            />
+                            <Input allowClear/>
                         )}
                     </FormItem>
                     <FormItem
@@ -56,8 +55,7 @@ class Condition extends Component{
                                 message: '请输入Part名称'
                             }]
                         })(
-                            <Input
-                            />
+                            <Input allowClear/>
                         )}
                     </FormItem>
                 </Form>
