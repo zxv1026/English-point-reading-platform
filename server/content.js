@@ -2,6 +2,368 @@ const express = require('express');
 const Router = express.Router();
 const Detail = require('./models/detail');
 const Content = require('./models/content');
+const Charpter = require('./models/charpter');
+const Part = require('./models/part');
+
+//根据检索的内容查询
+Router.post('/findlist',function(req,res) {
+    const {name,partname,charptername,mp3,chinese,english} = req.body
+    //通过使用RegExp，来构建正则表达式对象，来模糊查询
+    const reg = new RegExp(name,'i')//
+    const part = new RegExp(partname,'i')
+    const charpter = new RegExp(charptername,'i')
+    const ch = new RegExp(chinese,'i')
+    const en = new RegExp(english,'i')
+    if(mp3 && chinese && english){
+        Content.find({$and:[{'chinese': {$regex: ch}},{'english': {$regex: en}}]})
+            .populate({
+                path: 'detailID',
+                populate:({
+                    path:'charpterID',
+                    populate: { path: 'partID' }
+                })
+            })
+            .exec(function (err,content) {
+                Detail.find({$or:[{'name': {$regex: reg}}]})
+                    .where('mp3').in([mp3])
+                    .populate({
+                        path:'charpterID',
+                        populate: { path: 'partID' }
+                    })
+                    .sort({'_id': -1})
+                    .exec(function (err,doc) {
+                        Charpter.find({$or:[{'name': {$regex: charpter}}]})
+                            .populate({
+                                path: 'partID',
+                            })
+                            .sort({'_id': -1})
+                            .exec(function (err,c) {
+                                Part.find({$or:[{'name': {$regex: part}}]})
+                                    .sort({'_id': -1})
+                                    .exec(function (err,d) {
+                                        let data = []
+                                        for(let y in content){
+                                            for(let x in doc){
+                                                for(let i in c){
+                                                    for(let j in d){
+                                                        if(content[y].detailID.name===doc[x].name&&doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
+                                                            data.push(content[y])
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return res.json({code: 0,data:data})
+                                    })
+                            })
+                    })
+            })
+    }else if(!mp3 && chinese && english){
+        Content.find({$and:[{'chinese': {$regex: ch}},{'english': {$regex: en}}]})
+            .populate({
+                path: 'detailID',
+                populate:({
+                    path:'charpterID',
+                    populate: { path: 'partID' }
+                })
+            })
+            .exec(function (err,content) {
+                Detail.find({$or:[{'name': {$regex: reg}}]})
+                    .populate({
+                        path:'charpterID',
+                        populate: { path: 'partID' }
+                    })
+                    .sort({'_id': -1})
+                    .exec(function (err,doc) {
+                        Charpter.find({$or:[{'name': {$regex: charpter}}]})
+                            .populate({
+                                path: 'partID',
+                            })
+                            .sort({'_id': -1})
+                            .exec(function (err,c) {
+                                Part.find({$or:[{'name': {$regex: part}}]})
+                                    .sort({'_id': -1})
+                                    .exec(function (err,d) {
+                                        let data = []
+                                        for(let y in content){
+                                            for(let x in doc){
+                                                for(let i in c){
+                                                    for(let j in d){
+                                                        if(content[y].detailID.name===doc[x].name&&doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
+                                                            data.push(content[y])
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return res.json({code: 0,data:data})
+                                    })
+                            })
+                    })
+            })
+    }else if(mp3 && !chinese && english) {
+        Content.find({$and:[{'english': {$regex: en}}]})
+            .populate({
+                path: 'detailID',
+                populate:({
+                    path:'charpterID',
+                    populate: { path: 'partID' }
+                })
+            })
+            .exec(function (err,content) {
+                Detail.find({$or:[{'name': {$regex: reg}}]})
+                    .where('mp3').in([mp3])
+                    .populate({
+                        path:'charpterID',
+                        populate: { path: 'partID' }
+                    })
+                    .sort({'_id': -1})
+                    .exec(function (err,doc) {
+                        Charpter.find({$or:[{'name': {$regex: charpter}}]})
+                            .populate({
+                                path: 'partID',
+                            })
+                            .sort({'_id': -1})
+                            .exec(function (err,c) {
+                                Part.find({$or:[{'name': {$regex: part}}]})
+                                    .sort({'_id': -1})
+                                    .exec(function (err,d) {
+                                        let data = []
+                                        for(let y in content){
+                                            for(let x in doc){
+                                                for(let i in c){
+                                                    for(let j in d){
+                                                        if(content[y].detailID.name===doc[x].name&&doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
+                                                            data.push(content[y])
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return res.json({code: 0,data:data})
+                                    })
+                            })
+                    })
+            })
+    }else if(mp3 && chinese && !english){
+        Content.find({$and:[{'chinese': {$regex: ch}}]})
+            .populate({
+                path: 'detailID',
+                populate:({
+                    path:'charpterID',
+                    populate: { path: 'partID' }
+                })
+            })
+            .exec(function (err,content) {
+                Detail.find({$or:[{'name': {$regex: reg}}]})
+                    .where('mp3').in([mp3])
+                    .populate({
+                        path:'charpterID',
+                        populate: { path: 'partID' }
+                    })
+                    .sort({'_id': -1})
+                    .exec(function (err,doc) {
+                        Charpter.find({$or:[{'name': {$regex: charpter}}]})
+                            .populate({
+                                path: 'partID',
+                            })
+                            .sort({'_id': -1})
+                            .exec(function (err,c) {
+                                Part.find({$or:[{'name': {$regex: part}}]})
+                                    .sort({'_id': -1})
+                                    .exec(function (err,d) {
+                                        let data = []
+                                        for(let y in content){
+                                            for(let x in doc){
+                                                for(let i in c){
+                                                    for(let j in d){
+                                                        if(content[y].detailID.name===doc[x].name&&doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
+                                                            data.push(content[y])
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return res.json({code: 0,data:data})
+                                    })
+                            })
+                    })
+            })
+    }else if(!mp3 && !chinese && english){
+        Content.find({$and:[{'english': {$regex: en}}]})
+            .populate({
+                path: 'detailID',
+                populate:({
+                    path:'charpterID',
+                    populate: { path: 'partID' }
+                })
+            })
+            .exec(function (err,content) {
+                Detail.find({$or:[{'name': {$regex: reg}}]})
+                    .populate({
+                        path:'charpterID',
+                        populate: { path: 'partID' }
+                    })
+                    .sort({'_id': -1})
+                    .exec(function (err,doc) {
+                        Charpter.find({$or:[{'name': {$regex: charpter}}]})
+                            .populate({
+                                path: 'partID',
+                            })
+                            .sort({'_id': -1})
+                            .exec(function (err,c) {
+                                Part.find({$or:[{'name': {$regex: part}}]})
+                                    .sort({'_id': -1})
+                                    .exec(function (err,d) {
+                                        let data = []
+                                        for(let y in content){
+                                            for(let x in doc){
+                                                for(let i in c){
+                                                    for(let j in d){
+                                                        if(content[y].detailID.name===doc[x].name&&doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
+                                                            data.push(content[y])
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return res.json({code: 0,data:data})
+                                    })
+                            })
+                    })
+            })
+    }else if(!mp3 && chinese && !english){
+        Content.find({$and:[{'chinese': {$regex: ch}}]})
+            .populate({
+                path: 'detailID',
+                populate:({
+                    path:'charpterID',
+                    populate: { path: 'partID' }
+                })
+            })
+            .exec(function (err,content) {
+                Detail.find({$or:[{'name': {$regex: reg}}]})
+                    .populate({
+                        path:'charpterID',
+                        populate: { path: 'partID' }
+                    })
+                    .sort({'_id': -1})
+                    .exec(function (err,doc) {
+                        Charpter.find({$or:[{'name': {$regex: charpter}}]})
+                            .populate({
+                                path: 'partID',
+                            })
+                            .sort({'_id': -1})
+                            .exec(function (err,c) {
+                                Part.find({$or:[{'name': {$regex: part}}]})
+                                    .sort({'_id': -1})
+                                    .exec(function (err,d) {
+                                        let data = []
+                                        for(let y in content){
+                                            for(let x in doc){
+                                                for(let i in c){
+                                                    for(let j in d){
+                                                        if(content[y].detailID.name===doc[x].name&&doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
+                                                            data.push(content[y])
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return res.json({code: 0,data:data})
+                                    })
+                            })
+                    })
+            })
+    }else if(mp3 && !chinese && !english){
+        Content.find({})
+            .populate({
+                path: 'detailID',
+                populate:({
+                    path:'charpterID',
+                    populate: { path: 'partID' }
+                })
+            })
+            .exec(function (err,content) {
+                Detail.find({$or:[{'name': {$regex: reg}}]})
+                    .where('mp3').in([mp3])
+                    .populate({
+                        path:'charpterID',
+                        populate: { path: 'partID' }
+                    })
+                    .sort({'_id': -1})
+                    .exec(function (err,doc) {
+                        Charpter.find({$or:[{'name': {$regex: charpter}}]})
+                            .populate({
+                                path: 'partID',
+                            })
+                            .sort({'_id': -1})
+                            .exec(function (err,c) {
+                                Part.find({$or:[{'name': {$regex: part}}]})
+                                    .sort({'_id': -1})
+                                    .exec(function (err,d) {
+                                        let data = []
+                                        for(let y in content){
+                                            for(let x in doc){
+                                                for(let i in c){
+                                                    for(let j in d){
+                                                        if(content[y].detailID.name===doc[x].name&&doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
+                                                            data.push(content[y])
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return res.json({code: 0,data:data})
+                                    })
+                            })
+                    })
+            })
+    }else if(!mp3 && !chinese && !english){
+        Content.find({})
+            .populate({
+                path: 'detailID',
+                populate:({
+                    path:'charpterID',
+                    populate: { path: 'partID' }
+                })
+            })
+            .exec(function (err,content) {
+                Detail.find({$or:[{'name': {$regex: reg}}]})
+                    .populate({
+                        path:'charpterID',
+                        populate: { path: 'partID' }
+                    })
+                    .sort({'_id': -1})
+                    .exec(function (err,doc) {
+                        Charpter.find({$or:[{'name': {$regex: charpter}}]})
+                            .populate({
+                                path: 'partID',
+                            })
+                            .sort({'_id': -1})
+                            .exec(function (err,c) {
+                                Part.find({$or:[{'name': {$regex: part}}]})
+                                    .sort({'_id': -1})
+                                    .exec(function (err,d) {
+                                        let data = []
+                                        for(let y in content){
+                                            for(let x in doc){
+                                                for(let i in c){
+                                                    for(let j in d){
+                                                        if(content[y].detailID.name===doc[x].name&&doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
+                                                            data.push(content[y])
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return res.json({code: 0,data:data})
+                                    })
+                            })
+                    })
+            })
+    }
+})
 
 Router.get('/list',function (req, res) {
     // Content.remove({},function (err,doc) {})

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, Icon } from "antd";
+import { Button, Table, Popconfirm, Icon,Popover } from "antd";
 import moment from 'moment';
 import ContentModal from './contentModal';
+import Condition from './condition';
 import { connect } from 'react-redux';
 import { create, update, remove, getContentList } from "../../../redux/content_redux";
 import { getDetailOne } from "../../../redux/detail_redux";
@@ -19,6 +20,7 @@ class ContentControl extends Component {
         super(props);
         this.state={
             create: true,
+            retrieveVisible: false,
         }
     }
     componentDidMount() {
@@ -33,6 +35,17 @@ class ContentControl extends Component {
     createContent(content) {
         this.props.create(content);
     }
+
+    hide = () => {
+        this.setState({
+            retrieveVisible: false,
+        });
+    }
+
+    handleVisibleChange = (retrieveVisible) => {
+        this.setState({ retrieveVisible });
+    }
+
     SoundPlay(mp3,offset, duration) {
         const Sounds = new Howl({
             src: [require(`../../../assets/mp3/${mp3}.mp3`)],
@@ -102,6 +115,11 @@ class ContentControl extends Component {
                 title: '章节名称',
                 dataIndex: 'detailID.charpterID.partID.name',
                 key: 'partname',
+            },
+            {
+                title: '音频',
+                dataIndex: 'detailID.mp3',
+                key: 'mp3',
             },
             {
                 title: '音频偏移时间',
@@ -191,6 +209,25 @@ class ContentControl extends Component {
                     >
                         <Button type="primary">创建Content</Button>
                     </ContentModal>
+                    <Popover
+                        placement="leftTop"
+                        title="检索条件设置"
+                        content={<Condition hide={this.hide}/>}
+                        trigger="click"
+                        visible={this.state.retrieveVisible}
+                        onVisibleChange={this.handleVisibleChange}
+                    >
+                        <Button
+                            style={{
+                                position: "relative",
+                                float: 'right',
+                                marginRight: 10
+                            }}
+                        >
+                            <Icon type="search" />
+                            检索条件
+                        </Button>
+                    </Popover>
                 </div>
                 <div className="whitebox noPadding">
                     <Table

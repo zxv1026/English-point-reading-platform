@@ -20,6 +20,7 @@ class DetailControl extends Component {
         super(props);
         this.state={
             create: true,
+            retrieveVisible: false,
         }
     }
     componentDidMount() {
@@ -44,7 +45,7 @@ class DetailControl extends Component {
     handleVisibleChange = (retrieveVisible) => {
         this.setState({ retrieveVisible });
     }
-    
+
     SoundPlay(mp3) {
         const Sounds = new Howl({
             src: [require(`../../../assets/mp3/${mp3}.mp3`)],

@@ -90,6 +90,17 @@ export function update(_id,data) {
     }
 }
 
+export function contentFindList(data) {
+    return dispatch => {
+        axios.post('/content/findlist', data)
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch(getcontentlistSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function getContentList() {
     return dispatch=>{
         axios.get('/content/list')
