@@ -40,10 +40,10 @@ class Condition extends Component{
                             initialValue: record.partid,
                             rules: [{
                                 pattern: new RegExp(/^[0-9]\d*$/, "g"),
-                                message: '请输入PartID，只能输入非负整数'
+                                message: 'PartID，只能输入非负整数'
                             }]
                         })(
-                            <Input allowClear/>
+                            <Input  placeholder='请输入想要查找的PartID'  allowClear/>
                         )}
                     </FormItem>
                     <FormItem
@@ -51,11 +51,8 @@ class Condition extends Component{
                     >
                         {getFieldDecorator('name',{
                             initialValue: record.name,
-                            rules: [{
-                                message: '请输入Part名称'
-                            }]
                         })(
-                            <Input allowClear/>
+                            <Input placeholder='请输入想要查找的章节名称' allowClear/>
                         )}
                     </FormItem>
                 </Form>

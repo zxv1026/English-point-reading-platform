@@ -4,6 +4,7 @@ import { Icon,Select,Row, Col,Button,Form } from 'antd';
 import { Howl } from 'howler';
 import { connect } from 'react-redux';
 import { updateMp3 } from "../../redux/detail_redux";
+import { AudioMapper } from "../../utils/audio";
 
 const { Option } = Select;
 
@@ -45,27 +46,7 @@ class AudioChoose extends Component{
     render() {
         const { id,path,detailname } = this.props.location.state;
         const { mp3 } = this.state;
-        const AudioMapper = {
-            "1": { name: 'Ch01-01' },
-            "2": { name: 'Ch01-02早晨打招呼' },
-            "3": { name: 'Ch01-03洗臉' },
-            "4": { name: 'Ch01-04刷牙' },
-            "5": { name: 'Ch01-05吃早餐' },
-            "6": { name: 'Ch01-06用餐習慣和禮節' },
-            "7": { name: 'Ch01-07上廁所' },
-            "8": { name: 'Ch01-08爸爸去上班' },
-            "9": { name: 'Ch01-09挑衣服' },
-            "10": { name: 'Ch01-10穿衣服' },
-            "11": { name: 'Ch01-11自己穿衣服' },
-            "12": { name: 'Ch01-12梳頭髮' },
-            "13": { name: 'Ch01-13 準備學校用品' },
-            "14": { name: 'Ch01-14催促' },
-            "15": { name: 'Ch01-15穿鞋子' },
-            "16": { name: 'Ch01-16上學前的打招呼' },
-            "17": { name: 'Ch01-17媽媽的叮嚀' },
-            "18": { name: 'Ch01-18使用電梯/樓梯' },
-            "19": { name: 'Ch01-19 搭校車' },
-        }
+        
         return (
             <div>
                 <Link to={{

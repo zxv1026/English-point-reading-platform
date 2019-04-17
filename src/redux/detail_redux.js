@@ -184,6 +184,17 @@ export function getDetailCollectList() {
     }
 }
 
+export function detailFindList(data) {
+    return dispatch => {
+        axios.post('/detail/findlist', data)
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch(getdetaillistSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function getDetailList() {
     return dispatch=>{
         axios.get('/detail/list')

@@ -41,11 +41,8 @@ class Condition extends Component{
                     >
                         {getFieldDecorator('username',{
                             initialValue: record.username,
-                            rules: [{
-                                message: '请输入用户名'
-                            }]
                         })(
-                            <Input allowClear/>
+                            <Input placeholder='请输入想要查找的用户名' allowClear/>
                         )}
                     </FormItem>
                     <FormItem
@@ -53,11 +50,8 @@ class Condition extends Component{
                     >
                         {getFieldDecorator('type',{
                             initialValue: record.type,
-                            rules: [{
-                                message: '请选择类别'
-                            }]
                         })(
-                            <Select allowClear='true'>
+                            <Select placeholder='请选择想要查找的用户类别' 用户名 allowClear='true'>
                                 <Option value='user'>user</Option>
                                 <Option value='admin'>admin</Option>
                             </Select>

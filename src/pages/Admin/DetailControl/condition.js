@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import { Form,Input,Button } from "antd";
+import { Form,Input,Button,Select } from "antd";
 import { connect } from 'react-redux';
-import { charpterFindList } from "../../../redux/charpter_redux";
+import { detailFindList } from "../../../redux/detail_redux";
+import { AudioMapper } from "../../../utils/audio";
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 @connect(
     state => ({
 
     }),
-    {charpterFindList}
+    {detailFindList}
 )
 class Condition extends Component{
 
@@ -20,7 +22,7 @@ class Condition extends Component{
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(values);
-                this.props.charpterFindList(values);
+                this.props.detailFindList(values);
                 // this.props.hide()
             }
         })
@@ -35,34 +37,8 @@ class Condition extends Component{
         return(
             <div className='conditions'>
                 <Form {...formItemLayout} className="login-form">
-                    {/* <FormItem
-                        label="PartID"
-                    >
-                        {getFieldDecorator('partid',{
-                            initialValue: record.partid,
-                            rules: [{
-                                pattern: new RegExp(/^[0-9]\d*$/, "g"),
-                                message: '请输入PartID，只能输入非负整数'
-                            }]
-                        })(
-                            <Input allowClear/>
-                        )}
-                    </FormItem>
                     <FormItem
-                        label="CharpterID"
-                    >
-                        {getFieldDecorator('charpterid',{
-                            initialValue: record.charpterid,
-                            rules: [{
-                                pattern: new RegExp(/^[0-9]\d*$/, "g"),
-                                message: '请输入PartID，只能输入非负整数'
-                            }]
-                        })(
-                            <Input allowClear/>
-                        )}
-                    </FormItem> */}
-                    <FormItem
-                        label="Part名"
+                        label="章节名"
                     >
                         {getFieldDecorator('partname',{
                             initialValue: record.partname,
@@ -73,10 +49,37 @@ class Condition extends Component{
                     <FormItem
                         label="Charpter名"
                     >
+                        {getFieldDecorator('charptername',{
+                            initialValue: record.charptername,
+                        })(
+                            <Input placeholder='请输入想要查找的Charpter名称' allowClear/>
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label="话题名"
+                    >
                         {getFieldDecorator('name',{
                             initialValue: record.name,
                         })(
-                            <Input placeholder='请输入想要查找的Charpter名称' allowClear/>
+                            <Input placeholder='请输入想要查找的话题名称' allowClear/>
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label="音频"
+                    >
+                        {getFieldDecorator('mp3',{
+                            initialValue: record.mp3,
+                        })(
+                            <Select placeholder='请选择想要查找的信息的音频' allowClear>
+                                {Object.keys(AudioMapper).map(key => {
+                                    return <Option
+                                    key={key}
+                                    value={AudioMapper[key].name}
+                                    >
+                                        {AudioMapper[key].name}
+                                    </Option>
+                                })}
+                            </Select>
                         )}
                     </FormItem>
                 </Form>

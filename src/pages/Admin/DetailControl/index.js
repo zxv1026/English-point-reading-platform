@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, Icon } from "antd";
+import { Button, Table, Popconfirm, Icon,Popover } from "antd";
 import moment from 'moment';
 import DetailModal from './detailModal';
+import Condition from './condition';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { create, update, remove, getDetailList } from "../../../redux/detail_redux";
@@ -33,6 +34,17 @@ class DetailControl extends Component {
     createDetail(detail) {
         this.props.create(detail);
     }
+
+    hide = () => {
+        this.setState({
+            retrieveVisible: false,
+        });
+    }
+
+    handleVisibleChange = (retrieveVisible) => {
+        this.setState({ retrieveVisible });
+    }
+    
     SoundPlay(mp3) {
         const Sounds = new Howl({
             src: [require(`../../../assets/mp3/${mp3}.mp3`)],
@@ -164,6 +176,25 @@ class DetailControl extends Component {
                     >
                         <Button type="primary">创建Detail</Button>
                     </DetailModal>
+                    <Popover
+                        placement="leftTop"
+                        title="检索条件设置"
+                        content={<Condition hide={this.hide}/>}
+                        trigger="click"
+                        visible={this.state.retrieveVisible}
+                        onVisibleChange={this.handleVisibleChange}
+                    >
+                        <Button
+                            style={{
+                                position: "relative",
+                                float: 'right',
+                                marginRight: 10
+                            }}
+                        >
+                            <Icon type="search" />
+                            检索条件
+                        </Button>
+                    </Popover>
                 </div>
                 <div className="whitebox noPadding">
                     <Table
