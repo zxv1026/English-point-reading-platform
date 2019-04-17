@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, Icon } from "antd";
+import { Button, Table, Popconfirm, Icon,Popover } from "antd";
 import moment from 'moment';
 import PartModal from './partModal';
+import Condition from './condition';
 import { connect } from 'react-redux';
 import { create, update, remove, getPartList } from "../../../redux/part_redux";
 
@@ -14,6 +15,7 @@ class PartControl extends Component {
         super(props);
         this.state={
             create: true,
+            retrieveVisible: false,
         }
     }
     componentDidMount() {
@@ -28,6 +30,17 @@ class PartControl extends Component {
     createPart(part) {
         this.props.create(part);
     }
+
+    hide = () => {
+        this.setState({
+            retrieveVisible: false,
+        });
+    }
+
+    handleVisibleChange = (retrieveVisible) => {
+        this.setState({ retrieveVisible });
+    }
+
     render() {
 
         const { partlist } = this.props
@@ -114,6 +127,25 @@ class PartControl extends Component {
                     >
                         <Button type="primary">创建Part</Button>
                     </PartModal>
+                    <Popover
+                        placement="leftTop"
+                        title="检索条件设置"
+                        content={<Condition hide={this.hide}/>}
+                        trigger="click"
+                        visible={this.state.retrieveVisible}
+                        onVisibleChange={this.handleVisibleChange}
+                    >
+                        <Button
+                            style={{
+                                position: "relative",
+                                float: 'right',
+                                marginRight: 10
+                            }}
+                        >
+                            <Icon type="search" />
+                            检索条件
+                        </Button>
+                    </Popover>
                 </div>
                 <div className="whitebox noPadding">
                     <Table

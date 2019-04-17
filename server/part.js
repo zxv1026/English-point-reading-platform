@@ -3,6 +3,34 @@ const Router = express.Router();
 const Part = require('./models/part');
 const Charpter = require('./models/charpter');
 
+//根据检索的内容查询
+Router.post('/findlist',function(req,res) {
+    const {name,partid} = req.body
+    //通过使用RegExp，来构建正则表达式对象，来模糊查询
+    const reg = new RegExp(name,'i')//
+    if(partid){
+        Part.find({$or:[{'name': {$regex: reg}}]})
+            .where('partid').in([partid])
+            .sort({'_id': -1})
+            .exec(function (err,doc) {
+                console.log(doc)
+                if(err){
+                    return res.json({msg: '后端出错'})
+                }
+                return res.json({code: 0,data:doc})
+            })
+    }else{
+        Part.find({$or:[{'name': {$regex: reg}}]})
+            .sort({'_id': -1})
+            .exec(function (err,doc) {
+                console.log(doc)
+                if(err){
+                    return res.json({msg: '后端出错'})
+                }
+                return res.json({code: 0,data:doc})
+            })
+    }
+})
 
 //根据输入的内容查询
 Router.post('/find',function(req,res) {

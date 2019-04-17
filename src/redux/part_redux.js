@@ -70,12 +70,23 @@ export function changePartScrollTopShow(data) {
     }
 }
 
+export function partFindList(data) {
+    return dispatch => {
+        axios.post('/part/findlist',data)
+            .then(res => {
+                if(res.status===200){
+                    dispatch(getpartlistSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function partFind(data) {
     return dispatch => {
         axios.post('/part/find', data)
             .then(res => {
                 console.log(data)
-                if (res.status === 200 & res.data.code === 0) {
+                if (res.status === 200 && res.data.code === 0) {
                     dispatch(getpartfindlistSuccess(res.data.data))
                 } else {
                     message.error(res.data.msg)
