@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, Icon } from "antd";
+import { Button, Table, Popconfirm, Icon,Popover } from "antd";
 import moment from 'moment';
 import CharpterModal from './charpterModal';
+import Condition from './condition';
 import { connect } from 'react-redux';
 import { create, update, remove, getCharpterList } from "../../../redux/charpter_redux";
 
@@ -16,6 +17,7 @@ class CharpterControl extends Component {
         super(props);
         this.state={
             create: true,
+            retrieveVisible: false,
         }
     }
     componentDidMount() {
@@ -29,6 +31,16 @@ class CharpterControl extends Component {
     }
     createCharpter(charpter) {
         this.props.create(charpter);
+    }
+
+    hide = () => {
+        this.setState({
+            retrieveVisible: false,
+        });
+    }
+
+    handleVisibleChange = (retrieveVisible) => {
+        this.setState({ retrieveVisible });
     }
     render() {
         const { charpterlist } = this.props
@@ -125,6 +137,25 @@ class CharpterControl extends Component {
                     >
                         <Button type="primary">创建Charpter</Button>
                     </CharpterModal>
+                    <Popover
+                        placement="leftTop"
+                        title="检索条件设置"
+                        content={<Condition hide={this.hide}/>}
+                        trigger="click"
+                        visible={this.state.retrieveVisible}
+                        onVisibleChange={this.handleVisibleChange}
+                    >
+                        <Button
+                            style={{
+                                position: "relative",
+                                float: 'right',
+                                marginRight: 10
+                            }}
+                        >
+                            <Icon type="search" />
+                            检索条件
+                        </Button>
+                    </Popover>
                 </div>
                 <div className="whitebox noPadding">
                     <Table

@@ -165,6 +165,17 @@ export function getCharpterCollectList() {
     }
 }
 
+export function charpterFindList(data) {
+    return dispatch => {
+        axios.post('/charpter/findlist', data)
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch(getcharpterlistSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function getCharpterList() {
     return dispatch=>{
         axios.get('/charpter/list')
