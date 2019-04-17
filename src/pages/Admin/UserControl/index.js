@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Table, Popconfirm, Icon } from "antd";
+import { Button, Table, Popconfirm, Icon,Popover } from "antd";
 import moment from 'moment';
 import UsersModal from './usersModal';
+import Condition from './condition';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register, update, remove, getUserList, resetpassword } from "../../../redux/user_redux";
@@ -16,6 +17,7 @@ class UserControl extends Component {
         super(props);
         this.state={
             create: true,
+            retrieveVisible: false,
         }
     }
     componentDidMount(){
@@ -36,6 +38,16 @@ class UserControl extends Component {
             password: 12345678,
         }
         this.props.resetpassword(id, data);
+    }
+
+    hide = () => {
+        this.setState({
+            retrieveVisible: false,
+        });
+    }
+
+    handleVisibleChange = (retrieveVisible) => {
+        this.setState({ retrieveVisible });
     }
     render() {
         const { list } = this.props
@@ -132,6 +144,25 @@ class UserControl extends Component {
                     >
                         <Button type="primary">创建用户</Button>
                     </UsersModal>
+                    <Popover
+                        placement="leftTop"
+                        title="检索条件设置"
+                        content={<Condition hide={this.hide}/>}
+                        trigger="click"
+                        visible={this.state.retrieveVisible}
+                        onVisibleChange={this.handleVisibleChange}
+                    >
+                        <Button
+                            style={{
+                                position: "relative",
+                                float: 'right',
+                                marginRight: 10
+                            }}
+                        >
+                            <Icon type="search" />
+                            检索条件
+                        </Button>
+                    </Popover>
                 </div>
                 <div className="whitebox noPadding">
                     <Table

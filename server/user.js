@@ -24,6 +24,34 @@ const User = require('./models/users');
 //     })
 // })
 
+Router.post('/findlist',function (req, res) {
+    const {username,type} = req.body
+    //通过使用RegExp，来构建正则表达式对象，来模糊查询
+    const reg = new RegExp(username, 'i') //
+    if(type){
+        User.find({$or:[{'username': {$regex: reg}}]})
+            .where('type').in([type])
+            .sort({'_id': -1})
+            .exec(function (err,doc) {
+                console.log(doc)
+                if(err){
+                    return res.json({msg: '后端出错'})
+                }
+                return res.json({code: 0,data:doc})
+            })
+    }else{
+        User.find({$or:[{'username': {$regex: reg}}]})
+            .sort({'_id': -1})
+            .exec(function (err,doc) {
+                console.log(doc)
+                if(err){
+                    return res.json({msg: '后端出错'})
+                }
+                return res.json({code: 0,data:doc})
+            })
+    }
+})
+
 Router.get('/list',function (req, res) {
     // User.remove({},function (err,doc) {})
     User.find({},function (err,doc) {

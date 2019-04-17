@@ -163,6 +163,17 @@ export function update(id,data) {
     }
 }
 
+export function userFindList(data) {
+    return dispatch => {
+        axios.post('/user/findlist', data)
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch(getuserlistSuccess(res.data.data))
+                }
+            })
+    }
+}
+
 export function getUserList() {
     return dispatch=>{
         axios.get('/user/list')
