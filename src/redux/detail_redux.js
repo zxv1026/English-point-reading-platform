@@ -29,7 +29,7 @@ export function detail(state=initState, action) {
         case DETAIL_SUCCESS:
             return {...state,...action.payload}
         case DETAILLIST_SUCCESS:
-            return {...state,detaillist:action.payload, ...action.payload}
+            return {...state,detaillist:action.payload}
         //最新的4个
         case DETAILNEWLIST_SUCCESS:
             return {...state,newlist:action.payload}
@@ -230,15 +230,15 @@ export function getDetailOne(data) {
     }
 }
 
-export function create({detailid,charpterid,name,mp3,created,num,collectnum}) {
+export function create({detailid,charpterid,name,mp3,created,num,collectnum,commentnum}) {
     if(!detailid || !charpterid ||!name) {
         message.error('DetailID,CharpterID和名称必须输入', 5)
     }
     return dispatch=>{
-        axios.post('/detail/create',{detailid,charpterid,name,mp3,created,num,collectnum})
+        axios.post('/detail/create',{detailid,charpterid,name,mp3,created,num,collectnum,commentnum})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({detailid,charpterid,name,mp3,created,num,collectnum}))
+                dispatch(authSuccess({detailid,charpterid,name,mp3,created,num,collectnum,commentnum}))
                 message.success(res.data.success, 5);
                 axios.get('/detail/list')
                     .then(res => {

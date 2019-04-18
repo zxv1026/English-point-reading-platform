@@ -29,7 +29,7 @@ export function part(state=initState, action) {
         case PART_SUCCESS:
             return {...state, ...action.payload}
         case PARTLIST_SUCCESS:
-            return {...state, partlist:action.payload, ...action.payload}
+            return {...state, partlist:action.payload}
         case  PARTLIKELIST_SUCCESS:
             return {...state,likelist:action.payload}
         case  PARTCOLLECTLIST_SUCCESS:
@@ -193,15 +193,15 @@ export function getPartList() {
     }
 }
 
-export function create({partid,name,created,likenum,collectnum}) {
+export function create({partid,name,created,likenum,collectnum,commentnum}) {
     if(!partid || !name) {
         message.error('PartID和名称必须输入', 5)
     }
     return dispatch=>{
-        axios.post('/part/create',{partid,name,created,likenum,collectnum})
+        axios.post('/part/create',{partid,name,created,likenum,collectnum,commentnum})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({partid,name,created,likenum,collectnum}))
+                dispatch(authSuccess({partid,name,created,likenum,collectnum,commentnum}))
                 message.success(res.data.success,5);
                 axios.get('/part/list')
                     .then(res => {

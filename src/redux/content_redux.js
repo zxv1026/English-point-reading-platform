@@ -27,7 +27,7 @@ export function content(state=initState, action) {
         case CONTENT_SUCCESS:
             return {...state,...action.payload}
         case CONTENTLIST_SUCCESS:
-            return {...state,contentlist:action.payload, ...action.payload}
+            return {...state,contentlist:action.payload}
         default:
             return state
     }

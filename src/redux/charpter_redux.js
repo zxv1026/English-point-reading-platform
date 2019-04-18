@@ -28,7 +28,7 @@ export function charpter(state=initState, action) {
         case CHARPTER_SUCCESS:
             return {...state,...action.payload}
         case CHARPTERLIST_SUCCESS:
-            return {...state,charpterlist:action.payload, ...action.payload}
+            return {...state,charpterlist:action.payload}
         case CHARPTERLIKELIST_SUCCESS:
             return {...state,likelist:action.payload}
         case CHARPTERCOLLECTLIST_SUCCESS:
@@ -199,15 +199,15 @@ export function getCharpterListOne(data) {
     }
 }
 
-export function create({charpterid,partid,name,created,likenum,collectnum}) {
+export function create({charpterid,partid,name,created,likenum,collectnum,commentnum}) {
     if(!charpterid || !partid ||!name) {
         message.error('CharpterID,PartID和名称必须输入', 5)
     }
     return dispatch=>{
-        axios.post('/charpter/create',{charpterid,partid,name,created,likenum,collectnum})
+        axios.post('/charpter/create',{charpterid,partid,name,created,likenum,collectnum,commentnum})
         .then(res=>{
             if(res.status===200 && res.data.code===0){
-                dispatch(authSuccess({charpterid,partid,name,created,likenum,collectnum}))
+                dispatch(authSuccess({charpterid,partid,name,created,likenum,collectnum,commentnum}))
                 message.success(res.data.success, 5);
                 axios.get('/charpter/list')
                     .then(res => {

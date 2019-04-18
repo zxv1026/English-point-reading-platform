@@ -30,7 +30,7 @@ export function user(state=initState, action) {
         case AUTH_SUCCESS:
             return {...state,redirectTo:action.payload,listone:action.payload,...action.payload}
         case USERLIST_SUCCESS:
-            return {...state,list:action.payload, ...action.payload}
+            return {...state,list:action.payload}
         case LOG_OUT:
             return {...initState,logout:true} 
         case CHANGE_PASSWORD:
