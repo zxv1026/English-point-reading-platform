@@ -152,6 +152,7 @@ class PartControl extends Component {
                         columns={columns}
                         dataSource={partlist}
                         rowKey="id"
+                        pagination={{showQuickJumper:true}}
                     />
                 </div>
             </span>

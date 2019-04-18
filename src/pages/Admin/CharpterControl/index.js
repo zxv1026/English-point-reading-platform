@@ -162,6 +162,7 @@ class CharpterControl extends Component {
                         columns={columns}
                         dataSource={charpterlist}
                         rowKey="id"
+                        pagination={{showQuickJumper:true}}
                     />
                 </div>
             </div>

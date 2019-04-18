@@ -202,6 +202,7 @@ class DetailControl extends Component {
                         columns={columns}
                         dataSource={detaillist}
                         rowKey="id"
+                        pagination={{showQuickJumper:true}}
                     />
                 </div>
             </div>

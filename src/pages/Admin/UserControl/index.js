@@ -169,6 +169,7 @@ class UserControl extends Component {
                         columns={columns}
                         dataSource={list}
                         rowKey="id"
+                        pagination={{showQuickJumper:true}}
                     />
                 </div>
             </div>

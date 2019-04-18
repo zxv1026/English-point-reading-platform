@@ -234,6 +234,7 @@ class ContentControl extends Component {
                         columns={columns}
                         dataSource={contentlist}
                         rowKey="id"
+                        pagination={{showQuickJumper:true}}
                         scroll={{ x: 1900 }}
                     />
                 </div>
