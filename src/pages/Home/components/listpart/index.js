@@ -23,13 +23,12 @@ class Listpart extends Component {
             }
             partlist[i].charpter = charpterlistone;
         }
-        if(nextProps!==this.props){
+        if(JSON.stringify(nextProps) !== JSON.stringify(this.props)){
             this.setState({
                 partlist: partlist
             })
             console.log('WRP_setState')
         }
-        console.log('WillReceiveProps')
     }
     render() {
         // const {list,charpterlist} =this.props;
