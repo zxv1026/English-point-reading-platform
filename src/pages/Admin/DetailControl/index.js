@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Table, Popconfirm, Icon,Popover } from "antd";
+import { ButtonCompont } from './style';
 import moment from 'moment';
 import DetailModal from './detailModal';
 import Condition from './condition';
@@ -8,6 +9,7 @@ import { connect } from 'react-redux';
 import { create, update, remove, getDetailList } from "../../../redux/detail_redux";
 import { Howl } from 'howler';
 
+var Sounds=[];
 
 @connect(
     state => ({
@@ -21,6 +23,7 @@ class DetailControl extends Component {
         this.state={
             create: true,
             retrieveVisible: false,
+            pause: [],
         }
     }
     componentDidMount() {
@@ -45,16 +48,31 @@ class DetailControl extends Component {
     handleVisibleChange = (retrieveVisible) => {
         this.setState({ retrieveVisible });
     }
-
-    SoundPlay(mp3) {
-        const Sounds = new Howl({
-            src: [require(`../../../assets/mp3/${mp3}.mp3`)],
-        })
-        Sounds.play()
+    SoundPlay(detail) {
+        const { pause } = this.state;
+        if(!Sounds[detail.detailid]){
+            Sounds[detail.detailid] = new Howl({
+                src: [require(`../../../assets/mp3/${detail.mp3}.mp3`)],
+                onend: () => {
+                    pause[detail.detailid] = false;
+                    this.setState({pause})
+                }
+            })
+        }
+        if (pause[detail.detailid]) {
+            pause[detail.detailid] = false;
+            Sounds[detail.detailid].pause()
+            this.setState({pause})
+        }else{
+            pause[detail.detailid] = true
+            Sounds[detail.detailid].play()
+            this.setState({pause})
+        }
+        
     }
     render() {
         const { detaillist } = this.props
-        const { create } = this.state
+        const { create, pause } = this.state
         const columns = [
             {
                 title: 'DetailID',
@@ -127,11 +145,11 @@ class DetailControl extends Component {
                 render: (text, record)=>{
                     return (
                         <span>
-                            <Button 
-                                className='button' 
-                                type="primary" 
-                                onClick={() =>this.SoundPlay(record.mp3)}
-                            >播放音频</Button>
+                            <ButtonCompont
+                                className={pause[record.detailid] ? 'pause' : null }
+                                type="primary"
+                                onClick={() =>this.SoundPlay(record)}
+                            >{pause[record.detailid] ? <div>暂停音频</div> : <div>播放音频</div>}</ButtonCompont>
                             <Link to={{
                                 pathname:'/admin/audiochoose',
                                 state:{
