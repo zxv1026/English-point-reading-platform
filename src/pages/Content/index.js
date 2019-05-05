@@ -3,7 +3,7 @@ import Header from '../../components/Header/index';
 import ListContent from './components/listcontent';
 import Comment from './components/comment';
 import { Link } from "react-router-dom";
-import { Icon, Tooltip,List,Row,Col } from "antd";
+import { Icon, Tooltip, Button, Divider } from "antd";
 import { connect } from 'react-redux';
 import { getContentListOne,changeScrollTopShow } from "../../redux/content_redux";
 import { getDetailOne,updatenum } from "../../redux/detail_redux";
@@ -197,7 +197,7 @@ class Content extends Component {
                                         {detailcollectnum}
                                     </span>
                                 </span>
-                                <span className='centerp'></span>
+                                <Divider type="vertical" />
                                 <span style={{ marginRight: 8 }}>
                                     <Tooltip title="点赞">
                                         <Icon
@@ -230,7 +230,7 @@ class Content extends Component {
                                                 {num}
                                             </span>
                                         </span>
-                                        <span className='centerp'></span>
+                                        <Divider type="vertical" />
                                         <span>
                                             <Tooltip title="点赞">
                                                 <Link
