@@ -70,7 +70,10 @@ class Condition extends Component{
                         {getFieldDecorator('mp3',{
                             initialValue: record.mp3,
                         })(
-                            <Select placeholder='请选择想要查找的信息的音频' allowClear>
+                            <Select
+                                showSearch
+                                placeholder='请选择想要查找的信息的音频'
+                                allowClear>
                                 {Object.keys(AudioMapper).map(key => {
                                     return <Option
                                     key={key}
