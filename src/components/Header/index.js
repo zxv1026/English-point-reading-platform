@@ -148,7 +148,7 @@ class Header extends Component {
                     <Logo/>
                 </Link>
                 <Nav>
-                    <Link to="/"><NavItem className='left active'>英语点读平台首页</NavItem></Link>
+                    <Link to="/"><NavItem className={path==='/'? "left active" : "left home" }>英语点读平台首页</NavItem></Link>
                     {username? null:<Link to={{pathname:'/login', link:path}}><NavItem className='right'>登录</NavItem></Link>}
                     <SearchWrapper>
                         <CSSTransition

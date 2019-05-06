@@ -31,13 +31,15 @@ class Detail extends Component {
                 }}>
                     <Icon type="caret-left"/>Back
                 </Link>
-                <div>
-                    <h2>{charptername}</h2>
+                <div className='content'>
+                    <div style={{textAlign:'center'}}>
+                        <h2>{charptername}</h2>
+                    </div>
+                    <ListDetail
+                        list={detaillist}
+                        partid={this.props.match.params.partId}
+                    />
                 </div>
-                <ListDetail
-                    list={detaillist}
-                    partid={this.props.match.params.partId}
-                />
             </div>
         )
     }

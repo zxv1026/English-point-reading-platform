@@ -32,12 +32,14 @@ class Charpter extends Component {
                     <Icon type="caret-left"/>
                     Back
                 </Link>
-                <div>
-                    <h2>{partname}</h2>
+                <div className='content'>
+                    <div style={{textAlign:'center'}}>
+                        <h2>{partname}</h2>
+                    </div>
+                    <ListCharpter
+                        list={charpterlistone}
+                    />
                 </div>
-                <ListCharpter
-                    list={charpterlistone}
-                />
             </div>
         )
     }
