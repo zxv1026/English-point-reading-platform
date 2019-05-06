@@ -94,7 +94,7 @@ class PersonalCenter extends Component {
         );
         console.log(this.props)
         return (
-            <div>
+            <div style={{paddingTop:56}}>
                 {username?
                 <div>
                     <Header/>

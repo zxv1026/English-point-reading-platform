@@ -174,7 +174,7 @@ class Content extends Component {
     render() {
         const { contentlist,mp3,detailname,num,detailID,userID,like,likeID,collect,collectID,detailcollectnum,data} = this.props
         return (
-            <div>
+            <div style={{paddingTop:56}}>
                 <Header path={this.props.location.pathname}/>
                 <Link className="close-content" to={{
                     pathname: '/parts/'+this.props.match.params.partId+'/charpters/'+this.props.match.params.charpterId+'/details'

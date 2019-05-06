@@ -26,7 +26,7 @@ class Charpter extends Component {
         const { charpterlistone,partname } = this.props
         console.log(this.props)
         return (
-            <div>
+            <div style={{paddingTop:56}}>
                 <Header path={this.props.location.pathname}/>
                 <Link className="close-charpter" to="/">
                     <Icon type="caret-left"/>

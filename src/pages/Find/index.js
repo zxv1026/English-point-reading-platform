@@ -32,7 +32,7 @@ class Find extends Component {
             </span>
         );
         return (
-            <div>
+            <div style={{paddingTop:56}}>
                 <Header find={this.props.location.find}/>
                 <Tabs>
                     <TabPane tab={<span><Icon type="book"/>章节</span>} key="1">

@@ -44,7 +44,7 @@ class AvatarChoose extends Component{
         const { msg } = this.props;
         console.log(path)
         return (
-            <div>
+            <div style={path==='/personalcenter'? {paddingTop:56} : null }>
                 {msg==="true"?message.success("保存用户头像成功",5): null}
                 {path==='/personalcenter'?<Header/>:null}
                 <Link to={{

@@ -10,7 +10,7 @@ import CharpterControl from './CharpterControl/index';
 import DetailControl from './DetailControl';
 import ContentControl from './ContentControl';
 import { Layout, Menu, Icon } from 'antd';
-import logo from '../../assets/images/logo.svg';
+import logo from '../../assets/images/react.png';
 import './index.less';
 import { connect } from 'react-redux';
 
@@ -50,8 +50,8 @@ class AdminHome extends Component {
                     collapsed={this.state.collapsed}
                 >
                 <div className="logo">
-                    <Link to='/'><img src={logo} alt="logo"/></Link>
-                    英语点读平台
+                    <Link to='/'><img src={logo} style={this.state.collapsed ? {} : { marginLeft: -9 }} alt="logo"/></Link>
+                    {this.state.collapsed? null : "英语点读平台" }
                 </div>
                     <Menu theme="dark" >
                         <Menu.Item key="1">

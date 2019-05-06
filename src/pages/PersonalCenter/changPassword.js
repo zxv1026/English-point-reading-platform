@@ -48,7 +48,7 @@ class ChangPassword extends Component {
         const {id,path} = this.props.location.state;
         const { msg,changeTo } = this.props;
         return (
-            <div>
+            <div style={{paddingTop:56}}>
                 <Header/>
                 <Link to={{
                     pathname: path

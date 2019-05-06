@@ -24,7 +24,7 @@ class Detail extends Component {
     render() {
         const { detaillist,charptername } = this.props
         return (
-            <div>
+            <div style={{paddingTop:56}}>
                 <Header path={this.props.location.pathname}/>
                 <Link className="close-detail" to={{
                     pathname: "/parts/" + this.props.match.params.partId + "/charpters"

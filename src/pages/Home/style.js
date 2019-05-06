@@ -5,6 +5,7 @@ export const HomeWrapper = styled.div`
     overflow: hidden;
     width: 960px;
     margin: 0 auto;
+    padding-top: 56px;
 `;
 
 export const HomeLeft = styled.div`

@@ -1,20 +1,23 @@
 import styled from 'styled-components';
-import logoPic from "../../assets/images/logo.svg";
+import logoPic from "../../assets/images/log.png";
 
 export const HeaderWrapper = styled.div`
     z-index: 2;
-    position: relative;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
     height: 56px;
-    border-bottom: 1px solid #fofofo;
+    background-color: #fff;
+    border-bottom: 1px solid #777;
+    border-color: #f0f0f0;
 `;
 
 export const Logo = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
+    float: left;
+    height: 56 px;
     width: 95px;
-    height: 56px;
+    height: 55px;
     background: url(${logoPic});
     background-size: contain;
 `;
