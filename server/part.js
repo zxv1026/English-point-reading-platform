@@ -71,16 +71,35 @@ Router.get('/findcollectnumlist',function (req,res) {
 
 Router.get('/list',function (req, res) {
     // Part.remove({},function (err,doc) {})
-    Part.find({},null,{sort: {'partid': 1}},function (err,doc) {
-        return res.json({code: 0, data:doc})
-    })
+    Part.find({})
+        .sort({'partid': 1})
+        .lean()
+        .exec(function (err,doc) {
+            Charpter.find({})
+                .exec(function (err,d) {
+                    let data = [];
+                    for(let i in doc){
+                        let charpterlistone = [];
+                        let x=0;
+                        data.push(doc[i])
+                        for(let j in d){
+                            if(d[j].partid===doc[i].partid){
+                                charpterlistone[x] = d[j].name;
+                                x++;
+                            }
+                        }
+                        data[i].charpter = charpterlistone;
+                    }
+                    return res.json({code: 0,data:data})
+                })
+        })
 })
 
 Router.post('/one',function (req, res) {
     const {id} = req.body
     Part.findOne({'partid': id})
         .exec(function (err,doc) {
-            console.log(doc)
+            // console.log(doc)
             return res.json({code: 0, data:doc})
         })
 })

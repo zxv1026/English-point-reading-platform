@@ -157,9 +157,31 @@ Router.get('/list',function (req, res) {
 Router.post('/listone',function (req, res) {
     console.log('detail listone')
     const {id} = req.body
-    Detail.find({'charpterid': id}, null,{sort: {'detailid': 1}},function (err, doc) {
-        return res.json({code: 0, data:doc})
-    })
+    Detail.find({'charpterid': id})
+        .sort({'detailid': 1})
+        .lean()
+        .exec(function (err,doc) {
+            Content.find({})
+                .exec(function (err,d) {
+                    let data = [];
+                    for(let i in doc){
+                        let contentlistone = [];
+                        let x=0;
+                        data.push(doc[i])
+                        for(let j in d){
+                            if(d[j].detailid===doc[i].detailid){
+                                let substance = {}
+                                substance.chinese = d[j].chinese;
+                                substance.english = d[j].english;
+                                contentlistone[x] = substance ;
+                                x++;
+                            }
+                        }
+                        data[i].content = contentlistone;
+                    }
+                    return res.json({code: 0,data:data})
+                })
+        })
 })
 
 Router.post('/one',function (req, res) {

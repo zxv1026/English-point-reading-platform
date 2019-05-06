@@ -25,7 +25,8 @@ Router.post('/findlist',function(req,res) {
                     for(let i in c){
                         for(let j in d){
                             if(c[i].partID.name===d[j].name){
-                                data.push(c[i])
+                                data.push(c[i]);
+                                break;
                             }
                         }
                     }
@@ -104,9 +105,28 @@ Router.post('/one',function (req, res) {
 //获取与前端传过来的partid相同的的charpter信息
 Router.post('/listone',function (req, res) {
     const {id} = req.body
-    Charpter.find({'partid': id},null,{sort: {'charpterid': 1}},function (err, doc) {
-        return res.json({code: 0, data:doc})
-    })
+    Charpter.find({'partid': id})
+            .sort({'charpterid': 1})
+            .lean()
+            .exec(function (err,doc) {
+                Detail.find({})
+                    .exec(function (err,d) {
+                        let data = [];
+                        for(let i in doc){
+                            let detaillistone = [];
+                            let x=0;
+                            data.push(doc[i])
+                            for(let j in d){
+                                if(d[j].charpterid===doc[i].charpterid){
+                                    detaillistone[x] = d[j].name;
+                                    x++;
+                                }
+                            }
+                            data[i].detail = detaillistone;
+                        }
+                        return res.json({code: 0,data:data})
+                    })
+            })
 })
 
 Router.post('/remove', function (req, res) {

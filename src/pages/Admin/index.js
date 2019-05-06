@@ -74,19 +74,19 @@ class AdminHome extends Component {
                         </Menu.Item>
                         <Menu.Item key="4">
                             <Link to='/admin/charpter'>
-                                <Icon type="book" />
+                                <Icon type="project" />
                                 <span className="nav-text">Charpter管理</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="5">
                             <Link to='/admin/detail'>
-                                <Icon type="book" />
+                                <Icon type="profile" />
                                 <span className="nav-text">Detail管理</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="6">
                             <Link to='/admin/content'>
-                                <Icon type="book" />
+                                <Icon type="read" />
                                 <span className="nav-text">Content管理</span>
                             </Link>
                         </Menu.Item>

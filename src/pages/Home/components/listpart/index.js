@@ -3,36 +3,9 @@ import { Link } from 'react-router-dom';
 import { Icon, List,Tooltip } from 'antd';
 
 class Listpart extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            partlist: []
-        }
-    }
-    componentWillReceiveProps(nextProps) {
-        const {list,charpterlist} = nextProps;
-        let partlist = list;
-        for (let i in list) {
-            const charpterlistone = [];
-            let x = 0;
-            for (let j in charpterlist) {
-                if (charpterlist[j].partid === list[i].partid) {
-                    charpterlistone[x] = charpterlist[j].name
-                    x++;
-                }
-            }
-            partlist[i].charpter = charpterlistone;
-        }
-        if(JSON.stringify(nextProps) !== JSON.stringify(this.props)){
-            this.setState({
-                partlist: partlist
-            })
-            console.log('WRP_setState')
-        }
-    }
+    
     render() {
-        // const {list,charpterlist} =this.props;
-        const { partlist } = this.state;
+        const { list } =this.props;
         const IconText = ({ type, text ,title}) => (
             <span>
                 <Tooltip title={title}>
@@ -46,7 +19,7 @@ class Listpart extends Component {
                 <List
                     itemLayout="vertical"
                     size="large"
-                    dataSource={partlist}
+                    dataSource={list}
                     renderItem={item => (
                         <List.Item
                             key={"part_"+item.partid}

@@ -38,6 +38,12 @@ class ListCharpters extends Component {
                             <Link to={{
                                 pathname: "/parts/"+item.partid+"/charpters/"+item.charpterid+"/details",
                             }} ><h3>{item.name}</h3></Link>
+                            <div style={{fontSize:13,color:'#999'}}>
+                                {item.detail.slice(0,3).map((detail)=>(
+                                    <p key={'detail_'+detail}>{detail}</p>
+                                ))}
+                                {item.detail.length>3?<p>....</p>:null}
+                            </div>
                         </List.Item>
                     )}
                 />

@@ -17,7 +17,6 @@ const TabPane = Tabs.TabPane;
         partlikelist: state.part.likelist,
         partcollectlist: state.part.collectlist,
         showScroll: state.part.showScroll,
-        charpterlist: state.charpter.charpterlist,
         charpterlikelist: state.charpter.likelist,
         charptercollectlist: state.charpter.collectlist,
         detailnewlist: state.detail.newlist,
@@ -36,7 +35,6 @@ class Home extends Component {
         this.props.getDetailCollectList();
         this.props.getCharpterLikeList();
         this.props.getCharpterCollectList();
-        this.props.getCharpterList();
         this.bindEvents();
     }
     componentWillUnmount() {
@@ -57,7 +55,7 @@ class Home extends Component {
         this.refs.img.next();
     }
     render() {
-        const { partlist,charpterlist,detailnewlist,detaillikelist,detailcollectlist,charpterlikelist,charptercollectlist,partlikelist,partcollectlist } = this.props
+        const { partlist,detailnewlist,detaillikelist,detailcollectlist,charpterlikelist,charptercollectlist,partlikelist,partcollectlist } = this.props
         return (
             <div>
                 <Header path={this.props.location.pathname}/>
@@ -81,7 +79,6 @@ class Home extends Component {
                         </SlideShow>
                         <ListPart
                             list={partlist}
-                            charpterlist={charpterlist}
                         />
                     </HomeLeft>
                     <HomeRight>
