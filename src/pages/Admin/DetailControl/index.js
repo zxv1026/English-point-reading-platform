@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { create, update, remove, getDetailList } from "../../../redux/detail_redux";
 import { Howl } from 'howler';
 
-var Sounds=[];
+let Sounds=[];
 
 @connect(
     state => ({
@@ -78,6 +78,8 @@ class DetailControl extends Component {
                 title: 'DetailID',
                 dataIndex: 'detailid',
                 key: 'detailid',
+                fixed: 'left',
+                width: 50,
                 sorter: (a,b) => a.detailid - b.detailid,
                 render: text => <a href=" ">{text}</a>,
             },
@@ -85,6 +87,8 @@ class DetailControl extends Component {
                 title: 'Detail名',
                 dataIndex: 'name',
                 key: 'name',
+                fixed: 'left',
+                width: 100,
             },
             {
                 title: 'CharpterID',
@@ -142,9 +146,14 @@ class DetailControl extends Component {
             {
                 title: '操作',
                 key: 'operation',
+                fixed: 'right',
+                width: 100,
                 render: (text, record)=>{
                     return (
                         <span>
+                            <p style={Sounds[record.detailid]? {display:'none'}:null}>{Sounds[record.detailid]? null:`已经播放0秒`}</p>
+                            <p style={Sounds[record.detailid]&&!pause[record.detailid]? null:{display:'none'}}>{Sounds[record.detailid]&&!pause[record.detailid]?`已经播放`+Sounds[record.detailid].seek().toFixed(0)+`秒`: null}</p>
+                            <p style={pause[record.detailid]? null : {display:'none'}}>{pause[record.detailid]?`正在播放`: null}</p>
                             <ButtonCompont
                                 className={pause[record.detailid] ? 'pause' : null }
                                 type="primary"
@@ -221,6 +230,7 @@ class DetailControl extends Component {
                         dataSource={detaillist}
                         rowKey="id"
                         pagination={{showQuickJumper:true}}
+                        scroll={{ x: 1200 }}
                     />
                 </div>
             </div>
