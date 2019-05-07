@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { create, update, remove, getDetailList } from "../../../redux/detail_redux";
 import { Howl } from 'howler';
 
-let Sounds=[];
 
 @connect(
     state => ({
@@ -23,7 +22,9 @@ class DetailControl extends Component {
         this.state={
             create: true,
             retrieveVisible: false,
+            Sounds: [],
             pause: [],
+            mp3: [],
         }
     }
     componentDidMount() {
@@ -49,7 +50,7 @@ class DetailControl extends Component {
         this.setState({ retrieveVisible });
     }
     SoundPlay(detail) {
-        const { pause } = this.state;
+        const { Sounds,pause,mp3 } = this.state;
         if(!Sounds[detail.detailid]){
             Sounds[detail.detailid] = new Howl({
                 src: [require(`../../../assets/mp3/${detail.mp3}.mp3`)],
@@ -58,6 +59,18 @@ class DetailControl extends Component {
                     this.setState({pause})
                 }
             })
+            mp3[detail.detailid] = detail.mp3;
+            this.setState({mp3,Sounds})
+        }else if(mp3[detail.detailid]!==detail.mp3){
+            Sounds[detail.detailid] = new Howl({
+                src: [require(`../../../assets/mp3/${detail.mp3}.mp3`)],
+                onend: () => {
+                    pause[detail.detailid] = false;
+                    this.setState({pause})
+                }
+            })
+            mp3[detail.detailid] = detail.mp3;
+            this.setState({mp3,Sounds})
         }
         if (pause[detail.detailid]) {
             pause[detail.detailid] = false;
@@ -72,7 +85,7 @@ class DetailControl extends Component {
     }
     render() {
         const { detaillist } = this.props
-        const { create, pause } = this.state
+        const { create, pause, mp3, Sounds } = this.state
         const columns = [
             {
                 title: 'DetailID',
@@ -152,7 +165,7 @@ class DetailControl extends Component {
                     return (
                         <span>
                             <p style={Sounds[record.detailid]? {display:'none'}:null}>{Sounds[record.detailid]? null:`已经播放0秒`}</p>
-                            <p style={Sounds[record.detailid]&&!pause[record.detailid]? null:{display:'none'}}>{Sounds[record.detailid]&&!pause[record.detailid]?`已经播放`+Sounds[record.detailid].seek().toFixed(0)+`秒`: null}</p>
+                            <p style={Sounds[record.detailid]&&!pause[record.detailid]? null:{display:'none'}}>{Sounds[record.detailid]&&!pause[record.detailid]?(mp3[record.detailid]!==record.mp3?`已经播放0秒`:`已经播放`+Sounds[record.detailid].seek().toFixed(0)+`秒`): null}</p>
                             <p style={pause[record.detailid]? null : {display:'none'}}>{pause[record.detailid]?`正在播放`: null}</p>
                             <ButtonCompont
                                 className={pause[record.detailid] ? 'pause' : null }
