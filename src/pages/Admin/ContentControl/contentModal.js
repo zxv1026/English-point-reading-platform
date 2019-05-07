@@ -182,10 +182,10 @@ class contentModal extends Component{
                                 }]
                             })(
                                 <Select>
-                                    <Option value='dad'><img className='img' alt='icon' src={require(`../../../assets/images/content/dad.jpg`)}/></Option>
-                                    <Option value='gril_cry'><img className='img' alt='icon' src={require(`../../../assets/images/content/gril_cry.jpg`)}/></Option>
-                                    <Option value='gril'><img className='img' alt='icon' src={require(`../../../assets/images/content/gril.jpg`)}/></Option>
-                                    <Option value='mom'><img className='img' alt='icon' src={require(`../../../assets/images/content/mom.jpg`)}/></Option>
+                                    <Option value='dad'><img className='img icon' alt='icon' src={require(`../../../assets/images/content/dad.jpg`)}/></Option>
+                                    <Option value='gril_cry'><img className='img icon' alt='icon' src={require(`../../../assets/images/content/gril_cry.jpg`)}/></Option>
+                                    <Option value='gril'><img className='img icon' alt='icon' src={require(`../../../assets/images/content/gril.jpg`)}/></Option>
+                                    <Option value='mom'><img className='img icon' alt='icon' src={require(`../../../assets/images/content/mom.jpg`)}/></Option>
                                 </Select>
                             )}
                         </FormItem>
