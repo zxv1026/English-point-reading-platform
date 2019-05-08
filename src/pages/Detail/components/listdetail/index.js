@@ -39,13 +39,13 @@ class ListDetail extends Component {
                                 pathname: "/parts/"+partid+"/charpters/"+item.charpterid+"/details/"+item.detailid+'/contents',
                             }} ><h3>{item.name}</h3></Link>
                             <div style={{fontSize:13,color:'#999'}}>
-                                {item.content.slice(0,2).map((content)=>(
+                                {item.content?item.content.slice(0,2).map((content)=>(
                                     <div>
                                         <p>{content.chinese}</p>
                                         <p>{content.english}</p>
                                     </div>
-                                ))}
-                                {item.content.length>2?<p>....</p>:null}
+                                )):null}
+                                {item.content?(item.content.length>2?<p>....</p>:null):null}
                             </div>
                         </List.Item>
                     )}
