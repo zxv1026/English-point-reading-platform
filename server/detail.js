@@ -33,10 +33,14 @@ Router.post('/findlist',function(req,res) {
                                 let data = []
                                 for(let x in doc){
                                     for(let i in c){
-                                        for(let j in d){
-                                            if(doc[x].charpterID.name===c[i].name&&c[i].partID.name===d[j].name){
-                                                data.push(doc[x])
+                                        if(doc[x].charpterID.name===c[i].name){
+                                            for(let j in d){
+                                                if(c[i].partID.name===d[j].name){
+                                                    data.push(doc[x])
+                                                    break;
+                                                }
                                             }
+                                            break;
                                         }
                                     }
                                 }
@@ -187,13 +191,19 @@ Router.post('/listone',function (req, res) {
 Router.post('/one',function (req, res) {
     const {id} = req.body
     Detail.findOne({'detailid': id})
+        .lean()
         .populate({
             path:'charpterID',
             populate: { path: 'partID' }
         })
         .exec(function (err,doc) {
-            // console.log(doc)
-            return res.json({code: 0, data:doc})
+            Detail.find({'charpterid': doc.charpterid})
+                .sort({'detailid': 1})
+                .exec(function (e,d) {
+                    let data = doc;
+                    data.alldetaillist = d
+                    return res.json({code: 0,data:data})
+                })
         })
 })
 
