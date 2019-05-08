@@ -44,13 +44,14 @@ class AudioChoose extends Component{
         this.props.updateMp3(id,this.state)
     }
     render() {
-        const { id,path,detailname } = this.props.location.state;
+        const { id,path,detailname,pagenumber } = this.props.location.state;
         const { mp3 } = this.state;
         
         return (
             <div>
                 <Link to={{
-                    pathname: path
+                    pathname: path,
+                    pagenumber: pagenumber,
                 }}>
                     <Icon type="caret-left"/>
                     Back

@@ -9,7 +9,9 @@ import { connect } from 'react-redux';
 import { create, update, remove, getDetailList } from "../../../redux/detail_redux";
 import { Howl } from 'howler';
 
-
+let Sounds = [];
+let pauselist = [];
+let mp3 = [];
 @connect(
     state => ({
         detaillist: state.detail.detaillist,
@@ -22,13 +24,18 @@ class DetailControl extends Component {
         this.state={
             create: true,
             retrieveVisible: false,
-            Sounds: [],
             pause: [],
-            mp3: [],
+            pageto: false,
+            pagenumber: 0,
         }
     }
     componentDidMount() {
+        if(this.props.location.pagenumber){
+            this.setState({pageto:true,pagenumber:this.props.location.pagenumber})
+        }
         this.props.getDetailList();
+        //获取pauselist,点击其他界面返回后播放的还是显示播放状态
+        this.setState({pause: pauselist})
     }
     delectDetail(detail) {
         this.props.remove(detail);
@@ -49,35 +56,47 @@ class DetailControl extends Component {
     handleVisibleChange = (retrieveVisible) => {
         this.setState({ retrieveVisible });
     }
+
+    onChangepageNumber = (pageNumber) => {
+        const { pageto } = this.state;
+        if(pageto){
+            this.setState({pageto: false})
+        }
+        this.setState({pagenumber:pageNumber})
+    }
     SoundPlay(detail) {
-        const { Sounds,pause,mp3 } = this.state;
+        const { pause } = this.state;
         if(!Sounds[detail.detailid]){
             Sounds[detail.detailid] = new Howl({
                 src: [require(`../../../assets/mp3/${detail.mp3}.mp3`)],
                 onend: () => {
                     pause[detail.detailid] = false;
+                    pauselist[detail.detailid] = false;
                     this.setState({pause})
                 }
             })
             mp3[detail.detailid] = detail.mp3;
-            this.setState({mp3,Sounds})
+            // this.setState({mp3,Sounds})
         }else if(mp3[detail.detailid]!==detail.mp3){
             Sounds[detail.detailid] = new Howl({
                 src: [require(`../../../assets/mp3/${detail.mp3}.mp3`)],
                 onend: () => {
                     pause[detail.detailid] = false;
+                    pauselist[detail.detailid] = false;
                     this.setState({pause})
                 }
             })
             mp3[detail.detailid] = detail.mp3;
-            this.setState({mp3,Sounds})
+            // this.setState({mp3,Sounds})
         }
         if (pause[detail.detailid]) {
             pause[detail.detailid] = false;
+            pauselist[detail.detailid] = false;
             Sounds[detail.detailid].pause()
             this.setState({pause})
         }else{
             pause[detail.detailid] = true
+            pauselist[detail.detailid] = true;
             Sounds[detail.detailid].play()
             this.setState({pause})
         }
@@ -85,7 +104,7 @@ class DetailControl extends Component {
     }
     render() {
         const { detaillist } = this.props
-        const { create, pause, mp3, Sounds } = this.state
+        const { create, pause, pageto, pagenumber } = this.state
         const columns = [
             {
                 title: 'DetailID',
@@ -178,7 +197,8 @@ class DetailControl extends Component {
                                     path: '/admin/detail',
                                     id: record._id,
                                     mp3: record.mp3,
-                                    detailname: record.name
+                                    detailname: record.name,
+                                    pagenumber: pagenumber,
                                 }
                             }}><Button className='button' type="primary">修改音频</Button></Link>
                             <DetailModal
@@ -242,7 +262,7 @@ class DetailControl extends Component {
                         columns={columns}
                         dataSource={detaillist}
                         rowKey="id"
-                        pagination={{showQuickJumper:true}}
+                        pagination={pageto?{current:pagenumber,showQuickJumper:true,onChange:this.onChangepageNumber}:{showQuickJumper:true,onChange:this.onChangepageNumber}}
                         scroll={{ x: 1200 }}
                     />
                 </div>
