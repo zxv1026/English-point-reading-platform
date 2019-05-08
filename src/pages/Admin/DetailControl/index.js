@@ -30,10 +30,10 @@ class DetailControl extends Component {
         }
     }
     componentDidMount() {
+        this.props.getDetailList();
         if(this.props.location.pagenumber){
             this.setState({pageto:true,pagenumber:this.props.location.pagenumber})
         }
-        this.props.getDetailList();
         //获取pauselist,点击其他界面返回后播放的还是显示播放状态
         this.setState({pause: pauselist})
     }

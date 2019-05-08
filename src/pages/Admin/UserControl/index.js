@@ -18,10 +18,15 @@ class UserControl extends Component {
         this.state={
             create: true,
             retrieveVisible: false,
+            pageto: false,
+            pagenumber: 0,
         }
     }
     componentDidMount(){
         this.props.getUserList();
+        if(this.props.location.pagenumber){
+            this.setState({pageto:true,pagenumber:this.props.location.pagenumber})
+        }
     }
     delectUser(user) {
         this.props.remove(user);
@@ -49,9 +54,16 @@ class UserControl extends Component {
     handleVisibleChange = (retrieveVisible) => {
         this.setState({ retrieveVisible });
     }
+    onChangepageNumber = (pageNumber) => {
+        const { pageto } = this.state;
+        if(pageto){
+            this.setState({pageto: false})
+        }
+        this.setState({pagenumber:pageNumber})
+    }
     render() {
         const { list } = this.props
-        const { create } = this.state
+        const { create, pageto, pagenumber } = this.state
         const columns = [
             {
                 title: '头像',
@@ -95,7 +107,8 @@ class UserControl extends Component {
                                 state:{
                                     path: '/admin',
                                     id: record._id,
-                                    avatar: record.avatar
+                                    avatar: record.avatar,
+                                    pagenumber: pagenumber,
                                 }
                             }}><Button className='button' type="primary">修改头像</Button></Link>
                             <UsersModal
@@ -169,7 +182,7 @@ class UserControl extends Component {
                         columns={columns}
                         dataSource={list}
                         rowKey="id"
-                        pagination={{showQuickJumper:true}}
+                        pagination={pageto?{current:pagenumber,showQuickJumper:true,onChange:this.onChangepageNumber}:{showQuickJumper:true,onChange:this.onChangepageNumber}}
                     />
                 </div>
             </div>

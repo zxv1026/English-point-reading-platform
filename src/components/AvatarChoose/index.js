@@ -40,7 +40,7 @@ class AvatarChoose extends Component{
                                 avatar: require(`../../assets/images/user/${v}.jpg`),
                                 text: v 
                             }))
-        const {id,path} = this.props.location.state;
+        const {id,path,pagenumber} = this.props.location.state;
         const { msg } = this.props;
         console.log(path)
         return (
@@ -48,7 +48,8 @@ class AvatarChoose extends Component{
                 {msg==="true"?message.success("保存用户头像成功",5): null}
                 {path==='/personalcenter'?<Header/>:null}
                 <Link to={{
-                    pathname: path
+                    pathname: path,
+                    pagenumber: pagenumber
                 }}>
                     <Icon type="caret-left"/>
                     Back
