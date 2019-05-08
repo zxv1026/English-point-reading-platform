@@ -9,7 +9,6 @@ import { updatepartlikenum } from "../../../../redux/part_redux";
 
 @connect(
     state => ({
-        detailID: state.detail._id,
         detailcommentnum: state.detail.commentnum,
         charptercommentnum: state.charpter.commentnum,
         partcommentnum: state.part.commentnum,

@@ -20,7 +20,8 @@ const initState={
     newlist: [],
     likelist: [],
     collectlist: [],
-    detailfindlist: []
+    detailfindlist: [],
+    alldetaillist: [],//one接口时，把该detail所对应的charpter下所有的detail
 }
 
 //reducer
