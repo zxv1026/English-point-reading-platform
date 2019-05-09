@@ -93,7 +93,7 @@ class Home extends Component {
                                                     <Link to={{
                                                         pathname: "/parts/"+part.partid+"/charpters",
                                                     }}>
-                                                        <img alt="partlogo" src={require(`../../assets/images/part/part${part.partid}.jpg`)}/>
+                                                        <img alt="partlogo" src={part.partid<9?require(`../../assets/images/part/part${part.partid}.jpg`):require(`../../assets/images/def.png`)}/>
                                                         <p>{part.name}</p>
                                                     </Link>
                                                 </Col>

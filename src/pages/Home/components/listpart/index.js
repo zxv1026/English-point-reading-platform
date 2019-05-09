@@ -27,7 +27,7 @@ class Listpart extends Component {
                                 <IconText type="heart-o" text={item.collectnum} title="收藏数"/>, 
                                 <IconText type="like-o" text={item.likenum} title="点赞数" />, 
                                 <IconText type="message" text={item.commentnum} title="评论数"/>]}
-                            extra={<img height={200} width={272} alt="partlogo" src={require(`../../../../assets/images/part/part${item.partid}.jpg`)}/>}
+                            extra={<img height={200} width={272} alt="partlogo" src={item.partid<9?require(`../../../../assets/images/part/part${item.partid}.jpg`):require(`../../../../assets/images/def.png`)}/>}
                         >
                             <Link to={{
                                 pathname: "/parts/"+item.partid+"/charpters"

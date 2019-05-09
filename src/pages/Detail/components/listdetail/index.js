@@ -33,7 +33,7 @@ class ListDetail extends Component {
                                 <IconText type="heart-o" text={item.collectnum} title="收藏数"/>, 
                                 <IconText type="like-o" text={item.num} title="点赞数" />, 
                                 <IconText type="message" text={item.commentnum} title="评论数"/>]}
-                            extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+                            extra={<img width={272} alt="logo" src={require(`../../../../assets/images/def.png`)} />}
                         >
                             <Link to={{
                                 pathname: "/parts/"+partid+"/charpters/"+item.charpterid+"/details/"+item.detailid+'/contents',

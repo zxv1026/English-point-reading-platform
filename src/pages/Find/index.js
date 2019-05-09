@@ -60,7 +60,7 @@ class Find extends Component {
                                 )}
                             />
                             :<div style={{textAlign:"center",marginTop: 150}}>
-                                <img alt='未找到相关内容' src="https://cdn2.jianshu.io/assets/web/icon_default-91af5c0baead9a94bf1429cefb4ca554.png" style={{width: 100}}/>
+                                <img alt='未找到相关内容' src={require(`../../assets/images/notfind.png`)} style={{width: 100}}/>
                                 <H3>未找到相关内容</H3>
                             </div>}
                     </TabPane>
@@ -94,7 +94,7 @@ class Find extends Component {
                                     )}
                                 />
                                 :<div style={{textAlign:"center",marginTop: 150}}>
-                                    <img alt='未找到相关内容' src="https://cdn2.jianshu.io/assets/web/icon_default-91af5c0baead9a94bf1429cefb4ca554.png" style={{width: 100}}/>
+                                    <img alt='未找到相关内容' src={require(`../../assets/images/notfind.png`)} style={{width: 100}}/>
                                     <H3>未找到相关内容</H3>
                                 </div>}
                     </TabPane>
@@ -133,7 +133,7 @@ class Find extends Component {
                                 )}
                             />
                             :<div style={{textAlign:"center",marginTop: 150}}>
-                                <img alt='未找到相关内容' src="https://cdn2.jianshu.io/assets/web/icon_default-91af5c0baead9a94bf1429cefb4ca554.png" style={{width: 100}}/>
+                                <img alt='未找到相关内容' src={require(`../../assets/images/notfind.png`)} style={{width: 100}}/>
                                 <H3>未找到相关内容</H3>
                             </div>}
                     </TabPane>
