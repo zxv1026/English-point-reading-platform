@@ -186,6 +186,15 @@ class Content extends Component {
         const { contentlist,mp3,detailname,num,detailID,userID,like,likeID,collect,collectID,detailcollectnum,data,detaillist } = this.props
         const prev = String(Number(this.props.match.params.detailId) - 1)
         const next = String(Number(this.props.match.params.detailId) + 1)
+        let x = 1;
+        if(detaillist.length>0){
+            for(let i in detaillist){
+                if(detaillist[i].detailid === Number(this.props.match.params.detailId)){
+                    x = Number(i);
+                    break;
+                }
+            }
+        }
         return (
             <div style={{paddingTop:56}}>
                 <Header path={this.props.location.pathname}/>
@@ -268,7 +277,7 @@ class Content extends Component {
                     ?<Link className="close-content" to={{
                         pathname: '/parts/'+this.props.match.params.partId+'/charpters/'+this.props.match.params.charpterId+'/details/'+prev+'/contents'
                     }}>
-                        <Tooltip title={'上一个话题:'+detaillist[Number(this.props.match.params.detailId)-1].name}>
+                        <Tooltip title={'上一个话题:'+detaillist[x-1].name}>
                             <Button className='btn' shape="circle" icon="left" style={{marginLeft:-420}}/>
                         </Tooltip>
                     </Link>:null}
@@ -288,7 +297,7 @@ class Content extends Component {
                     ?<Link className="close-content" to={{
                         pathname: '/parts/'+this.props.match.params.partId+'/charpters/'+this.props.match.params.charpterId+'/details/'+next+'/contents'
                     }}>
-                        <Tooltip title={'下一个话题:'+detaillist[Number(this.props.match.params.detailId)+1].name}>
+                        <Tooltip title={'下一个话题:'+detaillist[x+1].name}>
                                 <Button className='btn' shape="circle" icon="right" style={{marginLeft:380}}/>
                         </Tooltip>
                     </Link>:null}
