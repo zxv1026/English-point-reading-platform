@@ -64,7 +64,11 @@ class AudioChoose extends Component{
         console.log(value);
     }
     updatemp3(id){
-        this.props.updateMp3(id,this.state)
+        const data = {
+            mp3: this.state.mp3,
+            _id: id
+        }
+        this.props.updateMp3(data)
     }
     playTime(){
         const { Sounds,pause } = this.state;

@@ -114,8 +114,7 @@ export function updatenum(_id, data) {
     }
 }
 
-export function updateMp3(_id, data) {
-    data._id = _id;
+export function updateMp3(data) {
     return dispatch => {
         axios.post('/detail/updatemp3', data)
             .then(res => {
