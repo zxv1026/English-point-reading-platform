@@ -33,9 +33,12 @@ class Find extends Component {
         );
         return (
             <div style={{paddingTop:56}}>
-                <Header find={this.props.location.find}/>
+                <Header 
+                    find={this.props.location.find}
+                    path={this.props.location.pathname}
+                />
                 <Tabs>
-                    <TabPane tab={<span><Icon type="book"/>章节</span>} key="1">
+                    <TabPane tab={<span><Icon type="book"/>章节</span>} key="part">
                         {partfindlist&&partfindlist.length!==0?
                             <List
                                 itemLayout="horizontal"
@@ -64,7 +67,7 @@ class Find extends Component {
                                 <H3>未找到相关内容</H3>
                             </div>}
                     </TabPane>
-                    <TabPane tab={<span><Icon type="file"/>Charpter</span>} key="2">
+                    <TabPane tab={<span><Icon type="file"/>Charpter</span>} key="charpter">
                         {charpterfindlist&&charpterfindlist.length!==0?
                                 <List
                                     itemLayout="horizontal"
@@ -98,7 +101,7 @@ class Find extends Component {
                                     <H3>未找到相关内容</H3>
                                 </div>}
                     </TabPane>
-                    <TabPane tab={<span><Icon type="bars"/>话题</span>} key="3">
+                    <TabPane tab={<span><Icon type="bars"/>话题</span>} key="detail">
                         {detailfindlist&&detailfindlist.length!==0?
                             <List
                                 itemLayout="horizontal"

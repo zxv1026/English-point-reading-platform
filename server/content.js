@@ -415,7 +415,7 @@ Router.post('/update', function (req, res) {
 
 Router.post('/create', function (req, res) {
     console.log(req.body)
-    const { contentid, detailid, chinese, english, offset, duration, created,promptType,prompt} = req.body;
+    const { contentid, detailid, chinese, english, offset, duration, created,icon,promptType,prompt} = req.body;
     Detail.findOne({'detailid': detailid},function (err,doc) {
         if(doc){
             const detailID = doc._id;
@@ -424,7 +424,7 @@ Router.post('/create', function (req, res) {
                 if(doc) {
                     return res.json({msg: '创建content失败，ContentID已经存在，请换一个'})
                 }
-                Content.create({contentid, detailid,chinese, english,offset, duration, created,detailID,promptType,prompt},function (e, d) {
+                Content.create({contentid, detailid,chinese, english,offset, duration, created,detailID,icon,promptType,prompt},function (e, d) {
                     if(e) {
                         return res.json({msg: '后端出错'})
                     }
